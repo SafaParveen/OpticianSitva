@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">OpticianSitwa</string>
+    <string name="login_as_an">Login as an Optician</string>
+    <string name="optician_si">Optician Sitva</string>
+    <string name="get_started">Get started by creating your account</string>
+    <string name="terms_of_se">Terms of Service.</string>
+    <string name="by_creating">By creating an account, I accept App\'s</string>
+    <string name="sign_Ggl">Sign In With Google</string>
+    <string name="sign_Fb">Sign In With Facebook</string>
+    <string name="sign_Mail">Sign In With Email</string>
+
 </resources>

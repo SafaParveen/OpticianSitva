@@ -12,5 +12,16 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <style name="login_as_an">
+
+            <item name="android:textSize">
+                14sp
+            </item>
+
+            <item name="android:textColor">
+                #FFFFFF
+            </item>
+
+        </style>
     </style>
 </resources>
