@@ -21,6 +21,9 @@
 
     <color name="grey">#A0A3A9</color>
 
+    <color name="dotInactive">#E5E8EE</color>
+    <color name="dotActive">#701BC8</color>
+
 
 
 </resources>
