@@ -22,6 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".intro.Act_IntroMain"/>
+        <activity android:name=".login.Act_location"/>
+        <activity android:name=".login.Act_Login"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
