@@ -16,4 +16,7 @@
     <string name="signn">Sign In</string>
     <string name="save_loc">Save your location</string>
 
+    <string name="facebook_app_id">512511643062066</string>
+    <string name="fb_login_protocol_scheme">fb512511643062066</string>
+
 </resources>
