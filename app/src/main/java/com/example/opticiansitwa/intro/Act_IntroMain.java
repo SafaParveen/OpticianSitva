@@ -24,7 +24,6 @@ public class Act_IntroMain extends AppCompatActivity {
 
     private ViewsSliderAdapter mAdapter;
     private TextView[] dots;
-    private int[] layouts;
     PrefManager preferenceManager;
 
     ActIntroMainBinding binding;
@@ -34,8 +33,6 @@ public class Act_IntroMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActIntroMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-
-        //init();
 
         mAdapter = new ViewsSliderAdapter();
         binding.introVp.setAdapter(mAdapter);
