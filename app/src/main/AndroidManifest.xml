@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.opticiansitwa">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos"/>
         <activity android:name=".intro.Act_Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

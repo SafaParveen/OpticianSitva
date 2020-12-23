@@ -4,4 +4,16 @@
     <string name="main_text">Lorem ipsum dolor</string>
     <string name="sub_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut.</string>
 
+    <string name="login_as_an">Login as an Optician</string>
+    <string name="optician_si">Optician Sitva</string>
+    <string name="get_started">Get started by creating your account</string>
+    <string name="terms_of_se">Terms of Service.</string>
+    <string name="by_creating">By creating an account, I accept App\'s</string>
+    <string name="sign_Ggl">Sign In With Google</string>
+    <string name="sign_Fb">Sign In With Facebook</string>
+    <string name="sign_Mail">Sign In With Email</string>
+    <string name="Already">Already have an account?</string>
+    <string name="signn">Sign In</string>
+    <string name="save_loc">Save your location</string>
+
 </resources>
