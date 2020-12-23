@@ -121,3 +121,8 @@ public class Act_location extends AppCompatActivity {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }
+
+
+
+
+
