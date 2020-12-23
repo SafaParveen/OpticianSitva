@@ -22,7 +22,15 @@
           }
         },
         {
-          "client_id": "552946857203-dm1nve5kbshahvut0frd3h85nhqdq7jf.apps.googleusercontent.com",
+          "client_id": "552946857203-c523o8peu1v0s5d23v28sn6uf79bn5ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.opticiansitwa",
+            "certificate_hash": "50148fd689934b794c43b0af4f1a45ac67947209"
+          }
+        },
+        {
+          "client_id": "552946857203-d0n7hs4udkj9i92c0mtd0nonf647g2vb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "552946857203-dm1nve5kbshahvut0frd3h85nhqdq7jf.apps.googleusercontent.com",
+              "client_id": "552946857203-d0n7hs4udkj9i92c0mtd0nonf647g2vb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

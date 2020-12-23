@@ -19,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActIntroMainBinding;
 import com.example.opticiansitwa.databinding.FragIntroBinding;
+import com.example.opticiansitwa.login.Act_Login;
 
 public class Act_IntroMain extends AppCompatActivity {
 
@@ -48,7 +49,9 @@ public class Act_IntroMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(Act_IntroMain.this, "Skipping to Login page", Toast.LENGTH_SHORT).show();
+                Intent loginIntent = new Intent(Act_IntroMain.this, Act_Login.class);
+                startActivity(loginIntent);
+                finish();
 
             }
         });
@@ -89,7 +92,10 @@ public class Act_IntroMain extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
 
-                            Toast.makeText(Act_IntroMain.this, "Login page", Toast.LENGTH_SHORT).show();
+                            Intent loginIntent = new Intent(Act_IntroMain.this, Act_Login.class);
+                            startActivity(loginIntent);
+                            finish();
+
 
                         }
                     });
@@ -159,13 +165,7 @@ public class Act_IntroMain extends AppCompatActivity {
                 holder.fragIntroBinding.mainText1.setText(R.string.main_text);
                 holder.fragIntroBinding.subText1.setText(R.string.sub_text);
                 holder.fragIntroBinding.imgIntro1.setImageResource(R.drawable.os_intro_img3);
-                binding.nextBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-
-                    }
-                });
 
 
             }
