@@ -1,6 +1,5 @@
-package com.example.opticiansitwa;
+package com.example.opticiansitwa.login;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -15,7 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-
+import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -32,6 +31,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 public class Act_location extends AppCompatActivity {
+
+
     ActLocationBinding binding;
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "552946857203",
+    "project_id": "optician-sitva-gcp",
+    "storage_bucket": "optician-sitva-gcp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552946857203:android:7dbc77da4423d8e7af3386",
+        "android_client_info": {
+          "package_name": "com.example.opticiansitwa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552946857203-6s617hvtv25vdbco3fg6e3m6qv31n83v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.opticiansitwa",
+            "certificate_hash": "a1dad6d9bb5074df59c87591ba57bab1d6c8aec3"
+          }
+        },
+        {
+          "client_id": "552946857203-c523o8peu1v0s5d23v28sn6uf79bn5ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.opticiansitwa",
+            "certificate_hash": "50148fd689934b794c43b0af4f1a45ac67947209"
+          }
+        },
+        {
+          "client_id": "552946857203-d0n7hs4udkj9i92c0mtd0nonf647g2vb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIWCksP2s566vNyTgQP-EvU0DCyPh0BSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552946857203-d0n7hs4udkj9i92c0mtd0nonf647g2vb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
