@@ -2,6 +2,7 @@ package com.example.opticiansitwa.intro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,10 @@ public class Act_Intro extends AppCompatActivity {
         binding.getstartedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intromain = new Intent(Act_Intro.this,Act_IntroMain.class);
+                startActivity(intromain);
+                finish();
 
             }
         });

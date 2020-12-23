@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">OpticianSitwa</string>
+    <string name="app_name">Optician Sitva</string>
+
+    <string name="main_text">Lorem ipsum dolor</string>
+    <string name="sub_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut.</string>
+
 </resources>
