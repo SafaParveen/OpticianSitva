@@ -8,5 +8,8 @@
     <string name="sign_Ggl">Sign In With Google</string>
     <string name="sign_Fb">Sign In With Facebook</string>
     <string name="sign_Mail">Sign In With Email</string>
+    <string name="Already">Already have an account?</string>
+    <string name="signn">Sign In</string>
+    <string name="save_loc">Save your location</string>
 
 </resources>
