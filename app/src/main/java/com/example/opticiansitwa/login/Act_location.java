@@ -11,12 +11,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +33,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class Act_location extends AppCompatActivity {
 
 
@@ -37,6 +44,10 @@ public class Act_location extends AppCompatActivity {
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     Context context;
+    Geocoder geocoder;
+    List<Address> addresses;
+    String place;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,7 @@ public class Act_location extends AppCompatActivity {
         setContentView(binding.getRoot());
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         client = LocationServices.getFusedLocationProviderClient(this);
+
 
         if (ActivityCompat.checkSelfPermission(Act_location.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -78,11 +90,20 @@ public class Act_location extends AppCompatActivity {
                 if(location!=null)
                 {
 
+//                    LocationRequest locationRequest=new LocationRequest();
+//                    locationRequest.setInterval(10000);
+//                    locationRequest.setFastestInterval(3000);
+//                    locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//                    LocationServices.
 
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
                             LatLng latLng=new LatLng(location.getLatitude(),location.getLongitude());
+
+                            place=getplace(latLng);
+
+                            binding.mapAddress.setText(place);
                             MarkerOptions options=new MarkerOptions().position(latLng).title("You are here").icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.google_map_icon));
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20));
                             googleMap.addMarker(options);
@@ -95,6 +116,24 @@ public class Act_location extends AppCompatActivity {
 
             }
         });
+    }
+
+    private String getplace(LatLng latLng)  {
+        String myCity ="";
+        geocoder = new Geocoder(this,Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String address= addresses.get(0).getAddressLine(0);
+
+        //String loc=addresses.get(0).getAdminArea();
+
+       // myCity=addresses.get(0).getLocality();
+        myCity=address;
+
+        return  myCity;
     }
 
     @Override
