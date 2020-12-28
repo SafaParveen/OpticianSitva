@@ -12,11 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <activity android:name=".opt_login.Act_Opt_Details"></activity>
+        <activity android:name=".opt_login.Act_Opt_Login" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
+
         <activity android:name=".intro.Act_Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.Act_Login"/>
-        <activity android:name=".login.Act_location"/>
-        <activity android:name=".intro.Act_IntroMain"/>
+        <activity android:name=".login.Act_Login" />
+        <activity android:name=".login.Act_location" />
+        <activity android:name=".intro.Act_IntroMain" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -34,22 +39,3 @@
     </application>
 
 </manifest>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

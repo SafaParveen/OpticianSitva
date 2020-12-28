@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLoginBinding;
+import com.example.opticiansitwa.opt_login.Act_Opt_Login;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -40,7 +41,7 @@ import org.json.JSONObject;
 public class Act_Login extends AppCompatActivity {
 
     ActLoginBinding binding;
-    public FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
@@ -66,7 +67,8 @@ public class Act_Login extends AppCompatActivity {
         binding.signFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginButton.performClick();
+//                loginButton.performClick();
+                Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,6 +112,18 @@ public class Act_Login extends AppCompatActivity {
 
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+
+
+            }
+        });
+
+        binding.loginAsAn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent optLogin = new Intent(Act_Login.this, Act_Opt_Login.class);
+                startActivity(optLogin);
+
 
 
             }
@@ -219,8 +233,9 @@ public class Act_Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
-//                            Intent locationIntent = new Intent(Act_Login.this,Act_location.class);
-//                            startActivity(locationIntent);
+                            Intent locationIntent = new Intent(Act_Login.this,Act_location.class);
+                            startActivity(locationIntent);
+                            finish();
 
                         }
                         else
