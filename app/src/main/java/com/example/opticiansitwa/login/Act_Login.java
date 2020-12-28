@@ -37,6 +37,8 @@ public class Act_Login extends AppCompatActivity {
         binding = ActLoginBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
+
+
         binding.signGgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
