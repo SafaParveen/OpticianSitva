@@ -60,10 +60,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
     implementation 'com.facebook.android:facebook-login:[8.1)'
     implementation 'com.google.firebase:firebase-auth'
-
-
-
-
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
 }

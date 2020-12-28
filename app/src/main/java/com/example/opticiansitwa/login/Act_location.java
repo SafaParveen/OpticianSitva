@@ -90,12 +90,6 @@ public class Act_location extends AppCompatActivity {
                 if(location!=null)
                 {
 
-//                    LocationRequest locationRequest=new LocationRequest();
-//                    locationRequest.setInterval(10000);
-//                    locationRequest.setFastestInterval(3000);
-//                    locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//                    LocationServices.
-
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(GoogleMap googleMap) {

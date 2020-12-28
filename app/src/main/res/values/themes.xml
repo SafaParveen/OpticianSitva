@@ -22,4 +22,13 @@
 
     </style>
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"></style>
+
+    <!-- Bottom Navigation . -->
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+
 </resources>
