@@ -12,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos"/>
         <activity android:name=".intro.Act_Intro">
@@ -24,9 +27,29 @@
         <activity android:name=".login.Act_Login"/>
         <activity android:name=".login.Act_location"/>
         <activity android:name=".intro.Act_IntroMain"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
