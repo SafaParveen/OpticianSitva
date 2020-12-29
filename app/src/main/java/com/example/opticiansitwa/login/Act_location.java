@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,8 +17,11 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
+import com.example.opticiansitwa.opt_login.Act_Opt_Details;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -46,7 +50,8 @@ public class Act_location extends AppCompatActivity {
     Context context;
     Geocoder geocoder;
     List<Address> addresses;
-    String place;
+    String place,loc,cou,city,fulladdr;
+    Bundle bundle;
 
 
     @Override
@@ -54,6 +59,10 @@ public class Act_location extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActLocationBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+        bundle = getIntent().getExtras();
+
+
+
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         client = LocationServices.getFusedLocationProviderClient(this);
 
@@ -69,18 +78,39 @@ public class Act_location extends AppCompatActivity {
 
         }
 
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(bundle!=null) {
+
+                    if (bundle.getInt("status") == 1) {
+
+
+                        Intent optdetailsIntent = new Intent(Act_location.this, Act_Opt_Details.class);
+                        optdetailsIntent.putExtra("city",city);
+                        optdetailsIntent.putExtra("state",loc);
+                        optdetailsIntent.putExtra("country",cou);
+                        optdetailsIntent.putExtra("address",fulladdr);
+                        startActivity(optdetailsIntent);
+                        finish();
+
+
+                    }
+
+                }
+
+
+
+            }
+        });
+
 
     }
 
     private void getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         Task<Location> task = client.getLastLocation();
@@ -122,7 +152,17 @@ public class Act_location extends AppCompatActivity {
         }
         String address= addresses.get(0).getAddressLine(0);
 
-        //String loc=addresses.get(0).getAdminArea();
+
+
+
+                 loc=addresses.get(0).getAdminArea();
+                 city= addresses.get(0).getLocality();
+                 cou = addresses.get(0).getCountryName();
+                 fulladdr = addresses.get(0).getAddressLine(0);
+
+
+
+
 
        // myCity=addresses.get(0).getLocality();
         myCity=address;

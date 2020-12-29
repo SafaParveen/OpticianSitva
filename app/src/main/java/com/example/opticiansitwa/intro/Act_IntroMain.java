@@ -43,7 +43,7 @@ public class Act_IntroMain extends AppCompatActivity {
 //            launchHomeScreen();
 //            finish();
 //        }
-//
+
 
         binding.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +133,7 @@ public class Act_IntroMain extends AppCompatActivity {
 
 //    private void launchHomeScreen() {
 //        preferenceManager.setFirstTimeLaunch(false);
-//        startActivity(new Intent(Act_IntroMain.this, Act_Intro.class));
+//        startActivity(new Intent(Act_IntroMain.this, Act_Login.class));
 //        finish();
 //    }
 
