@@ -21,6 +21,8 @@ import android.view.View;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
+import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Details;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -36,6 +38,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,6 +52,7 @@ public class Act_location extends AppCompatActivity {
 
 
     ActLocationBinding binding;
+    User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     Context context;
@@ -52,6 +60,9 @@ public class Act_location extends AppCompatActivity {
     List<Address> addresses;
     String place,loc,cou,city,fulladdr;
     Bundle bundle;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser current = mAuth.getCurrentUser();
 
 
     @Override
@@ -96,6 +107,18 @@ public class Act_location extends AppCompatActivity {
                         finish();
 
 
+                    }
+
+                    else
+                    {
+
+
+//                        User user = new User(userInfo.name,userInfo.email,userInfo.pro_pic,"","",fulladdr,"","");
+                        User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","",fulladdr,"","");
+                        db.collection("user").document(current.getUid()).set(user);
+                        Intent userHome = new Intent(Act_location.this,Act_doctor_details.class);
+                        startActivity(userHome);
+                        finish();
                     }
 
                 }

@@ -25,7 +25,6 @@ public class Act_IntroMain extends AppCompatActivity {
 
     private ViewsSliderAdapter mAdapter;
     private TextView[] dots;
-    PrefManager preferenceManager;
 
     ActIntroMainBinding binding;
 
@@ -37,12 +36,6 @@ public class Act_IntroMain extends AppCompatActivity {
 
         mAdapter = new ViewsSliderAdapter();
         binding.introVp.setAdapter(mAdapter);
-
-//        preferenceManager = new PrefManager(this);
-//        if (!preferenceManager.isFirstTimeLaunch()) {
-//            launchHomeScreen();
-//            finish();
-//        }
 
 
         binding.skipBtn.setOnClickListener(new View.OnClickListener() {
@@ -130,12 +123,6 @@ public class Act_IntroMain extends AppCompatActivity {
         if (dots.length > 0)
             dots[currentPage].setTextColor(getResources().getColor(R.color.dotActive));
     }
-
-//    private void launchHomeScreen() {
-//        preferenceManager.setFirstTimeLaunch(false);
-//        startActivity(new Intent(Act_IntroMain.this, Act_Login.class));
-//        finish();
-//    }
 
 
     public class ViewsSliderAdapter extends RecyclerView.Adapter<Act_IntroMain.IntroViewHolder> {

@@ -70,7 +70,7 @@ public class Act_SplashScreen extends AppCompatActivity {
                         user.pro_pic = current.getPhotoUrl().toString();
                         user.uid = current.getUid();
                         EventBus.getDefault().postSticky(user);
-                        Intent i = new Intent(Act_SplashScreen.this, Act_location.class);
+                        Intent i = new Intent(Act_SplashScreen.this, Act_Pending_Approval.class);
                         i.putExtra("status",1);
                         startActivity(i);
                         finish();
