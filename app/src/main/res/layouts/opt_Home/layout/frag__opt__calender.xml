@@ -6,15 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".opt_Home.Frag_Opt_Calender">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="291dp"
-        android:text="Calender"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+   <com.github.jhonnyx2012.horizontalpicker.HorizontalPicker
+       android:id="@+id/datePicker"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="30dp"
+       android:layout_marginTop="70dp"
+       android:layout_marginEnd="30dp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

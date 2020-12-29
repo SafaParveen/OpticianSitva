@@ -10,19 +10,28 @@
     <color name="white">#FFFFFFFF</color>
 
 
-
-    <color name="blue1">#9FBFF4</color>
     <color name="blue">#007AFE</color>
+    <color name="blue1">#9FBFF4</color>
+    <color name="blue2">#EDF1FA</color>
+    <color name="blue3">#4B7FFB</color>
+
     
     <color name="orange">#EF716B</color>
 
 
     <color name="green">#6AEE67</color>
+    <color name="green1">#34C47C</color>
+
 
     <color name="grey">#A0A3A9</color>
 
     <color name="dotInactive">#E5E8EE</color>
     <color name="dotActive">#701BC8</color>
+
+    <color name="Red1">#932D2D</color>
+    <color name="yellow1">#83761E</color>
+
+
 
 
 
