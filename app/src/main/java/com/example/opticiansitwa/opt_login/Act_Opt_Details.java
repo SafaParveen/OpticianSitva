@@ -80,7 +80,7 @@ public class Act_Opt_Details extends AppCompatActivity {
 
                 Toast.makeText(Act_Opt_Details.this, "Request Sent!", Toast.LENGTH_SHORT).show();
 
-                Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,"178",appr_img1,"","",addr,"","",0,0L,0L,0L,0L,0L,0L);
+                Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,"178",appr_img1,"","",addr,"","","0",0L,0L,0L,0L,0L,0L);
                 db.collection("doctor").document(userInfo.uid).set(doctor);
                 Intent apprIntent = new Intent(Act_Opt_Details.this,Act_Pending_Approval.class);
                 startActivity(apprIntent);

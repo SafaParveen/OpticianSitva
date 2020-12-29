@@ -12,7 +12,7 @@ public class Doctor {
     public String age;
     public String id_proof_url_1;
     public String id_proof_url_2;
-    public int status;
+    public String status;
     public Long morning_start_epoch;
     public Long morning_end_epoch;
     public Long afternoon_start_epoch;
@@ -21,7 +21,7 @@ public class Doctor {
     public Long evening_end_epoch;
 
 
-    public Doctor(String name, String email, String profile_pic, String location_x, String id_proof_url_1, String id_proof_url_2, String location_y, String address_google_map, String ssn, String age, int status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch) {
+    public Doctor(String name, String email, String profile_pic, String location_x, String id_proof_url_1, String id_proof_url_2, String location_y, String address_google_map, String ssn, String age, String status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch) {
         this.name = name;
         this.email = email;
         this.profile_pic = profile_pic;
