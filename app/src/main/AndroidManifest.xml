@@ -12,13 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <activity android:name=".opt_login.Act_Pending_Approval"></activity>
-        <activity android:name=".intro.Act_SplashScreen" >
+        <activity android:name=".home.Act_Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".opt_login.Act_Pending_Approval" />
+        <activity android:name=".intro.Act_SplashScreen">
+
         </activity>
         <activity android:name=".opt_login.Act_Opt_Details" />
         <activity android:name=".opt_login.Act_Opt_Login" />
@@ -30,8 +33,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
 
-        <activity android:name=".intro.Act_Intro">
-        </activity>
+        <activity android:name=".intro.Act_Intro"></activity>
         <activity android:name=".login.Act_Login" />
         <activity android:name=".login.Act_location" />
         <activity android:name=".intro.Act_IntroMain" />
