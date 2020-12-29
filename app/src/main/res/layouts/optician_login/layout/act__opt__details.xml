@@ -27,24 +27,222 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/reqappr_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/profile_logo_v2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/home_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
+            <EditText
+                android:id="@+id/opt_name1"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPersonName"
+                android:paddingStart="5dp"
+                android:text="Jonathan Idiculla"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
+            <EditText
+                android:id="@+id/opt_addr1"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:enabled="false"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPersonName"
+                android:paddingStart="5dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/opt_addr2"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+            <EditText
+                android:id="@+id/opt_addr2"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:enabled="false"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPersonName"
+                android:paddingStart="5dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/opt_addr3"
+                app:layout_constraintStart_toStartOf="@+id/opt_addr1"
+                app:layout_constraintTop_toBottomOf="@+id/opt_addr1" />
+
+            <EditText
+                android:id="@+id/opt_addr3"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:enabled="false"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPersonName"
+                android:paddingStart="5dp"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/opt_addr2"
+                app:layout_constraintTop_toBottomOf="@+id/opt_addr2" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Name"
+                android:textColor="#2D0C57"
+                app:layout_constraintBottom_toTopOf="@+id/opt_name1"
+                app:layout_constraintEnd_toEndOf="@+id/opt_name1"
+                app:layout_constraintHorizontal_bias="0.043"
+                app:layout_constraintStart_toStartOf="@+id/opt_name1" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Address Line 1"
+                android:textColor="#2D0C57"
+                app:layout_constraintBottom_toTopOf="@+id/opt_addr1"
+                app:layout_constraintEnd_toEndOf="@+id/opt_addr1"
+                app:layout_constraintHorizontal_bias="0.059"
+                app:layout_constraintStart_toStartOf="@+id/opt_addr1" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Address Line 3"
+                android:textColor="#2D0C57"
+                app:layout_constraintBottom_toTopOf="@+id/opt_addr3"
+                app:layout_constraintEnd_toEndOf="@+id/opt_addr3"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintStart_toStartOf="@+id/opt_addr3" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Address Line 2"
+                android:textColor="#2D0C57"
+                app:layout_constraintBottom_toTopOf="@+id/opt_addr2"
+                app:layout_constraintEnd_toEndOf="@+id/opt_addr2"
+                app:layout_constraintHorizontal_bias="0.06"
+                app:layout_constraintStart_toStartOf="@+id/opt_addr2" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="56dp"
+                android:fontFamily="@font/poppins"
+                android:text="Photo"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/opt_addr3" />
+
+            <TextView
+                android:id="@+id/upload_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/poppins"
+                android:text="UPLOAD"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView12"
+                app:layout_constraintVertical_bias="0.466" />
+
+            <ImageView
+                android:id="@+id/upload_image"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="30dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                app:layout_constraintVertical_bias="0.0"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminateTint="#2D0C57"
+                app:layout_constraintBottom_toBottomOf="@+id/upload_image"
+                app:layout_constraintEnd_toEndOf="@+id/upload_image"
+                app:layout_constraintStart_toStartOf="@+id/upload_image"
+                app:layout_constraintTop_toTopOf="@+id/upload_image" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/reqappr_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

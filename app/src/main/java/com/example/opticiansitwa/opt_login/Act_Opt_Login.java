@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class Act_Opt_Login extends AppCompatActivity {
 
     ActOptLoginBinding binding;
@@ -46,6 +49,12 @@ public class Act_Opt_Login extends AppCompatActivity {
         binding.signGgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences sharedPref = getSharedPreferences("version", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("type", 1);
+                editor.apply();
+
 
                 GoogleSignInOptions gso1 = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestEmail()
@@ -108,6 +117,7 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                             Toast.makeText(Act_Opt_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Opt_Login.this, Act_location.class);
+                            locationIntent.putExtra("status",1);
                             startActivity(locationIntent);
                             finish();
 
