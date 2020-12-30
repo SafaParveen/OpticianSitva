@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <activity android:name=".login.Act_User_Calender"></activity>
-        <activity android:name=".login.Act_doctor_details" />
+        <activity android:name=".home.Act_User_Calender"></activity>
+        <activity android:name=".home.Act_doctor_details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
         <activity android:name=".intro.Act_SplashScreen">
         </activity>

@@ -22,12 +22,11 @@ import android.view.View;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
 import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.home.Act_doctor_details;
 import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Details;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -116,7 +115,7 @@ public class Act_location extends AppCompatActivity {
 //                        User user = new User(userInfo.name,userInfo.email,userInfo.pro_pic,"","",fulladdr,"","");
                         User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","",fulladdr,"","");
                         db.collection("user").document(current.getUid()).set(user);
-                        Intent userHome = new Intent(Act_location.this,Act_doctor_details.class);
+                        Intent userHome = new Intent(Act_location.this, Act_doctor_details.class);
                         startActivity(userHome);
                         finish();
                     }

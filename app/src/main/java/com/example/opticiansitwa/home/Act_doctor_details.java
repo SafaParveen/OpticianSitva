@@ -1,26 +1,26 @@
-package com.example.opticiansitwa.login;
+package com.example.opticiansitwa.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActDoctorDetailsBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class Act_doctor_details extends AppCompatActivity {
+
 
     ActDoctorDetailsBinding binding;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
@@ -53,7 +53,9 @@ public class Act_doctor_details extends AppCompatActivity {
                         public void onClick(View view) {
 
                             Toast.makeText(Act_doctor_details.this, "Choose slot time", Toast.LENGTH_SHORT).show();
-                            
+                            Intent slotIntent = new Intent(Act_doctor_details.this,Act_User_Calender.class);
+                            startActivity(slotIntent);
+
                         }
                     });
 
