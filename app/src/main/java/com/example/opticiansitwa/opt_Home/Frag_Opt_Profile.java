@@ -106,8 +106,6 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.ssn.setEnabled(true);
                     binding.email.setEnabled(true);
 
-
-
                 }
 
             }

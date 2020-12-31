@@ -25,12 +25,14 @@ public class Act_doctor_details extends AppCompatActivity {
     ActDoctorDetailsBinding binding;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActDoctorDetailsBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+        uid = getIntent().getStringExtra("uid");
 
         db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
