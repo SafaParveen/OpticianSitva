@@ -33,7 +33,7 @@ import org.greenrobot.eventbus.EventBus;
 public class Act_Opt_Login extends AppCompatActivity {
 
     ActOptLoginBinding binding;
-    FirebaseAuth mAuth;
+    FirebaseAuth mAuth1;
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 123;
 
@@ -43,7 +43,7 @@ public class Act_Opt_Login extends AppCompatActivity {
         binding = ActOptLoginBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth1 = FirebaseAuth.getInstance();
 
 
         binding.signGgl.setOnClickListener(new View.OnClickListener() {
@@ -109,13 +109,13 @@ public class Act_Opt_Login extends AppCompatActivity {
     private void firebaseAuthGoogle(String idToken) {
 
         AuthCredential cred = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(cred)
+        mAuth1.signInWithCredential(cred)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            Toast.makeText(Act_Opt_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Act_Opt_Login.this, "Opt Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Opt_Login.this, Act_location.class);
                             locationIntent.putExtra("status",1);
                             startActivity(locationIntent);

@@ -59,7 +59,7 @@ public class Act_Home extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent1 = new Intent(getApplicationContext(), Act_Opt_Home.class);
+                        Intent intent1 = new Intent(getApplicationContext(), Act_doctor_details.class);
                         intent1.putExtra("uid", doctorList.get(position).getId());
                         startActivity(intent1);
 
