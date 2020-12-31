@@ -28,6 +28,8 @@ public class Act_User_Calender extends AppCompatActivity {
     String[] days = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     ArrayList<String> calenderList = new ArrayList<String>();
 
+    int selectedIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +100,6 @@ public class Act_User_Calender extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull CalenderViewHolder holder, int position) {
 
-                final int[] selectedIndex = new int[1];
 
                 holder.scalenderViewBinding.dateSelected.setText(calenderList.get(position).split("_")[0]);
                 holder.scalenderViewBinding.daySelected.setText(calenderList.get(position).split("_")[1]);
@@ -107,26 +108,17 @@ public class Act_User_Calender extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        selectedIndex[0] = position;
-
-
+                        selectedIndex = position;
                         notifyDataSetChanged();
-
-
 
                     }
                 });
 
-                if(selectedIndex[0]==position)
+                if(selectedIndex==position)
                 {
-
-
-
-                    holder.scalenderViewBinding.daySelected.setTextColor(Color.parseColor("#aaaaaa"));
-                    holder.scalenderViewBinding.dateSelected.setTextColor(Color.parseColor("#000000"));
-                    holder.scalenderViewBinding.selectedRvItem.setBackgroundColor(Color.parseColor("#ffffff"));
-
-
+                    holder.scalenderViewBinding.daySelected.setTextColor(Color.parseColor("#ffffff"));
+                    holder.scalenderViewBinding.dateSelected.setTextColor(Color.parseColor("#ffffff"));
+                    holder.scalenderViewBinding.selectedRvItem.setBackgroundResource(R.drawable.blue_roundcorner);
                 }
 
                 else
@@ -135,10 +127,7 @@ public class Act_User_Calender extends AppCompatActivity {
                     holder.scalenderViewBinding.dateSelected.setTextColor(Color.parseColor("#000000"));
                     holder.scalenderViewBinding.selectedRvItem.setBackgroundColor(Color.parseColor("#ffffff"));
 
-
                 }
-
-
 
             }
 

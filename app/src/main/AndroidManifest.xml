@@ -16,6 +16,12 @@
         <activity android:name=".home.Act_doctor_details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
         <activity android:name=".intro.Act_SplashScreen">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".opt_login.Act_Opt_Details" />
         <activity android:name=".opt_login.Act_Opt_Login" />
@@ -29,11 +35,7 @@
 
         <activity android:name=".intro.Act_Intro" />
         <activity android:name=".login.Act_Login" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity android:name=".login.Act_location" />
         <activity android:name=".intro.Act_IntroMain" />
