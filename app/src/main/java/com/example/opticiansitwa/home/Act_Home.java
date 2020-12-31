@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActHomeBinding;
 import com.example.opticiansitwa.databinding.ActIntroBinding;
 import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
+import com.example.opticiansitwa.opt_Home.Act_Opt_Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -49,7 +53,18 @@ public class Act_Home extends AppCompatActivity {
             public void onBindViewHolder(@NonNull docList_ViewHolder holder, int position) {
 
                holder.dbinding.DocName.setText(String.valueOf(doctorList.get(position).getData().get("name")));
-              // holder.dbinding.profilePic.setText(String.valueOf(DoctorList.get(position).getData().get("email")));
+                Glide.with(getApplicationContext()).load(doctorList.get(position).get("profile_pic")).into(holder.dbinding.profilePic);
+
+                holder.dbinding.open.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent1 = new Intent(getApplicationContext(), Act_Opt_Home.class);
+                        intent1.putExtra("uid", doctorList.get(position).getId());
+                        startActivity(intent1);
+
+                    }
+                });
 
             }
 

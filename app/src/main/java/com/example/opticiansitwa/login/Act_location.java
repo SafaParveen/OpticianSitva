@@ -22,6 +22,7 @@ import android.view.View;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
 import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.home.Act_Home;
 import com.example.opticiansitwa.home.Act_doctor_details;
 import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Details;
@@ -94,7 +95,7 @@ public class Act_location extends AppCompatActivity {
 
                 if(bundle!=null) {
 
-                    if (bundle.getInt("status") == 1) {
+                    if(bundle.getInt("status") == 1) {
 
 
                         Intent optdetailsIntent = new Intent(Act_location.this, Act_Opt_Details.class);
@@ -115,7 +116,7 @@ public class Act_location extends AppCompatActivity {
 //                        User user = new User(userInfo.name,userInfo.email,userInfo.pro_pic,"","",fulladdr,"","");
                         User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","",fulladdr,"","");
                         db.collection("user").document(current.getUid()).set(user);
-                        Intent userHome = new Intent(Act_location.this, Act_doctor_details.class);
+                        Intent userHome = new Intent(Act_location.this, Act_Home.class);
                         startActivity(userHome);
                         finish();
                     }

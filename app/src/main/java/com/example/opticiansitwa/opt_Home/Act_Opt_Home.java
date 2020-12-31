@@ -3,14 +3,32 @@ package com.example.opticiansitwa.opt_Home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.opticiansitwa.R;
+import com.example.opticiansitwa.databinding.ActHomeBinding;
 import com.example.opticiansitwa.databinding.ActOptHomeBinding;
+import com.example.opticiansitwa.databinding.AppointmentRecyclerviewBinding;
+import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
+import com.example.opticiansitwa.databinding.FragOptAppointmentBinding;
+import com.example.opticiansitwa.home.Act_Home;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Act_Opt_Home extends AppCompatActivity {
 
@@ -18,6 +36,7 @@ public class Act_Opt_Home extends AppCompatActivity {
 
     ActOptHomeBinding binding;
     Fragment selectedFragment = new Frag_Opt_Appointment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +69,7 @@ public class Act_Opt_Home extends AppCompatActivity {
                 return true;
             }
         });
-
-
     }
+
+
 }
