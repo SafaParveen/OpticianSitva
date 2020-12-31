@@ -15,6 +15,7 @@
         <activity android:name=".home.Act_User_Calender"></activity>
         <activity android:name=".home.Act_doctor_details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
+        <activity android:name=".opt_Home.Act_Opt_Home"/>
         <activity android:name=".intro.Act_SplashScreen">
 
             <intent-filter>
@@ -39,7 +40,7 @@
         </activity>
         <activity android:name=".login.Act_location" />
         <activity android:name=".intro.Act_IntroMain" />
-        <activity android:name=".opt_Home.Act_Opt_Home" />
+        <activity android:name=".home.Act_Home" />
 
         <meta-data
             android:name="preloaded_fonts"

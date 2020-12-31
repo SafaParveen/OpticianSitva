@@ -15,6 +15,7 @@ import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.home.Act_Home;
 import com.example.opticiansitwa.login.Act_Login;
 import com.example.opticiansitwa.login.Act_location;
+import com.example.opticiansitwa.opt_Home.Act_Opt_Home;
 import com.example.opticiansitwa.opt_login.Act_Opt_Details;
 import com.example.opticiansitwa.opt_login.Act_Pending_Approval;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +72,7 @@ public class Act_SplashScreen extends AppCompatActivity {
                         user.pro_pic = current.getPhotoUrl().toString();
                         user.uid = current.getUid();
                         EventBus.getDefault().postSticky(user);
-                        Intent i = new Intent(Act_SplashScreen.this, Act_Pending_Approval.class);
+                        Intent i = new Intent(Act_SplashScreen.this, Act_Opt_Home.class);
                         i.putExtra("status",1);
                         startActivity(i);
                         finish();

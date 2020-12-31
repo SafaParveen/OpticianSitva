@@ -3,6 +3,7 @@ package com.example.opticiansitwa.opt_Home;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +52,10 @@ public class Frag_Opt_Appointment extends Fragment {
 
                if(appointList.get(position).get("approve_status").equals("0"))
                {
-                   holder.Abinding.AppointmentRv.setBackgroundColor(Color.parseColor("#FFE68989"));
+                   holder.Abinding.AppointmentRv.setBackgroundResource(R.drawable.red_approval);
+                   holder.Abinding.dateConstraint.setBackgroundResource(R.drawable.red_date);
+                   holder.Abinding.date.setTextColor(ContextCompat.getColor(getContext(),R.color.Red1));
+                   holder.Abinding.month.setTextColor(ContextCompat.getColor(getContext(),R.color.Red1));
                    holder.Abinding.approvalPendingText.setVisibility(View.VISIBLE);
                    holder.Abinding.pendingPayText.setVisibility(View.INVISIBLE);
                    holder.Abinding.approvedTick.setVisibility(View.INVISIBLE);
@@ -60,7 +64,10 @@ public class Frag_Opt_Appointment extends Fragment {
 
                }
                else if(appointList.get(position).get("approve_status").equals("1")){
-                   holder.Abinding.AppointmentRv.setBackgroundColor(Color.parseColor("#FF96E499"));
+                   holder.Abinding.AppointmentRv.setBackgroundResource(R.drawable.yellow_approval);
+                   holder.Abinding.dateConstraint.setBackgroundResource(R.drawable.yellow_date);
+                   holder.Abinding.date.setTextColor(ContextCompat.getColor(getContext(),R.color.yellow1));
+                   holder.Abinding.month.setTextColor(ContextCompat.getColor(getContext(),R.color.yellow1));
                    holder.Abinding.pendingPayText.setVisibility(View.VISIBLE);
                    holder.Abinding.approvalPendingText.setVisibility(View.INVISIBLE);
                    holder.Abinding.approvedTick.setVisibility(View.INVISIBLE);
@@ -68,7 +75,10 @@ public class Frag_Opt_Appointment extends Fragment {
 
                }
                else if(appointList.get(position).get("approve_status").equals("2")){
-                   holder.Abinding.AppointmentRv.setBackgroundColor(Color.parseColor("#83761E"));
+                   holder.Abinding.AppointmentRv.setBackgroundResource(R.drawable.light_green_bg);
+                   holder.Abinding.dateConstraint.setBackgroundResource(R.drawable.green_date);
+                   holder.Abinding.date.setTextColor(ContextCompat.getColor(getContext(),R.color.blue3));
+                   holder.Abinding.month.setTextColor(ContextCompat.getColor(getContext(),R.color.blue3));
                    holder.Abinding.pendingPayText.setVisibility(View.INVISIBLE);
                    holder.Abinding.approvalPendingText.setVisibility(View.INVISIBLE);
                    holder.Abinding.approvedTick.setVisibility(View.VISIBLE);
