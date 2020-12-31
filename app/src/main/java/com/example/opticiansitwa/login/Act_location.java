@@ -18,6 +18,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
@@ -120,6 +121,13 @@ public class Act_location extends AppCompatActivity {
                         startActivity(userHome);
                         finish();
                     }
+
+                }
+
+                else
+                {
+                    Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
+
 
                 }
 
