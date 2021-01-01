@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
+import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.home.Act_Home;
 import com.example.opticiansitwa.home.Act_doctor_details;
@@ -54,6 +55,8 @@ public class Act_location extends AppCompatActivity {
 
     ActLocationBinding binding;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
+
+    Location_info location_info = new Location_info();
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     Context context;
@@ -115,6 +118,8 @@ public class Act_location extends AppCompatActivity {
 
 
 //                        User user = new User(userInfo.name,userInfo.email,userInfo.pro_pic,"","",fulladdr,"","");
+                        location_info.addr = fulladdr;
+                        EventBus.getDefault().postSticky(location_info);
                         User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","",fulladdr,"","");
                         db.collection("user").document(current.getUid()).set(user);
                         Intent userHome = new Intent(Act_location.this, Act_Home.class);

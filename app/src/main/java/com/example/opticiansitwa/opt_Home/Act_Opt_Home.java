@@ -44,6 +44,8 @@ public class Act_Opt_Home extends AppCompatActivity {
         binding = ActOptHomeBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
+
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
         binding.botnav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

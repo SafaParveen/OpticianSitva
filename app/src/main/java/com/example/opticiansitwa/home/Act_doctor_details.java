@@ -14,10 +14,14 @@ import com.example.opticiansitwa.databinding.ActDoctorDetailsBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Act_doctor_details extends AppCompatActivity {
 
@@ -33,38 +37,36 @@ public class Act_doctor_details extends AppCompatActivity {
         binding = ActDoctorDetailsBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
         uid = getIntent().getStringExtra("uid");
+//        for(DocumentSnapshot doc: userInfo.doctorsList){
+//            if(doc.getId().equals(uid)){
+//
+//                cart = (ArrayList<Map<String, String>>) doc.getData().get("myproducts");
+//            }
+//        }
 
-        db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("doctor").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                if(task.isSuccessful())
-                {
-
-                    for(int i=0;i<task.getResult().getDocuments().size();i++)
-                    {
-
-                        binding.docName.setText(task.getResult().getDocuments().get(i).get("name").toString());
-                        Glide.with(getApplicationContext()).load(task.getResult().getDocuments().get(i).get("profile_pic")).into(binding.docImage);
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
 
-                    }
-                    
+                binding.docName.setText(task.getResult().getData().get("name").toString());
+                Glide.with(getApplicationContext()).load(task.getResult().getData().get("profile_pic")).into(binding.docImage);
+
+
                     binding.makeApptBtn1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                @Override
+                public void onClick(View view) {
 
-                            Toast.makeText(Act_doctor_details.this, "Choose slot time", Toast.LENGTH_SHORT).show();
-                            Intent slotIntent = new Intent(Act_doctor_details.this,Act_User_Calender.class);
-                            startActivity(slotIntent);
-
-                        }
-                    });
-
+                    Toast.makeText(Act_doctor_details.this, "Choose slot time", Toast.LENGTH_SHORT).show();
+                    Intent slotIntent = new Intent(Act_doctor_details.this,Act_User_Calender.class);
+                    slotIntent.putExtra("uid", uid);
+                    startActivity(slotIntent);
 
                 }
+            });
 
-            }
+
+        }
         });
 
 

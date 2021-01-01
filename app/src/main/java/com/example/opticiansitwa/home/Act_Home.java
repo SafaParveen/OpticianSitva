@@ -16,9 +16,13 @@ import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActHomeBinding;
 import com.example.opticiansitwa.databinding.ActIntroBinding;
 import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
+import com.example.opticiansitwa.global_data.Location_info;
+import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.opt_Home.Act_Opt_Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,11 +38,19 @@ public class Act_Home extends AppCompatActivity {
     ActHomeBinding binding;
     RecyclerView.Adapter<Act_Home.docList_ViewHolder> DocListAdapter;
     List<DocumentSnapshot> doctorList = new ArrayList<>();
+    Location_info locationInfo = EventBus.getDefault().getStickyEvent(Location_info.class);
+    User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
+    FirebaseAuth mAuth =FirebaseAuth.getInstance();
+    FirebaseUser current = mAuth.getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActHomeBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+
+        binding.Address.setText(locationInfo.addr);
+        Glide.with(this).load(current.getPhotoUrl().toString()).into(binding.profileImage);
 
 
         DocListAdapter=new RecyclerView.Adapter<docList_ViewHolder>() {
@@ -55,11 +67,11 @@ public class Act_Home extends AppCompatActivity {
                holder.dbinding.DocName.setText(String.valueOf(doctorList.get(position).getData().get("name")));
                 Glide.with(getApplicationContext()).load(doctorList.get(position).get("profile_pic")).into(holder.dbinding.profilePic);
 
-                holder.dbinding.open.setOnClickListener(new View.OnClickListener() {
+                holder.dbinding.DoctorRv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent1 = new Intent(getApplicationContext(), Act_doctor_details.class);
+                        Intent intent1 = new Intent(Act_Home.this, Act_doctor_details.class);
                         intent1.putExtra("uid", doctorList.get(position).getId());
                         startActivity(intent1);
 
@@ -77,10 +89,11 @@ public class Act_Home extends AppCompatActivity {
         db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if(task.isSuccessful()){
+
                     doctorList = task.getResult().getDocuments();
                     DocListAdapter.notifyDataSetChanged();
-
 
                 }
             }

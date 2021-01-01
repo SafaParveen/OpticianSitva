@@ -7,7 +7,7 @@ public class Appointment {
     public String user_id;
     public String doctor_id;
     public String appointment_id;
-    public String epoch;
+    public Long epoch;
     public String approve_status;
     public String test_status;
     public String rating;
@@ -20,7 +20,7 @@ public class Appointment {
     public String cancel_status;
     public String review;
 
-    public Appointment(String user_id, String doctor_id, String appointment_id, String epoch, String approve_status, String test_status, String rating, String user_complaint, String video_url, Map<String, String> test_report, String cost, String invoice_url, String note_from_doctor, String cancel_status, String review) {
+    public Appointment(String user_id, String doctor_id, String appointment_id, Long epoch, String approve_status, String test_status, String rating, String user_complaint, String video_url, Map<String, String> test_report, String cost, String invoice_url, String note_from_doctor, String cancel_status, String review) {
         this.user_id = user_id;
         this.doctor_id = doctor_id;
         this.appointment_id = appointment_id;

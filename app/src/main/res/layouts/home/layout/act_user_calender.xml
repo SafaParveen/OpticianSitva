@@ -8,115 +8,287 @@
     android:background="@color/white">
 
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/poppins"
-        android:text="Choose your slot"
-        android:textColor="@color/grey"
-        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:background="#eee"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calender_rv"
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins"
+            android:text="Choose your slot"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calender_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/make_appt_btn2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="Morning"
+                android:textColor="#555"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/time_m1"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="10:00AM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/time_m2"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="11:00AM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/time_m1"
+                app:layout_constraintTop_toTopOf="@+id/time_m1" />
+
+            <TextView
+                android:id="@+id/time_m3"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="12:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/time_m2"
+                app:layout_constraintTop_toTopOf="@+id/time_m1" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins"
+                android:text="Afternoon"
+                android:textColor="#555"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time_m1" />
+
+            <TextView
+                android:id="@+id/time_a1"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="01:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+            <TextView
+                android:id="@+id/time_a2"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="02:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/time_a1"
+                app:layout_constraintTop_toTopOf="@+id/time_a1" />
+
+            <TextView
+                android:id="@+id/time_a3"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="03:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/time_a2"
+                app:layout_constraintTop_toTopOf="@+id/time_a1" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppins"
+                android:text="Evening"
+                android:textColor="#555"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time_a4" />
+
+            <TextView
+                android:id="@+id/time_e1"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="05:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+            <TextView
+                android:id="@+id/time_e2"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="06:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/time_e1"
+                app:layout_constraintStart_toEndOf="@+id/time_e1"
+                app:layout_constraintTop_toTopOf="@+id/time_e1" />
+
+            <TextView
+                android:id="@+id/time_e3"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="07:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/time_e2"
+                app:layout_constraintStart_toEndOf="@+id/time_e2"
+                app:layout_constraintTop_toTopOf="@+id/time_e1" />
+
+            <TextView
+                android:id="@+id/time_a4"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="04:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time_a1" />
+
+            <TextView
+                android:id="@+id/time_e4"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/grey_button1"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="08:00PM"
+                android:textColor="#555"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time_e1" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/make_appt_btn2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/blue_button"
+        android:fontFamily="@font/poppins"
+        android:text="Make an Appointment"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calender_rv" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toTopOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toTopOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView21"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView22"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 </androidx.constraintlayout.widget.ConstraintLayout>
