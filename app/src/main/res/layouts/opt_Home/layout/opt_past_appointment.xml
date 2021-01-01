@@ -5,32 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".opt_Home.Frag_Opt_Appointment">
+    tools:context=".opt_Home.opt_past_appointment">
 
     <TextView
-        android:id="@+id/upcoming_ap"
+        android:id="@+id/past_ap"
         android:layout_width="216dp"
         android:layout_height="23dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="38dp"
         android:fontFamily="@font/open_sans"
         android:lineSpacingExtra="2sp"
-        android:text="Upcoming Appointments"
+        android:text="Past Appointments"
         android:textColor="#1E1C61"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/back_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/back_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Appointment_rv"
+        android:id="@+id/past_ap_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upcoming_ap" />
+        app:layout_constraintTop_toBottomOf="@+id/past_ap" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

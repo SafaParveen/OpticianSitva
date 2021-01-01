@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -38,10 +40,13 @@ public class Frag_Opt_Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         binding = FragOptProfileBinding.inflate(inflater,container,false);
         binding.age.setEnabled(false);
         binding.ssn.setEnabled(false);
         binding.email.setEnabled(false);
+
 
         db.collection("doctor").document(userInfo.uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -107,6 +112,15 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.email.setEnabled(true);
 
                 }
+
+            }
+        });
+
+        binding.pastAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),opt_past_appointment.class);
+                startActivity(intent);
 
             }
         });
