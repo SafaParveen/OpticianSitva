@@ -57,7 +57,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -79,193 +80,67 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/time_m1"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="10:00AM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-            <TextView
-                android:id="@+id/time_m2"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="11:00AM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/time_m1"
-                app:layout_constraintTop_toTopOf="@+id/time_m1" />
-
-            <TextView
-                android:id="@+id/time_m3"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="12:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/time_m2"
-                app:layout_constraintTop_toTopOf="@+id/time_m1" />
-
-            <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins"
                 android:text="Afternoon"
+
                 android:textColor="#555"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_m1" />
+                app:layout_constraintTop_toBottomOf="@+id/morning_rv" />
 
-            <TextView
-                android:id="@+id/time_a1"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/afternoon_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="01:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-            <TextView
-                android:id="@+id/time_a2"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="02:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/time_a1"
-                app:layout_constraintTop_toTopOf="@+id/time_a1" />
-
-            <TextView
-                android:id="@+id/time_a3"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="03:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/time_a2"
-                app:layout_constraintTop_toTopOf="@+id/time_a1" />
 
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins"
                 android:text="Evening"
                 android:textColor="#555"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_a4" />
+                app:layout_constraintTop_toBottomOf="@+id/afternoon_rv" />
 
-            <TextView
-                android:id="@+id/time_e1"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/evening_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="05:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-            <TextView
-                android:id="@+id/time_e2"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="06:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/time_e1"
-                app:layout_constraintStart_toEndOf="@+id/time_e1"
-                app:layout_constraintTop_toTopOf="@+id/time_e1" />
-
-            <TextView
-                android:id="@+id/time_e3"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="07:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/time_e2"
-                app:layout_constraintStart_toEndOf="@+id/time_e2"
-                app:layout_constraintTop_toTopOf="@+id/time_e1" />
-
-            <TextView
-                android:id="@+id/time_a4"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/morning_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="04:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_a1" />
-
-            <TextView
-                android:id="@+id/time_e4"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/grey_button1"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="08:00PM"
-                android:textColor="#555"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/time_e1" />
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
