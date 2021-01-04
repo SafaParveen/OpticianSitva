@@ -67,6 +67,21 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
+    implementation "android.arch.paging:runtime:1.0.1"
+    implementation 'androidx.paging:paging-runtime:2.x.x'
+    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-firestore:20.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:7.1.1'
+
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:7.1.1'
+
 
 
 

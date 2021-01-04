@@ -40,7 +40,6 @@ public class opt_past_appointment extends AppCompatActivity {
     List<DocumentSnapshot>  cleanList = new ArrayList<>();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     String cost;
-    int pastsize=0;
 
 
     @Override
@@ -97,16 +96,12 @@ public class opt_past_appointment extends AppCompatActivity {
                         holder.pbinding.pendingPayAmt.setText("$"+cost);
                     }
 
-
-
-
-
             }
 
             @Override
             public int getItemCount() {
                 return cleanList.size();
-               // return pastsize;
+
             }
         };
 

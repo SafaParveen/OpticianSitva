@@ -1,23 +1,20 @@
-package com.example.opticiansitwa.opt_Home;
+package com.example.opticiansitwa.home;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.opticiansitwa.R;
-import com.example.opticiansitwa.databinding.FragOptAppointmentBinding;
-import com.example.opticiansitwa.databinding.FragOptProfileBinding;
+import com.example.opticiansitwa.databinding.ActOptHomeBinding;
+import com.example.opticiansitwa.databinding.ActProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.opt_Home.opt_past_appointment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,27 +24,23 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class Frag_Opt_Profile extends Fragment {
-
-
-
-    FragOptProfileBinding binding;
+public class Act_Profile extends AppCompatActivity {
+    ActProfileBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        binding = FragOptProfileBinding.inflate(inflater,container,false);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActProfileBinding.inflate(LayoutInflater.from(this));
+        setContentView(binding.getRoot());
+
         binding.age.setEnabled(false);
         binding.ssn.setEnabled(false);
         binding.email.setEnabled(false);
-
-
-        db.collection("doctor").document(userInfo.uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -59,7 +52,7 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.age.setText(value.getData().get("age").toString());
                     binding.ssn.setText(value.getData().get("ssn").toString());
                     binding.email.setText(value.getData().get("email").toString());
-                    Glide.with(getContext()).load(value.getData().get("profile_pic")).into(binding.profileImage);
+                    Glide.with(getApplicationContext()).load(value.getData().get("profile_pic")).into(binding.profileImage);
 
 
                 }
@@ -84,7 +77,7 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.edit.setText("Edit");
 
 
-                    db.collection("doctor").document(userInfo.uid)
+                    db.collection("user").document(userInfo.uid)
                             .update("age",binding.age.getText().toString(),
                                     "ssn",binding.ssn.getText().toString(),
                                     "email",binding.email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -94,7 +87,7 @@ public class Frag_Opt_Profile extends Fragment {
                             if(task.isSuccessful())
                             {
 
-                                Toast.makeText(getContext(), "Values Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Values Updated", Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -103,7 +96,7 @@ public class Frag_Opt_Profile extends Fragment {
                     });
 
                 }
-            else if(binding.edit.getText().equals("Edit"))
+                else if(binding.edit.getText().equals("Edit"))
                 {
                     binding.edit.setText("Save");
                     binding.age.setEnabled(true);
@@ -115,18 +108,13 @@ public class Frag_Opt_Profile extends Fragment {
             }
         });
 
-        binding.pastAppointment.setOnClickListener(new View.OnClickListener() {
+        binding.myAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),opt_past_appointment.class);
+                Intent intent = new Intent(getApplicationContext(), Act_Appointment_detail.class);
                 startActivity(intent);
 
             }
         });
-
-
-
-
-        return binding.getRoot();
     }
 }

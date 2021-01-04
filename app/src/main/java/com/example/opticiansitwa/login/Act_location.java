@@ -131,7 +131,7 @@ public class Act_location extends AppCompatActivity {
 
                 else
                 {
-                    Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Act_location.this, "Error!", Toast.LENGTH_SHORT).show();
 
 
                 }

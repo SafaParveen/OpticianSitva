@@ -49,6 +49,14 @@ public class Act_Home extends AppCompatActivity {
         binding = ActHomeBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
+        binding.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(),Act_Profile.class);
+                startActivity(intent);
+            }
+        });
+
         binding.Address.setText(locationInfo.addr);
         Glide.with(this).load(current.getPhotoUrl().toString()).into(binding.profileImage);
 
