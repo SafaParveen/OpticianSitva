@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.opticiansitwa">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,32 +13,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <activity android:name=".opt_Home.opt_past_appointment"></activity>
+        <activity android:name=".home.Act_Spec_Store"></activity>
+        <activity android:name=".opt_Home.opt_past_appointment" />
         <activity android:name=".home.Act_User_Calender"></activity>
         <activity android:name=".home.Act_doctor_details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
         <activity android:name=".home.Act_Home" />
-        <activity android:name=".intro.Act_SplashScreen">
+        <activity android:name=".intro.Act_SplashScreen"></activity>
+        <activity android:name=".opt_login.Act_Opt_Details" />
+        <activity android:name=".opt_login.Act_Opt_Login" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
+
+        <activity android:name=".intro.Act_Intro" />
+        <activity android:name=".login.Act_Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".opt_login.Act_Opt_Details" />
-        <activity android:name=".opt_login.Act_Opt_Login" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
-
-        <activity android:name=".intro.Act_Intro" />
-        <activity android:name=".login.Act_Login"></activity>
         <activity android:name=".login.Act_location" />
         <activity android:name=".intro.Act_IntroMain" />
+        <activity android:name=".home.Act_Profile" />
+        <activity android:name=".home.Act_Appointment_detail" />
+        <activity android:name=".home.Act_Specs_List" />
         <activity android:name=".opt_Home.Act_Patient_Details" />
         <activity android:name=".opt_Home.Act_Patient_History" />
         <activity
