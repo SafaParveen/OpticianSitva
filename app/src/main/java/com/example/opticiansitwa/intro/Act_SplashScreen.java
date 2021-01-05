@@ -37,6 +37,7 @@ public class Act_SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         binding = ActSplashScreenBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
@@ -52,11 +53,7 @@ public class Act_SplashScreen extends AppCompatActivity {
                 SharedPreferences sharedPref = getSharedPreferences("version", MODE_PRIVATE);
 
 
-
-
                 if (current != null) {
-
-
 
 
                     if(sharedPref.getInt("type",0)==0)
@@ -120,6 +117,8 @@ public class Act_SplashScreen extends AppCompatActivity {
                                 if(task.isSuccessful())
                                 {
                                     DocumentSnapshot documentSnapshot = task.getResult();
+
+
                                     if(documentSnapshot.exists())
                                     {
 
@@ -159,7 +158,6 @@ public class Act_SplashScreen extends AppCompatActivity {
                         });
 
                     }
-
 
 
                 } else {

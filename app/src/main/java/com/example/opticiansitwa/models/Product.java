@@ -11,7 +11,7 @@ public class Product {
     public String subtitle;
     public String price;
     public String store_id;
-    public String stock_left;
+    public long stock_left;
     public String description;
     public ArrayList<String> pic_list;
 
@@ -20,7 +20,7 @@ public class Product {
 
     }
 
-    public Product(String title, String subtitle, String price, String store_id, String stock_left, String description, ArrayList<String> pic_list) {
+    public Product(String title, String subtitle, String price, String store_id, long stock_left, String description, ArrayList<String> pic_list) {
         this.title = title;
         this.subtitle = subtitle;
         this.price = price;
