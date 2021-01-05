@@ -13,7 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <activity android:name=".home.Act_Spec_Store"></activity>
+        <activity android:name=".home.Act_Spec_Store">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".opt_Home.opt_past_appointment" />
         <activity android:name=".home.Act_User_Calender"></activity>
         <activity android:name=".home.Act_doctor_details" />
@@ -32,13 +39,8 @@
             android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
 
         <activity android:name=".intro.Act_Intro" />
-        <activity android:name=".login.Act_Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".login.Act_Login"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".login.Act_location" />
         <activity android:name=".intro.Act_IntroMain" />
         <activity android:name=".home.Act_Profile" />

@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
+import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActAppointmentDetailBinding;
 import com.example.opticiansitwa.databinding.HistoryRvBinding;
-import com.example.opticiansitwa.opt_Home.Appointment_Adapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,7 +26,6 @@ public class Act_Appointment_detail extends AppCompatActivity {
 
     ActAppointmentDetailBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    RecyclerView.Adapter<Act_Appointment_detail.Appointment_ViewHolder> AppointmentListAdapter;
     List<DocumentSnapshot> AppointmentListPast=new ArrayList<>();
     List<DocumentSnapshot> AppointmentListUpcom=new ArrayList<>();
     Appointment_Adapter adapter;
@@ -73,11 +74,7 @@ public class Act_Appointment_detail extends AppCompatActivity {
         binding.upcomingRv.setLayoutManager(layoutManager);
     }
 
-    public class Appointment_ViewHolder extends RecyclerView.ViewHolder {
-        HistoryRvBinding hbinding;
-        public Appointment_ViewHolder(HistoryRvBinding hbinding) {
-            super(hbinding.getRoot());
-            this.hbinding= hbinding;
-        }
+
+
+
     }
-}

@@ -16,6 +16,7 @@ import com.example.opticiansitwa.databinding.ActHomeBinding;
 import com.example.opticiansitwa.databinding.ActSpecStoreBinding;
 import com.example.opticiansitwa.databinding.ActSpecsListBinding;
 import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
+import com.example.opticiansitwa.databinding.StoreRvBinding;
 import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,42 +58,46 @@ public class Act_Spec_Store extends AppCompatActivity {
             }
         });
 
-        binding.Address.setText(locationInfo.addr);
-        Glide.with(this).load(current.getPhotoUrl().toString()).into(binding.profileImage);
+      //  binding.Address.setText(locationInfo.addr);
+     //   Glide.with(this).load(current.getPhotoUrl().toString()).into(binding.profileImage);
+
+        StoreListAdapter=new RecyclerView.Adapter<Store_List_ViewHolder>() {
+            @NonNull
+            @Override
+            public Store_List_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new Store_List_ViewHolder(StoreRvBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull Store_List_ViewHolder holder, int position) {
 
 
-//        StoreListAdapter=new RecyclerView.Adapter<Act_Home.docList_ViewHolder>() {
-//            @NonNull
-//            @Override
-//            public Act_Home.docList_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//               // return new Store_List_ViewHolder(DoctorDetailsRvBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
-//                return false;
-//            }
-//
-//            @Override
-//            public void onBindViewHolder(@NonNull Act_Home.docList_ViewHolder holder, int position) {
-//
-//                holder.dbinding.DocName.setText(String.valueOf(storeList.get(position).getData().get("name")));
-//                Glide.with(getApplicationContext()).load(storeList.get(position).get("profile_pic")).into(holder.dbinding.profilePic);
-//
-//                holder.dbinding.DoctorRv.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                        Intent intent1 = new Intent(Act_Spec_Store.this, Act_doctor_details.class);
-//                        intent1.putExtra("uid", storeList.get(position).getId());
-//                        startActivity(intent1);
-//
-//                    }
-//                });
-//
-//            }
-//
-//            @Override
-//            public int getItemCount() {
-//                return storeList.size();
-//            }
-//        };
+
+
+                holder.dbinding.storeName.setText(String.valueOf(storeList.get(position).getData().get("name")));
+                holder.dbinding.storeAddress.setText(String.valueOf(storeList.get(position).getData().get("address_typed")));
+                Glide.with(getApplicationContext()).load(storeList.get(position).get("image")).into(holder.dbinding.storeImage);
+
+
+                holder.dbinding.StoreRv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent1 = new Intent(Act_Spec_Store.this, Act_Specs_List.class);
+                        intent1.putExtra("uid", storeList.get(position).getId());
+                        startActivity(intent1);
+
+                    }
+                });
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return storeList.size();
+            }
+        };
 
         db.collection("store").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -114,8 +119,8 @@ public class Act_Spec_Store extends AppCompatActivity {
     }
 
     public class Store_List_ViewHolder extends RecyclerView.ViewHolder {
-        DoctorDetailsRvBinding dbinding;
-        public Store_List_ViewHolder(DoctorDetailsRvBinding cbinding) {
+        StoreRvBinding dbinding;
+        public Store_List_ViewHolder(StoreRvBinding cbinding) {
             super(cbinding.getRoot());
             this.dbinding= cbinding;
         }

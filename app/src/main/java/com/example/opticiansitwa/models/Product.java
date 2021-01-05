@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class product {
+public class Product {
 
     public String title;
     public String subtitle;
     public String price;
-    public Long store_id;
+    public String store_id;
     public String stock_left;
     public String description;
     public ArrayList<String> pic_list;
 
-    public product(String title, String subtitle, String price, Long store_id, String stock_left, String description, ArrayList<String> pic_list) {
+    public Product()
+    {
+
+    }
+
+    public Product(String title, String subtitle, String price, String store_id, String stock_left, String description, ArrayList<String> pic_list) {
         this.title = title;
         this.subtitle = subtitle;
         this.price = price;
