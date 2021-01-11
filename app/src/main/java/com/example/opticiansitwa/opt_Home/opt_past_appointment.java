@@ -42,8 +42,9 @@ public class opt_past_appointment extends AppCompatActivity {
     String cost;
     long epoch;
     String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    String day,dayNo,year,month;
+    String day,dayNo,year,month,time;
     int monthNo;
+
 
 
 
@@ -97,7 +98,8 @@ public class opt_past_appointment extends AppCompatActivity {
                     dateConverter(epoch);
                     holder.pbinding.date.setText(dayNo);
                     holder.pbinding.month.setText(month);
-                    holder.pbinding.dayTime.setText(day+".");
+                    holder.pbinding.dayTime.setText(day+"."+time);
+
                     }
                     else if(cleanList.get(position).get("settlement_status").equals("0")){
                     dateConverter(epoch);
@@ -107,7 +109,7 @@ public class opt_past_appointment extends AppCompatActivity {
                         holder.pbinding.month.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.yellow1));
                         holder.pbinding.date.setText(dayNo);
                         holder.pbinding.month.setText(month);
-                        holder.pbinding.dayTime.setText(day+".");
+                        holder.pbinding.dayTime.setText(day+"."+time);
                         holder.pbinding.pendingPayText.setVisibility(View.VISIBLE);
                         holder.pbinding.pendingPayAmt.setVisibility(View.VISIBLE);
                         cost=cleanList.get(position).getData().get("cost").toString();
@@ -136,7 +138,7 @@ public class opt_past_appointment extends AppCompatActivity {
     }
 
     private void dateConverter(long epoch) {
-        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ HH:mm:ss").format(new java.util.Date (epoch*1000));
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ HH a").format(new java.util.Date (epoch*1000));
 
         String dateParts[] = date.split("/");
          dayNo = dateParts[0];
@@ -144,6 +146,7 @@ public class opt_past_appointment extends AppCompatActivity {
          month= months[monthNo-1];
          year = dateParts[2];
          day = dateParts[3];
+         time = dateParts[4];
 
     }
 

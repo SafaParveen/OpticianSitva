@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,21 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <activity android:name=".home.Act_Spec_Store"/>
-
+        <activity android:name=".home.Act_Appointment_result"></activity>
+        <activity android:name=".home.Act_Spec_Store" />
         <activity android:name=".opt_Home.opt_past_appointment" />
-
-
-
-
-
-
-        <activity android:name=".home.Act_User_Calender"></activity>
+        <activity android:name=".home.Act_User_Calender" />
         <activity android:name=".home.Act_doctor_details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
         <activity android:name=".home.Act_Home" />
-        <activity android:name=".intro.Act_SplashScreen"/>
-
+        <activity android:name=".intro.Act_SplashScreen" />
         <activity android:name=".opt_login.Act_Opt_Details" />
         <activity android:name=".opt_login.Act_Opt_Login" />
 
@@ -40,19 +34,17 @@
             android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
 
         <activity android:name=".intro.Act_Intro" />
-        <activity android:name=".login.Act_Login"/>
-
+        <activity android:name=".login.Act_Login" />
         <activity android:name=".login.Act_location" />
         <activity android:name=".intro.Act_IntroMain" />
         <activity android:name=".home.Act_Profile" />
-        <activity android:name=".home.Act_Appointment_detail" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".home.Act_Appointment_detail">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".home.Act_Specs_List" />
         <activity android:name=".opt_Home.Act_Patient_Details" />
         <activity android:name=".opt_Home.Act_Patient_History" />

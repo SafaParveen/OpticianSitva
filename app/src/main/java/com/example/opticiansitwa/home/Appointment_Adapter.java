@@ -1,10 +1,13 @@
 package com.example.opticiansitwa.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.opticiansitwa.R;
@@ -21,12 +24,12 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
     int status;
     long epoch;
     String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    String day,dayNo,year,month;
+    String day,dayNo,year,month,time;
     int monthNo;
 
     public Appointment_Adapter(List<DocumentSnapshot> appointmentList, Context applicationContext, int status) {
         this.AppointmentList = appointmentList;
-        this.context = applicationContext;
+        context = applicationContext;
         this.status = status;
     }
 
@@ -42,25 +45,51 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
 
         epoch=(long)AppointmentList.get(position).getData().get("epoch");
         dateConverter(epoch);
+        holder.binding.date.setText(dayNo);
+        holder.binding.month.setText(month);
+        holder.binding.dayTime.setText(day+"."+time);
         if (status == 0) {
-            holder.binding.AppointmentRv.setBackgroundResource(R.drawable.red_approval);
-            holder.binding.title.setText(AppointmentList.get(position).get("user_name").toString());
-            holder.binding.date.setText(dayNo);
-            holder.binding.month.setText(month);
-            holder.binding.dayTime.setText(day+".");
+            holder.binding.AppointmentRv.setBackgroundResource(R.drawable.blue_ripple);
+            holder.binding.dateConstraint.setBackgroundResource(R.drawable.date_corner_round);
+            holder.binding.approvedTick.setVisibility(View.VISIBLE);
+            holder.binding.date.setTextColor(ContextCompat.getColor(context,R.color.blue3));
+            holder.binding.month.setTextColor(ContextCompat.getColor(context,R.color.blue3));
 
         } else if (status == 1) {
-            holder.binding.AppointmentRv.setBackgroundResource(R.drawable.yellow_approval);
-            holder.binding.title.setText(AppointmentList.get(position).get("user_name").toString());
-            holder.binding.date.setText(dayNo);
-            holder.binding.month.setText(month);
-            holder.binding.dayTime.setText(day+".");
+            holder.binding.AppointmentRv.setBackgroundResource(R.drawable.light_green_bg);
+
+            holder.binding.AppointmentRv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent1 = new Intent(context, Act_Appointment_result.class);
+                    intent1.setFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                    intent1.putExtra("doctor_name", AppointmentList.get(position).getData().get("doctor_name").toString());
+                    intent1.putExtra("doctor_profile", AppointmentList.get(position).getData().get("doctor_profile").toString());
+                    intent1.putExtra("day_no",dayNo);
+                    intent1.putExtra("month",month);
+                    intent1.putExtra("day",day);
+                    intent1.putExtra("time",time);
+                    intent1.putExtra("invoice_url", AppointmentList.get(position).getData().get("invoice_url").toString());
+                    intent1.putExtra("test_report_img",AppointmentList.get(position).getData().get("test_report_img").toString());
+                    intent1.putExtra("note_from_doctor",AppointmentList.get(position).getData().get("note_from_doctor").toString());
+
+                    context.startActivity(intent1);
+
+                }
+            });
         }
+
+
+
     }
+
+
+
 
     private void dateConverter(long epoch) {
 
-        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ HH:mm:ss").format(new java.util.Date (epoch*1000));
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch*1000));
 
         String dateParts[] = date.split("/");
         dayNo = dateParts[0];
@@ -68,12 +97,16 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
         month= months[monthNo-1];
         year = dateParts[2];
         day = dateParts[3];
+        time = dateParts[4];
     }
 
     @Override
     public int getItemCount() {
         return AppointmentList.size();
     }
+
+
+
 
     public class Appointment_ViewHolder extends RecyclerView.ViewHolder {
         HistoryRvBinding binding;

@@ -17,7 +17,7 @@ import com.example.opticiansitwa.databinding.ActSplashScreenBinding;
 
 public class Act_Patient_Details extends AppCompatActivity {
 
-    String approve_status,user_name,user_profile,user_id;
+    String approve_status,user_name,user_profile,user_id,epoch;
     ActPatientDetailsBinding binding;
 
     @Override
@@ -30,6 +30,7 @@ public class Act_Patient_Details extends AppCompatActivity {
         user_name = intent.getStringExtra("user_name");
         user_profile=intent.getStringExtra("user_profile");
         user_id=intent.getStringExtra("user_id");
+        epoch=intent.getStringExtra("epoch");
 
 
 
