@@ -10,13 +10,10 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
-import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActSplashScreenBinding;
 import com.example.opticiansitwa.global_data.User_Info;
-import com.example.opticiansitwa.home.Act_Home;
 import com.example.opticiansitwa.login.Act_Login;
-import com.example.opticiansitwa.login.Act_location;
-import com.example.opticiansitwa.opt_login.Act_Opt_Details;
+import com.example.opticiansitwa.login.Act_Location;
 import com.example.opticiansitwa.opt_login.Act_Opt_Login;
 import com.example.opticiansitwa.opt_login.Act_Pending_Approval;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,7 +71,9 @@ public class Act_SplashScreen extends AppCompatActivity {
                                         user.pro_pic = current.getPhotoUrl().toString();
                                         EventBus.getDefault().postSticky(user);
 
-                                        Intent i = new Intent(Act_SplashScreen.this, Act_location.class);
+
+                                        Intent i = new Intent(Act_SplashScreen.this, Act_Location.class);
+                                        i.putExtra("status",0);
                                         startActivity(i);
                                         finish();
 

@@ -12,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActHomeBinding;
-import com.example.opticiansitwa.databinding.ActIntroBinding;
 import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
 import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
-import com.example.opticiansitwa.opt_Home.Act_Opt_Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,7 +76,7 @@ public class Act_Home extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent1 = new Intent(Act_Home.this, Act_doctor_details.class);
+                        Intent intent1 = new Intent(Act_Home.this, Act_Doctor_Details.class);
                         intent1.putExtra("uid", doctorList.get(position).getId());
                         startActivity(intent1);
 

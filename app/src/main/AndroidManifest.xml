@@ -15,18 +15,26 @@
         android:theme="@style/Theme.OpticianSitva">
         <activity android:name=".home.Act_Specs_Details"></activity>
         <activity android:name=".home.Act_Spec_Store">
+
+        </activity>
+
+        <activity android:name=".home.Act_Appointment_Video"
+            android:configChanges="orientation|screenSize|layoutDirection">
+
+        </activity>
+        <activity android:name=".opt_Home.Act_Opt_Past_Appointment" />
+        <activity android:name=".home.Act_User_Calender" />
+        <activity android:name=".home.Act_Doctor_Details" />
+        <activity android:name=".opt_login.Act_Pending_Approval" />
+        <activity android:name=".home.Act_Home" />
+        <activity android:name=".intro.Act_SplashScreen" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".opt_Home.opt_past_appointment" />
-        <activity android:name=".home.Act_User_Calender" />
-        <activity android:name=".home.Act_doctor_details" />
-        <activity android:name=".opt_login.Act_Pending_Approval" />
-        <activity android:name=".home.Act_Home" />
-        <activity android:name=".intro.Act_SplashScreen" />
         <activity android:name=".opt_login.Act_Opt_Details" />
         <activity android:name=".opt_login.Act_Opt_Login" />
 
@@ -41,16 +49,22 @@
 
         <activity android:name=".intro.Act_Intro" />
         <activity android:name=".login.Act_Login" />
-        <activity android:name=".login.Act_location" />
+        <activity android:name=".login.Act_Location" />
         <activity android:name=".intro.Act_IntroMain" />
-        <activity android:name=".home.Act_Profile" />
+        <activity android:name=".home.Act_Profile" >
+
+
+        </activity>
         <activity android:name=".home.Act_Appointment_detail" />
         <activity android:name=".home.Act_Specs_List" />
         <activity android:name=".opt_Home.Act_Patient_Details" />
         <activity android:name=".opt_Home.Act_Patient_History" />
         <activity
             android:name=".opt_Home.Act_Opt_Home"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" >
+
+
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -62,7 +62,7 @@ public class Act_Specs_Details extends AppCompatActivity {
             {
                 binding.buyBtn.setText("Out of Stock");
                 binding.buyBtn.setClickable(false);
-                binding.buyBtn.setBackgroundResource(R.drawable.orange_ripple);
+                binding.buyBtn.setBackgroundResource(R.drawable.orange_ripple_1);
 
             }
 

@@ -2,10 +2,11 @@ package com.example.opticiansitwa.opt_Home;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +15,26 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.opticiansitwa.R;
-import com.example.opticiansitwa.databinding.FragOptAppointmentBinding;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.opticiansitwa.databinding.FragOptProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.greenrobot.eventbus.EventBus;
+
+import static android.app.Activity.RESULT_OK;
 
 public class Frag_Opt_Profile extends Fragment {
 
@@ -34,6 +43,8 @@ public class Frag_Opt_Profile extends Fragment {
     FragOptProfileBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
+    FirebaseStorage storage;
+    StorageReference storageReference,uploadTask;
 
 
     @Override
@@ -46,8 +57,22 @@ public class Frag_Opt_Profile extends Fragment {
         binding.ssn.setEnabled(false);
         binding.email.setEnabled(false);
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
-        db.collection("doctor").document(userInfo.uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+
+        storageReference.child("doctor_profile_pics").child("KnDp1bHwo4gWMJIaT9P9HpkBKVt2").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+                Glide.with(getContext()).load(uri).into(binding.profileImage);
+
+
+            }
+        });
+
+
+        db.collection("doctor").document("KnDp1bHwo4gWMJIaT9P9HpkBKVt2").addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -59,7 +84,6 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.age.setText(value.getData().get("age").toString());
                     binding.ssn.setText(value.getData().get("ssn").toString());
                     binding.email.setText(value.getData().get("email").toString());
-                    Glide.with(getContext()).load(value.getData().get("profile_pic")).into(binding.profileImage);
 
 
                 }
@@ -118,15 +142,76 @@ public class Frag_Opt_Profile extends Fragment {
         binding.pastAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),opt_past_appointment.class);
+                Intent intent = new Intent(getContext(), Act_Opt_Past_Appointment.class);
                 startActivity(intent);
+
+            }
+        });
+
+        binding.changeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123);
+
 
             }
         });
 
 
 
-
         return binding.getRoot();
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        binding.progressBar.setVisibility(View.VISIBLE);
+
+        if (requestCode == 123 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            uploadTask = storageReference.child("doctor_profile_pics").child("KnDp1bHwo4gWMJIaT9P9HpkBKVt2");
+            uploadTask.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                    if(task.isSuccessful())
+                    {
+                        uploadTask.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+
+                                Glide.with(getContext()).load(uri).listener(new RequestListener<Drawable>() {
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                        binding.progressBar.setVisibility(View.VISIBLE);
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                                        binding.progressBar.setVisibility(View.GONE);
+                                        return false;
+                                    }
+                                }).into(binding.profileImage);
+
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+
+        }
     }
 }

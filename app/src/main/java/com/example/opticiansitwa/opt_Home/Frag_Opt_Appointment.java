@@ -50,7 +50,7 @@ public class Frag_Opt_Appointment extends Fragment {
 
 
 
-        db.collection("appointment").whereEqualTo("doctor_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("doctor_id","KnDp1bHwo4gWMJIaT9P9HpkBKVt2").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -114,7 +114,6 @@ public class Frag_Opt_Appointment extends Fragment {
 
                        approve_status=appointList.get(position).getData().get("approve_status").toString();
                        user_name=appointList.get(position).getData().get("user_name").toString();
-                       user_profile=appointList.get(position).getData().get("user_profile").toString();
                        user_id=appointList.get(position).getData().get("user_id").toString();
                        Intent intent = new Intent(getContext(),Act_Patient_Details.class);
                        intent.putExtra("approve_status", approve_status);

@@ -5,22 +5,30 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.opticiansitwa.databinding.ActOptHomeBinding;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.opticiansitwa.databinding.ActProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
-import com.example.opticiansitwa.opt_Home.opt_past_appointment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,6 +36,9 @@ public class Act_Profile extends AppCompatActivity {
     ActProfileBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
+
+    FirebaseStorage storage;
+    StorageReference storageReference,uploadTask;
 
 
 
@@ -37,30 +48,45 @@ public class Act_Profile extends AppCompatActivity {
         binding = ActProfileBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
-        binding.age.setEnabled(false);
-        binding.ssn.setEnabled(false);
-        binding.email.setEnabled(false);
-        db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+
+        storageReference.child("user_profile_pics").child("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+            public void onSuccess(Uri uri) {
 
-                if(value.exists())
-                {
+                Glide.with(getApplicationContext()).load(uri).into(binding.profileImage);
 
-                    binding.optName.setText(value.getData().get("name").toString());
-                    binding.address.setText(value.getData().get("address_google_map").toString());
-                    binding.age.setText(value.getData().get("age").toString());
-                    binding.ssn.setText(value.getData().get("ssn").toString());
-                    binding.email.setText(value.getData().get("email").toString());
-                    Glide.with(getApplicationContext()).load(value.getData().get("profile_pic")).into(binding.profileImage);
-
-
-                }
 
 
             }
         });
 
+
+        binding.age.setEnabled(false);
+        binding.ssn.setEnabled(false);
+        binding.email.setEnabled(false);
+
+        db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        if(task.isSuccessful())
+                        {
+
+                            binding.optName.setText(task.getResult().getData().get("name").toString());
+                            binding.address.setText(task.getResult().getData().get("address_google_map").toString());
+                            binding.age.setText(task.getResult().getData().get("age").toString());
+                            binding.ssn.setText(task.getResult().getData().get("ssn").toString());
+                            binding.email.setText(task.getResult().getData().get("email").toString());
+
+
+                        }
+
+                    }
+                });
 
         binding.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,5 +142,67 @@ public class Act_Profile extends AppCompatActivity {
 
             }
         });
+
+        binding.changeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123);
+
+
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        binding.progressBar.setVisibility(View.VISIBLE);
+
+
+        if (requestCode == 123 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            uploadTask = storageReference.child("user_profile_pics").child("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2");
+            uploadTask.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                    if(task.isSuccessful())
+                    {
+                        uploadTask.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+
+                                Glide.with(getApplicationContext()).load(uri).listener(new RequestListener<Drawable>() {
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                        binding.progressBar.setVisibility(View.VISIBLE);
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                                        binding.progressBar.setVisibility(View.GONE);
+                                        return false;
+                                    }
+                                }).into(binding.profileImage);
+
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+
+        }
     }
 }

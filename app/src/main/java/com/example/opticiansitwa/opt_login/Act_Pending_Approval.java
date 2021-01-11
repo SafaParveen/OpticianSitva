@@ -1,5 +1,6 @@
 package com.example.opticiansitwa.opt_login;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,8 @@ import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActPendingApprovalBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.opt_Home.Act_Opt_Home;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,27 +34,26 @@ public class Act_Pending_Approval extends AppCompatActivity {
         binding=ActPendingApprovalBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
-        db.collection("doctor").document(userInfo.uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection("doctor").document(userInfo.uid)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                if(value.exists())
+                if(task.isSuccessful())
                 {
-
-                    if(value.getData().get("status").equals("1"))
+                    if(task.getResult().getData().get("status").equals("1"))
                     {
                         Intent homeIntent = new Intent(Act_Pending_Approval.this, Act_Opt_Home.class);
                         startActivity(homeIntent);
                         finish();
 
-
                     }
+
 
                 }
 
             }
         });
-
 
 
 

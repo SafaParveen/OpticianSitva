@@ -16,14 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-public class Act_doctor_details extends AppCompatActivity {
+public class Act_Doctor_Details extends AppCompatActivity {
 
 
     ActDoctorDetailsBinding binding;
@@ -57,8 +53,8 @@ public class Act_doctor_details extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(Act_doctor_details.this, "Choose slot time", Toast.LENGTH_SHORT).show();
-                    Intent slotIntent = new Intent(Act_doctor_details.this,Act_User_Calender.class);
+                    Toast.makeText(Act_Doctor_Details.this, "Choose slot time", Toast.LENGTH_SHORT).show();
+                    Intent slotIntent = new Intent(Act_Doctor_Details.this,Act_User_Calender.class);
                     slotIntent.putExtra("uid", uid);
                     startActivity(slotIntent);
 

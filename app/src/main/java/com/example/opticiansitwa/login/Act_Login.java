@@ -33,10 +33,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -241,7 +239,7 @@ public class Act_Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
-                            Intent locationIntent = new Intent(Act_Login.this,Act_location.class);
+                            Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",0);
                             startActivity(locationIntent);
                             finish();

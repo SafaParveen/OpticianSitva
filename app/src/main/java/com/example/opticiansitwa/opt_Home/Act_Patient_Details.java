@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,19 @@ import com.bumptech.glide.Glide;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActPatientDetailsBinding;
 import com.example.opticiansitwa.databinding.ActSplashScreenBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class Act_Patient_Details extends AppCompatActivity {
 
     String approve_status,user_name,user_profile,user_id;
     ActPatientDetailsBinding binding;
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +41,26 @@ public class Act_Patient_Details extends AppCompatActivity {
         user_id=intent.getStringExtra("user_id");
 
 
+        binding.patientName.setText(user_name);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        storageReference.child("user_profile_pics").child(user_id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+                Glide.with(getApplicationContext()).load(uri).into(binding.profilePic1);
+
+
+
+            }
+        });
+
+
 
         if(approve_status.equals("0"))
         {
-            binding.patientName.setText(user_name);
-            Glide.with(this).load(user_profile).into(binding.profilePic1);
             binding.myCalender.setVisibility(View.VISIBLE);
             binding.Approve.setVisibility(View.VISIBLE);
             binding.history.setVisibility(View.INVISIBLE);
@@ -52,8 +76,6 @@ public class Act_Patient_Details extends AppCompatActivity {
         }
         else if(approve_status.equals("1"))
         {
-            binding.patientName.setText(user_name);
-            Glide.with(this).load(user_profile).into(binding.profilePic1);
             binding.pendingPay.setVisibility(View.VISIBLE);
             binding.history.setVisibility(View.INVISIBLE);
             binding.videoCall.setVisibility(View.INVISIBLE);
@@ -68,8 +90,6 @@ public class Act_Patient_Details extends AppCompatActivity {
         else if(approve_status.equals("2"))
 
         {
-            binding.patientName.setText(user_name);
-            Glide.with(this).load(user_profile).into(binding.profilePic1);
             binding.ApproveStatus.setBackgroundResource(R.drawable.light_green_bg);
             binding.dateConstraint.setBackgroundResource(R.drawable.green_date);
             binding.date.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.blue3));

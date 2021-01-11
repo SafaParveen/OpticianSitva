@@ -12,10 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.opticiansitwa.R;
-import com.example.opticiansitwa.databinding.ActLoginBinding;
 import com.example.opticiansitwa.databinding.ActOptLoginBinding;
 import com.example.opticiansitwa.login.Act_Login;
-import com.example.opticiansitwa.login.Act_location;
+import com.example.opticiansitwa.login.Act_Location;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -27,8 +26,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class Act_Opt_Login extends AppCompatActivity {
 
@@ -116,7 +113,7 @@ public class Act_Opt_Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             Toast.makeText(Act_Opt_Login.this, "Opt Signed in successfully", Toast.LENGTH_SHORT).show();
-                            Intent locationIntent = new Intent(Act_Opt_Login.this, Act_location.class);
+                            Intent locationIntent = new Intent(Act_Opt_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",1);
                             startActivity(locationIntent);
                             finish();

@@ -11,16 +11,15 @@ import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.HistoryRvBinding;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapter.Appointment_ViewHolder> {
+public class Adapter_Appointment extends RecyclerView.Adapter<Adapter_Appointment.Appointment_ViewHolder> {
 
     List<DocumentSnapshot> AppointmentListUpcom;
     Context context;
     int status;
 
-    public Appointment_Adapter(List<DocumentSnapshot> appointmentListUpcom, Context applicationContext, int status) {
+    public Adapter_Appointment(List<DocumentSnapshot> appointmentListUpcom, Context applicationContext, int status) {
         this.AppointmentListUpcom = appointmentListUpcom;
         this.context = applicationContext;
         this.status = status;

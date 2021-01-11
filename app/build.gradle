@@ -60,7 +60,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.facebook.android:facebook-login:[8.1)'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'org.greenrobot:eventbus:3.2.0'
@@ -73,16 +72,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:20.1.0'
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
     implementation 'com.shreyaspatil:FirebaseRecyclerPagination:1.0.1'
-
-
-    // FirebaseUI for Cloud Firestore
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
-
-    // FirebaseUI for Firebase Auth
     implementation 'com.firebaseui:firebase-ui-auth:7.1.1'
-
-    // FirebaseUI for Cloud Storage
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.firebaseui:firebase-ui-storage:7.1.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.7.3'
 
 
 

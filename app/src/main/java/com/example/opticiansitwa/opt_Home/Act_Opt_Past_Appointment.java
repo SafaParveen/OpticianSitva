@@ -2,29 +2,24 @@
 package com.example.opticiansitwa.opt_Home;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.opticiansitwa.R;
-import com.example.opticiansitwa.databinding.ActPatientHistoryBinding;
+import com.example.opticiansitwa.databinding.ActOptPastAppointmentBinding;
 import com.example.opticiansitwa.databinding.HistoryRvBinding;
-import com.example.opticiansitwa.databinding.OptPastAppointmentBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,11 +27,11 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class opt_past_appointment extends AppCompatActivity {
+public class Act_Opt_Past_Appointment extends AppCompatActivity {
 
-    OptPastAppointmentBinding binding;
+    ActOptPastAppointmentBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    RecyclerView.Adapter<opt_past_appointment.past_ViewHolder> pastListAdapter;
+    RecyclerView.Adapter<Act_Opt_Past_Appointment.past_ViewHolder> pastListAdapter;
     List<DocumentSnapshot>  cleanList = new ArrayList<>();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     String cost;
@@ -45,7 +40,7 @@ public class opt_past_appointment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = OptPastAppointmentBinding.inflate(LayoutInflater.from(this));
+        binding = ActOptPastAppointmentBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
 

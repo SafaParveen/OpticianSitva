@@ -25,7 +25,6 @@ import com.example.opticiansitwa.databinding.ActLocationBinding;
 import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.home.Act_Home;
-import com.example.opticiansitwa.home.Act_doctor_details;
 import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Details;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -50,7 +49,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class Act_location extends AppCompatActivity {
+public class Act_Location extends AppCompatActivity {
 
 
     ActLocationBinding binding;
@@ -82,14 +81,14 @@ public class Act_location extends AppCompatActivity {
         client = LocationServices.getFusedLocationProviderClient(this);
 
 
-        if (ActivityCompat.checkSelfPermission(Act_location.this,
+        if (ActivityCompat.checkSelfPermission(Act_Location.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             getCurrentLocation();
         }
         else {
 
-            ActivityCompat.requestPermissions(Act_location.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+            ActivityCompat.requestPermissions(Act_Location.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
 
         }
 
@@ -102,7 +101,7 @@ public class Act_location extends AppCompatActivity {
                     if(bundle.getInt("status") == 1) {
 
 
-                        Intent optdetailsIntent = new Intent(Act_location.this, Act_Opt_Details.class);
+                        Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
                         optdetailsIntent.putExtra("city",city);
                         optdetailsIntent.putExtra("state",loc);
                         optdetailsIntent.putExtra("country",cou);
@@ -122,7 +121,7 @@ public class Act_location extends AppCompatActivity {
                         EventBus.getDefault().postSticky(location_info);
                         User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","",fulladdr,"","");
                         db.collection("user").document(current.getUid()).set(user);
-                        Intent userHome = new Intent(Act_location.this, Act_Home.class);
+                        Intent userHome = new Intent(Act_Location.this, Act_Home.class);
                         startActivity(userHome);
                         finish();
                     }
@@ -131,7 +130,7 @@ public class Act_location extends AppCompatActivity {
 
                 else
                 {
-                    Toast.makeText(Act_location.this, "Error!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Act_Location.this, "Error!", Toast.LENGTH_SHORT).show();
 
 
                 }

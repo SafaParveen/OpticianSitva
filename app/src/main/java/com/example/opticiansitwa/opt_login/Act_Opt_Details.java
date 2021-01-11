@@ -111,7 +111,7 @@ public class Act_Opt_Details extends AppCompatActivity {
 
         if (requestCode == 11 && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-            uploadTask = storageReference.child("images").child(Long.toString(System.currentTimeMillis()));
+            uploadTask = storageReference.child("doctor_approval_images").child(Long.toString(System.currentTimeMillis()));
             uploadTask.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -127,7 +127,7 @@ public class Act_Opt_Details extends AppCompatActivity {
                                 Glide.with(getApplicationContext()).load(uri).listener(new RequestListener<Drawable>() {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                        binding.progressBar.setVisibility(View.GONE);
+                                        binding.progressBar.setVisibility(View.VISIBLE);
                                         return false;
                                     }
 
