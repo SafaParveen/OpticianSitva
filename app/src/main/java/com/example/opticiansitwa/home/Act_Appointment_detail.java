@@ -3,11 +3,18 @@ package com.example.opticiansitwa.home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActAppointmentDetailBinding;
+import com.example.opticiansitwa.databinding.HistoryRvBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,7 +30,7 @@ public class Act_Appointment_detail extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     List<DocumentSnapshot> AppointmentListPast=new ArrayList<>();
     List<DocumentSnapshot> AppointmentListUpcom=new ArrayList<>();
-    Adapter_Appointment adapter;
+    Appointment_Adapter adapter;
 
 
     @Override
@@ -51,11 +58,13 @@ public class Act_Appointment_detail extends AppCompatActivity {
 
 
 
+
+
     }
 
     private void recyclerviewPast() {
 
-        adapter = new Adapter_Appointment( AppointmentListPast,getApplicationContext(),1);
+        adapter = new Appointment_Adapter( AppointmentListPast,getApplicationContext(),1);
         binding.pastRv.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
         binding.pastRv.setLayoutManager(layoutManager);
@@ -63,7 +72,7 @@ public class Act_Appointment_detail extends AppCompatActivity {
 
     private void recyclerview() {
 
-        adapter = new Adapter_Appointment( AppointmentListUpcom,getApplicationContext(), 0);
+        adapter = new Appointment_Adapter( AppointmentListUpcom,getApplicationContext(), 0);
         binding.upcomingRv.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
         binding.upcomingRv.setLayoutManager(layoutManager);

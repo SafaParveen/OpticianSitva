@@ -35,6 +35,12 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
     List<DocumentSnapshot>  cleanList = new ArrayList<>();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     String cost;
+    long epoch;
+    String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    String day,dayNo,year,month,time;
+    int monthNo;
+
+
 
 
     @Override
@@ -67,6 +73,7 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
         });
 
 
+
         pastListAdapter=new RecyclerView.Adapter<past_ViewHolder>() {
             @NonNull
             @Override
@@ -77,14 +84,27 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull past_ViewHolder holder, int position) {
 
+                epoch=(long)cleanList.get(position).getData().get("epoch");
+
+
                 if(cleanList.get(position).get("settlement_status").equals("1")){
-                        holder.pbinding.title.setText(cleanList.get(position).get("user_name").toString());
+
+                    holder.pbinding.title.setText(cleanList.get(position).get("user_name").toString());
+                    dateConverter(epoch);
+                    holder.pbinding.date.setText(dayNo);
+                    holder.pbinding.month.setText(month);
+                    holder.pbinding.dayTime.setText(day+"."+time);
+
                     }
                     else if(cleanList.get(position).get("settlement_status").equals("0")){
+                    dateConverter(epoch);
                         holder.pbinding.AppointmentRv.setBackgroundResource(R.drawable.yellow_approval);
                         holder.pbinding.dateConstraint.setBackgroundResource(R.drawable.yellow_date);
                         holder.pbinding.date.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.yellow1));
                         holder.pbinding.month.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.yellow1));
+                        holder.pbinding.date.setText(dayNo);
+                        holder.pbinding.month.setText(month);
+                        holder.pbinding.dayTime.setText(day+"."+time);
                         holder.pbinding.pendingPayText.setVisibility(View.VISIBLE);
                         holder.pbinding.pendingPayAmt.setVisibility(View.VISIBLE);
                         cost=cleanList.get(position).getData().get("cost").toString();
@@ -112,7 +132,18 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
 
     }
 
+    private void dateConverter(long epoch) {
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ HH a").format(new java.util.Date (epoch*1000));
 
+        String dateParts[] = date.split("/");
+         dayNo = dateParts[0];
+         monthNo = Integer.parseInt(dateParts[1]) ;
+         month= months[monthNo-1];
+         year = dateParts[2];
+         day = dateParts[3];
+         time = dateParts[4];
+
+    }
 
 
     public class past_ViewHolder extends RecyclerView.ViewHolder {

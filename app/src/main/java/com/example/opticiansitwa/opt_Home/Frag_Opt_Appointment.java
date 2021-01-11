@@ -38,6 +38,10 @@ public class Frag_Opt_Appointment extends Fragment {
     List<DocumentSnapshot> appointList =new ArrayList<>();
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     String approve_status,user_name,user_profile,user_id;
+    long epoch;
+    String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    String day,dayNo,year,month,time;
+    int monthNo;
 
 
 
@@ -73,6 +77,12 @@ public class Frag_Opt_Appointment extends Fragment {
            @Override
            public void onBindViewHolder(@NonNull appoint_ViewHolder holder, int position) {
 
+               epoch=(long)appointList.get(position).getData().get("epoch");
+               dateConverter(epoch);
+               holder.Abinding.date.setText(dayNo);
+               holder.Abinding.month.setText(month);
+               holder.Abinding.dayTime.setText(day+"."+time);
+
                if(appointList.get(position).get("approve_status").equals("0"))
                {
                    holder.Abinding.AppointmentRv.setBackgroundResource(R.drawable.red_approval);
@@ -82,7 +92,6 @@ public class Frag_Opt_Appointment extends Fragment {
                    holder.Abinding.approvalPendingText.setVisibility(View.VISIBLE);
                    holder.Abinding.pendingPayText.setVisibility(View.INVISIBLE);
                    holder.Abinding.approvedTick.setVisibility(View.INVISIBLE);
-
 
 
                }
@@ -120,10 +129,23 @@ public class Frag_Opt_Appointment extends Fragment {
                        intent.putExtra("user_name", user_name);
                        intent.putExtra("user_profile", user_profile);
                        intent.putExtra("user_id", user_id);
+                       intent.putExtra("epoch",epoch);
                        startActivity(intent);
 
                    }
                });
+           }
+           private void dateConverter(long epoch) {
+
+               String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch*1000));
+
+               String dateParts[] = date.split("/");
+               dayNo = dateParts[0];
+               monthNo = Integer.parseInt(dateParts[1]) ;
+               month= months[monthNo-1];
+               year = dateParts[2];
+               day = dateParts[3];
+               time = dateParts[4];
            }
 
            @Override
