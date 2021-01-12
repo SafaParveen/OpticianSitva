@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,12 +103,28 @@ public class Act_Location extends AppCompatActivity {
 
 
                         Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
-                        optdetailsIntent.putExtra("city",city);
-                        optdetailsIntent.putExtra("state",loc);
-                        optdetailsIntent.putExtra("country",cou);
-                        optdetailsIntent.putExtra("address",fulladdr);
-                        startActivity(optdetailsIntent);
-                        finish();
+                        location_info.addr = fulladdr;
+                        EventBus.getDefault().postSticky(location_info);
+
+                        db.collection("doctor").document(userInfo.uid)
+                                .update("address_google_map",fulladdr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if(task.isSuccessful())
+                                {
+                                    optdetailsIntent.putExtra("city",city);
+                                    optdetailsIntent.putExtra("state",loc);
+                                    optdetailsIntent.putExtra("country",cou);
+                                    optdetailsIntent.putExtra("address",fulladdr);
+                                    startActivity(optdetailsIntent);
+                                    finish();
+
+                                }
+
+
+                            }
+                        });
 
 
                     }
@@ -116,14 +133,26 @@ public class Act_Location extends AppCompatActivity {
                     {
 
 
-//                        User user = new User(userInfo.name,userInfo.email,userInfo.pro_pic,"","",fulladdr,"","");
                         location_info.addr = fulladdr;
                         EventBus.getDefault().postSticky(location_info);
-                        User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","",fulladdr,"","");
-                        db.collection("user").document(current.getUid()).set(user);
-                        Intent userHome = new Intent(Act_Location.this, Act_Home.class);
-                        startActivity(userHome);
-                        finish();
+                        db.collection("user").document(userInfo.uid)
+                                .update("address_google_map",fulladdr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if(task.isSuccessful())
+                                {
+
+                                    Intent userHome = new Intent(Act_Location.this, Act_Home.class);
+                                    startActivity(userHome);
+                                    finish();
+
+                                }
+
+
+                            }
+                        });
+
                     }
 
                 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLoginBinding;
+import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Login;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -33,7 +34,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,12 +44,14 @@ import org.json.JSONObject;
 public class Act_Login extends AppCompatActivity {
 
     ActLoginBinding binding;
-    FirebaseAuth mAuth;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
     String user_email = "";
     int flag;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser current = mAuth.getCurrentUser();
 
 
 
@@ -58,8 +63,6 @@ public class Act_Login extends AppCompatActivity {
 
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
-        mAuth = FirebaseAuth.getInstance();
-
 
 
         final LoginButton loginButton = binding.loginButton;
@@ -241,6 +244,8 @@ public class Act_Login extends AppCompatActivity {
                             Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",0);
+                            User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
+                            db.collection("user").document(current.getUid()).set(user);
                             startActivity(locationIntent);
                             finish();
 

@@ -115,7 +115,7 @@
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/grey_corner"
         android:clickable="true"
@@ -159,63 +159,10 @@
         android:paddingLeft="20dp"
         android:text="@string/sign_Fb"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/sign_mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_Ggl" />
-
-    <TextView
-        android:id="@+id/sign_mail"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/grey_corner"
-        android:clickable="true"
-        android:drawableStart="@drawable/logo_mail"
-        android:drawableLeft="@drawable/logo_mail"
-        android:fontFamily="@font/poppins"
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="1sp"
-        android:paddingLeft="20dp"
-        android:paddingRight="30dp"
-        android:text="@string/sign_Mail"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_Fb" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginBottom="136dp"
-        android:fontFamily="@font/poppins"
-        android:text="@string/Already"
-        app:layout_constraintBottom_toTopOf="@+id/by_creating"
-        app:layout_constraintEnd_toStartOf="@+id/SignIn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/SignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="70dp"
-        android:fontFamily="@font/poppins"
-        android:text="@string/signn"
-        android:textColor="@color/green"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/sign_in_user"

@@ -251,8 +251,6 @@ public class Act_User_Calender extends AppCompatActivity {
     private void checkSlot() {
 
 
-
-
         db.collection("doctor").document(uid)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -294,7 +292,7 @@ public class Act_User_Calender extends AppCompatActivity {
                                             for (int i = 0; i < fullTimings.size(); i++) {
 
                                                 timeChecker = fullTimings.get(i);
-                                                ismBooked=false;
+                                                ismBooked = false;
 
                                                 if (timeChecker.contains("PM")) {
                                                     timeSelected = Integer.parseInt(fullTimings.get(i).substring(0, 2)) + 12;
@@ -313,12 +311,9 @@ public class Act_User_Calender extends AppCompatActivity {
                                                         aTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
 
 
-
-
                                                     } else if (timeSelected > 15) {
 
                                                         eTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
-
 
 
                                                     } else if (timeSelected <= 12) {
@@ -328,9 +323,6 @@ public class Act_User_Calender extends AppCompatActivity {
                                                         break;
 
 //                                                        Log.v("DOCSIZE1", String.valueOf(mTimingList.size()));
-
-
-
 
 
                                                     }
@@ -361,9 +353,7 @@ public class Act_User_Calender extends AppCompatActivity {
                                         binding.eveningRv.setAdapter(eAdapter);
 
 
-                                    }
-                                    else
-                                    {
+                                    } else {
 
                                         mAdapter = new DocTimeAdapter(getApplicationContext(), mtiming, ismBooked);
                                         aAdapter = new DocTimeAdapter(getApplicationContext(), atiming, isaBooked);
@@ -382,16 +372,10 @@ public class Act_User_Calender extends AppCompatActivity {
                                         binding.eveningRv.setAdapter(eAdapter);
 
 
-
-
-
                                     }
 
                                 }
                             });
-
-
-
 
 
                 }
@@ -417,7 +401,7 @@ public class Act_User_Calender extends AppCompatActivity {
         Context context;
         ArrayList<String> timings;
         Boolean notAvailable;
-        Map<String,Integer> slotBooked;
+        Map<String, Integer> slotBooked;
 
 
         public DocTimeAdapter(Context context, ArrayList<String> timings, Boolean notAvailable) {
@@ -447,7 +431,6 @@ public class Act_User_Calender extends AppCompatActivity {
 
             }
         };
-
 
 
         @NonNull

@@ -54,7 +54,7 @@ public class Frag_Opt_Appointment extends Fragment {
 
 
 
-        db.collection("appointment").whereEqualTo("doctor_id","KnDp1bHwo4gWMJIaT9P9HpkBKVt2").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("doctor_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){

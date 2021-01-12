@@ -65,6 +65,13 @@ public class Act_Doctor_Details extends AppCompatActivity {
         }
         });
 
+        binding.backIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
 
     }

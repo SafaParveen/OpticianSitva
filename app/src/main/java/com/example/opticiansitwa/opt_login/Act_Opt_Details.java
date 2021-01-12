@@ -38,6 +38,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Act_Opt_Details extends AppCompatActivity {
 
@@ -50,6 +51,10 @@ public class Act_Opt_Details extends AppCompatActivity {
 
     FirebaseStorage storage;
     StorageReference storageReference, uploadTask;
+
+    ArrayList<String> m_timing = new ArrayList<>();
+    ArrayList<String> a_timing = new ArrayList<>();
+    ArrayList<String> e_timing = new ArrayList<>();
 
 
 
@@ -80,7 +85,9 @@ public class Act_Opt_Details extends AppCompatActivity {
 
                 Toast.makeText(Act_Opt_Details.this, "Request Sent!", Toast.LENGTH_SHORT).show();
 
-                Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,"178",appr_img1,"","",addr,"","","0",0L,0L,0L,0L,0L,0L);
+
+
+                Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,"",appr_img1,"","",addr,"","","0",0L,0L,0L,0L,0L,0L,m_timing,a_timing,e_timing);
                 db.collection("doctor").document(userInfo.uid).set(doctor);
                 Intent apprIntent = new Intent(Act_Opt_Details.this,Act_Pending_Approval.class);
                 startActivity(apprIntent);

@@ -9,8 +9,9 @@
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginBottom="1dp"
-    android:background="@color/white"
+    android:background="@drawable/white_ripple"
     android:clickable="true"
+    android:elevation="2dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 
@@ -32,7 +33,7 @@
         app:layout_constraintTop_toTopOf="@+id/profile_pic"
         app:layout_constraintVertical_bias="0.511" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_pic"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -48,9 +49,11 @@
 
     <Button
         android:id="@+id/open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="10dp"
+        android:clickable="false"
+        android:enabled="false"
         android:background="@drawable/light_green_button"
         android:fontFamily="@font/poppins"
         android:text="Open"
@@ -63,10 +66,12 @@
 
     <Button
         android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
+        android:clickable="false"
+        android:enabled="false"
         android:background="@drawable/light_pink_button"
         android:text="Close"
         android:textColor="@color/Red1"

@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.opticiansitwa.databinding.ActAppointmentResultBinding;
-import com.example.opticiansitwa.databinding.OptPastAppointmentBinding;
-import com.example.opticiansitwa.login.Act_location;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -103,6 +101,17 @@ public class Act_Appointment_result extends AppCompatActivity {
                         Toast.makeText(Act_Appointment_result.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+            }
+        });
+
+        binding.videoPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent videoIntent = new Intent(Act_Appointment_result.this,Act_Appointment_Video.class);
+                startActivity(videoIntent);
+
 
             }
         });

@@ -20,6 +20,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.opticiansitwa.databinding.ActProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -52,13 +53,20 @@ public class Act_Profile extends AppCompatActivity {
         storageReference = storage.getReference();
 
 
-        storageReference.child("user_profile_pics").child("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("user_profile_pics").child(userInfo.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
                 Glide.with(getApplicationContext()).load(uri).into(binding.profileImage);
 
 
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Glide.with(getApplicationContext()).load(userInfo.pro_pic).into(binding.profileImage);
 
             }
         });
@@ -68,7 +76,7 @@ public class Act_Profile extends AppCompatActivity {
         binding.ssn.setEnabled(false);
         binding.email.setEnabled(false);
 
-        db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").get()
+        db.collection("user").document(userInfo.uid).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -155,6 +163,16 @@ public class Act_Profile extends AppCompatActivity {
 
             }
         });
+
+        binding.myOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+            }
+        });
     }
 
 
@@ -167,7 +185,8 @@ public class Act_Profile extends AppCompatActivity {
 
         if (requestCode == 123 && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-            uploadTask = storageReference.child("user_profile_pics").child("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2");
+            uploadTask = storageReference.child("user_profile_pics").child(userInfo.uid);
+
             uploadTask.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {

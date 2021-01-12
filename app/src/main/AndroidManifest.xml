@@ -27,7 +27,9 @@
         <activity android:name=".home.Act_Doctor_Details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
         <activity android:name=".home.Act_Home" />
+        <activity android:name=".home.Act_Appointment_result"/>
         <activity android:name=".intro.Act_SplashScreen" >
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

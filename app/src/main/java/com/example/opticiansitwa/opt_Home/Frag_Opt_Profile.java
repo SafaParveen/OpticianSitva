@@ -72,7 +72,7 @@ public class Frag_Opt_Profile extends Fragment {
         });
 
 
-        db.collection("doctor").document("KnDp1bHwo4gWMJIaT9P9HpkBKVt2").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection("doctor").document(userInfo.uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -176,7 +176,7 @@ public class Frag_Opt_Profile extends Fragment {
 
         if (requestCode == 123 && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-            uploadTask = storageReference.child("doctor_profile_pics").child("KnDp1bHwo4gWMJIaT9P9HpkBKVt2");
+            uploadTask = storageReference.child("doctor_profile_pics").child(userInfo.uid);
             uploadTask.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {

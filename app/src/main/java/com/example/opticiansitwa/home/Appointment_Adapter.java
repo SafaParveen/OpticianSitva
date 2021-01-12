@@ -92,8 +92,8 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
         String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch*1000));
 
         String dateParts[] = date.split("/");
-        dayNo = dateParts[0];
-        monthNo = Integer.parseInt(dateParts[1]) ;
+        dayNo = dateParts[1];
+        monthNo = Integer.parseInt(dateParts[0]) ;
         month= months[monthNo-1];
         year = dateParts[2];
         day = dateParts[3];
