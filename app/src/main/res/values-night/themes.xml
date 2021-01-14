@@ -14,12 +14,15 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.OpticianSitva" parent="Theme.Design.NoActionBar">
+    <style name="Theme.OpticianSitva" parent="Theme.MaterialComponents.NoActionBar">
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/black</item>
+
+
 
     </style>
 </resources>

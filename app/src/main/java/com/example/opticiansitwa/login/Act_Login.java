@@ -39,6 +39,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 
 public class Act_Login extends AppCompatActivity {
 
@@ -47,8 +50,9 @@ public class Act_Login extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
-    String user_email = "";
+    String user_email = "",name="",dob="",email;
     int flag;
+    FirebaseUser user;
 
 
 
@@ -61,6 +65,7 @@ public class Act_Login extends AppCompatActivity {
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         mAuth = FirebaseAuth.getInstance();
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
 
 
@@ -69,8 +74,8 @@ public class Act_Login extends AppCompatActivity {
         binding.signFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                loginButton.performClick();
-                Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
+              loginButton.performClick();
+//                Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,13 +170,19 @@ public class Act_Login extends AppCompatActivity {
                                     public void onCompleted(JSONObject object, GraphResponse response) {
 
                                         Toast.makeText(Act_Login.this, "SUCCESSFUL .", Toast.LENGTH_SHORT).show();
-
+                                        user=mAuth.getCurrentUser();
+                                        name=user.getDisplayName();
 
                                         try {
                                             user_email = object.getString("email");
-                                            String name=object.getString("first_name");
-                                            String dob=object.getString("birthday");
-                                            Toast.makeText(Act_Login.this, "SUCCESSFUL ."+name+"Birthday"+dob, Toast.LENGTH_SHORT).show();
+                                             //name=object.getString("first_name");
+                                            user=mAuth.getCurrentUser();
+                                             dob=object.getString("birthday");
+                                             name=user.getDisplayName();
+                                             email=user.getEmail();
+
+//                                            Toast.makeText(Act_Login.this, "Email:"+user_email, Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(Act_Login.this, "SUCCESSFUL :"+name+"Birthday:"+dob, Toast.LENGTH_SHORT).show();
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -181,7 +192,14 @@ public class Act_Login extends AppCompatActivity {
 
                                     }
                                 });
-                                Toast.makeText(Act_Login.this, "SUCCESSFUL 2.", Toast.LENGTH_SHORT).show();
+                                Log.w("Name",name);
+                                Log.w("Email",user_email);
+                              //  Log.w("Email2",email);
+                               // Log.w("profile_url",profile);
+                                Log.w("DOB",dob);
+                                Toast.makeText(Act_Login.this, "SUCCESSFUL.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Act_Login.this, "Email: "+user_email, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Act_Login.this, "SUCCESSFUL :"+name+"Birthday: "+dob, Toast.LENGTH_SHORT).show();
 
 
                                 Bundle parameters = new Bundle();
