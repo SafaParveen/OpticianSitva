@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Doctor {
 
     public String name;
-    public  String email;
+    public String email;
     public String profile_pic;
-    public String location_x;
-    public String location_y;
+    public Double location_x;
+    public Double location_y;
+    public String address_typed_1;
+    public String address_typed_2;
     public String address_google_map;
     public String ssn;
     public String age;
@@ -26,13 +28,15 @@ public class Doctor {
     public ArrayList<String> e_timing;
 
 
-    public Doctor(String name, String email, String profile_pic, String location_x, String id_proof_url_1, String id_proof_url_2, String location_y, String address_google_map, String ssn, String age, String status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch,ArrayList<String> m_timing,
+    public Doctor(String name, String email, String profile_pic, Double location_x, String id_proof_url_1,String address_typed_1,String address_typed_2, String id_proof_url_2, Double location_y, String address_google_map, String ssn, String age, String status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch,ArrayList<String> m_timing,
     ArrayList<String> a_timing,ArrayList<String> e_timing) {
         this.name = name;
         this.email = email;
         this.profile_pic = profile_pic;
         this.location_x = location_x;
         this.location_y = location_y;
+        this.address_typed_1=address_typed_1;
+        this.address_typed_2=address_typed_2;
         this.address_google_map = address_google_map;
         this.id_proof_url_1=id_proof_url_1;
         this.id_proof_url_2=id_proof_url_2;

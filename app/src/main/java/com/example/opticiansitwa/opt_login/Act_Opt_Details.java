@@ -44,13 +44,14 @@ public class Act_Opt_Details extends AppCompatActivity {
 
     ActOptDetailsBinding binding;
     public static final int GET_FROM_GALLERY = 3;
-    String addr="",appr_img1="";
+    String addr="",appr_img1="",address1,address2;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     FirebaseStorage storage;
     StorageReference storageReference, uploadTask;
+    double latitude,longitude;
 
     ArrayList<String> m_timing = new ArrayList<>();
     ArrayList<String> a_timing = new ArrayList<>();
@@ -76,6 +77,10 @@ public class Act_Opt_Details extends AppCompatActivity {
             binding.optAddr2.setText(bundle.getString("state"));
             binding.optAddr3.setText(bundle.getString("country"));
             addr = bundle.getString("address");
+            latitude=bundle.getDouble("location_x");
+            longitude=bundle.getDouble("location_y");
+            address1=bundle.getString("address1");
+            address2=bundle.getString("address2");
 
         }
 
@@ -87,7 +92,7 @@ public class Act_Opt_Details extends AppCompatActivity {
 
 
 
-                Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,"",appr_img1,"","",addr,"","","0",0L,0L,0L,0L,0L,0L,m_timing,a_timing,e_timing);
+                Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,latitude,appr_img1,address1,address2,"",longitude,addr,"","","0",0L,0L,0L,0L,0L,0L,m_timing,a_timing,e_timing);
                 db.collection("doctor").document(userInfo.uid).set(doctor);
                 Intent apprIntent = new Intent(Act_Opt_Details.this,Act_Pending_Approval.class);
                 startActivity(apprIntent);
