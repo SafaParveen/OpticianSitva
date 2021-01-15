@@ -78,6 +78,8 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 
     ActLocationBinding binding;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
+    User_Info user = new User_Info();
+
 
     Location_info location_info = new Location_info();
     SupportMapFragment supportMapFragment;
@@ -87,6 +89,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
     LocationRequest locationRequest;
     List<Address> addresses;
     String place, loc, cou, city, fulladdr;
+    double latitude,longitude;
     Bundle bundle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -154,31 +157,27 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                     if(bundle!=null) {
 
                         if(bundle.getInt("status") == 1) {
-                            Toast.makeText(Act_Location.this, "Doctor", Toast.LENGTH_SHORT).show();
-                           // Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
+                            Toast.makeText(Act_Location.this, "Doctor \n city:"+city+"\nstate: "+loc+"Country :"+cou+"\naddres:"+fulladdr, Toast.LENGTH_SHORT).show();
+                            Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
                             location_info.addr = fulladdr;
                             EventBus.getDefault().postSticky(location_info);
+                            user.name = current.getDisplayName();
+                            user.email = current.getEmail();
+                            user.pro_pic = current.getPhotoUrl().toString();
+                            user.uid = current.getUid();
+                            EventBus.getDefault().postSticky(user);
 
-                            db.collection("doctor").document(userInfo.uid)
-                                    .update("address_google_map",fulladdr).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                            optdetailsIntent.putExtra("city",city);
+                            optdetailsIntent.putExtra("state",loc);
+                            optdetailsIntent.putExtra("country",cou);
+                            optdetailsIntent.putExtra("address",fulladdr);
+                            optdetailsIntent.putExtra("location_x",latitude);
+                            optdetailsIntent.putExtra("location_y",longitude);
+                            optdetailsIntent.putExtra("address1",binding.address1.getText().toString());
+                            optdetailsIntent.putExtra("address2",binding.address2.getText().toString());
+                            startActivity(optdetailsIntent);
+                            finish();
 
-                                    if(task.isSuccessful())
-                                    {
-//                                        optdetailsIntent.putExtra("city",city);
-//                                        optdetailsIntent.putExtra("state",loc);
-//                                        optdetailsIntent.putExtra("country",cou);
-//                                        optdetailsIntent.putExtra("address",fulladdr);
-                                        Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
-                                        startActivity(optdetailsIntent);
-                                        finish();
-
-                                    }
-
-
-                                }
-                            });
 
 
                         }
@@ -191,7 +190,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                             Toast.makeText(Act_Location.this, "Userrr", Toast.LENGTH_SHORT).show();
                             EventBus.getDefault().postSticky(location_info);
                             db.collection("user").document(userInfo.uid)
-                                    .update("address_google_map",fulladdr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    .update("address_google_map",fulladdr,"location_x",latitude,"location_y",longitude,"address_typed_1",binding.address1.getText().toString(),"address_typed_2",binding.address2.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
@@ -451,6 +450,8 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
         String address = addresses.get(0).getAddressLine(0);
+        latitude=latLng.latitude;
+        longitude=latLng.longitude;
         loc = addresses.get(0).getAdminArea();
         city = addresses.get(0).getLocality();
         cou = addresses.get(0).getCountryName();
@@ -499,9 +500,9 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
                 String streetAddress = address.getAddressLine(0);
+                place = getplace(latLng);
 
                 mMap.clear();
-                place = getplace(latLng);
                 marker.setTitle(streetAddress);
                 binding.mapAddress.setText(streetAddress);
                 mMap.addMarker(new MarkerOptions()
@@ -527,6 +528,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             public void onSuccess(Location location) {
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+
                 List<Address> addresses = null;
                 try {
                     addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
@@ -537,7 +539,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                     Address address = addresses.get(0);
                     streetAddress = address.getAddressLine(0);
                     binding.mapAddress.setText(streetAddress);
-
+                    place = getplace(latLng);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                     mMap.addMarker(new MarkerOptions()
                             .position(latLng)

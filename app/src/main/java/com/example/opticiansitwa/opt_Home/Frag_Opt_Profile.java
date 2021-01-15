@@ -64,7 +64,7 @@ public class Frag_Opt_Profile extends Fragment {
         storageReference = storage.getReference();
 
 
-        storageReference.child("doctor_profile_pics").child("KnDp1bHwo4gWMJIaT9P9HpkBKVt2").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("doctor_profile_pics").child(userInfo.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
