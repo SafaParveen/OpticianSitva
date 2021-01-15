@@ -1,11 +1,15 @@
 package com.example.opticiansitwa.login;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLoginBinding;
 import com.example.opticiansitwa.models.User;
@@ -39,9 +46,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class Act_Login extends AppCompatActivity {
 
@@ -55,6 +68,11 @@ public class Act_Login extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser current;
 
+    File imageFile;
+
+    FirebaseStorage storage;
+    StorageReference storageReference, uploadTask;
+
 
 
 
@@ -63,6 +81,10 @@ public class Act_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActLoginBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
         binding.termsOfSe.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         // Initialize Facebook Login button
@@ -188,6 +210,7 @@ public class Act_Login extends AppCompatActivity {
                                         Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                                         Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                                         locationIntent.putExtra("status",0);
+                                        downloadImage(current.getPhotoUrl().toString());
                                         User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
                                         db.collection("user").document(current.getUid()).set(user);
                                         startActivity(locationIntent);
@@ -258,6 +281,9 @@ public class Act_Login extends AppCompatActivity {
                             Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",0); //status = 0 User
                             current=mAuth.getCurrentUser();
+                            downloadImage(current.getPhotoUrl().toString());
+                            uploadTask = storageReference.child("user_profile_pics").child(current.getUid());
+                            uploadTask.putFile(Uri.fromFile(imageFile));
                             User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
                             db.collection("user").document(current.getUid()).set(user);
                             startActivity(locationIntent);
@@ -273,5 +299,53 @@ public class Act_Login extends AppCompatActivity {
 
                       }
                 });
+    }
+
+    private void downloadImage(String imageURL) {
+
+
+        final String fileName = "profile_pic";
+
+        Glide.with(this)
+                .load(imageURL)
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+
+                        Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                        saveImage(bitmap, getFilesDir(), fileName);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        super.onLoadFailed(errorDrawable);
+
+                        Toast.makeText(getApplicationContext(), "Failed to Download Image! Please try again later.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+
+    private void saveImage(Bitmap image, File storageDir, String imageFileName) {
+
+
+        imageFile = new File(storageDir, imageFileName);
+        try {
+            OutputStream fOut = new FileOutputStream(imageFile);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.close();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error while saving image!", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
     }
 }

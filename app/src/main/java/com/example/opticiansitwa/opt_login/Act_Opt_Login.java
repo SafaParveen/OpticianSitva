@@ -245,8 +245,6 @@ public class Act_Opt_Login extends AppCompatActivity {
                             Toast.makeText(Act_Opt_Login.this, "Opt Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Opt_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",1);
-
-
                             startActivity(locationIntent);
                             finish();
 

@@ -95,27 +95,66 @@ public class Act_SplashScreen extends AppCompatActivity {
 
                     downloadImage(current.getPhotoUrl().toString());
 
-                    uploadTask = storageReference.child("user_profile_pics").child(current.getUid());
+                    SharedPreferences sharedPref = getSharedPreferences("version", MODE_PRIVATE);
+
+                    if (sharedPref.getInt("type", 0) == 0) {
 
 
-                    uploadTask.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
+                        uploadTask = storageReference.child("user_profile_pics").child(current.getUid());
 
-                            if (task.isSuccessful()) {
 
-                                restCode();
+                        uploadTask.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
 
-                            } else {
+                                if (task.isSuccessful()) {
 
-                                uploadTask.putFile(Uri.fromFile(imageFile));
-                                restCode();
+                                    restCode();
 
+                                } else {
+
+                                    uploadTask.putFile(Uri.fromFile(imageFile));
+                                    restCode();
+
+
+                                }
 
                             }
+                        });
 
-                        }
-                    });
+
+                    }
+                    else
+                    {
+
+
+                        uploadTask = storageReference.child("doctor_profile_pics").child(current.getUid());
+
+
+                        uploadTask.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+
+                                if (task.isSuccessful()) {
+
+                                    restCode();
+
+                                } else {
+
+                                    uploadTask.putFile(Uri.fromFile(imageFile));
+                                    restCode();
+
+
+                                }
+
+                            }
+                        });
+
+
+
+                    }
+
+
 
 
                 } else {
@@ -209,13 +248,16 @@ public class Act_SplashScreen extends AppCompatActivity {
 
 
                         } else {
-                            Toast.makeText(Act_SplashScreen.this, "Please sign in again!", Toast.LENGTH_SHORT).show();
+
+
+
+                            Toast.makeText(Act_SplashScreen.this, "Awaiting approval!", Toast.LENGTH_SHORT).show();
                             user.name = current.getDisplayName();
                             user.email = current.getEmail();
                             user.pro_pic = current.getPhotoUrl().toString();
                             user.uid = current.getUid();
                             EventBus.getDefault().postSticky(user);
-                            Intent i = new Intent(Act_SplashScreen.this, Act_Opt_Login.class);
+                            Intent i = new Intent(Act_SplashScreen.this, Act_Pending_Approval.class);
                             startActivity(i);
                             finish();
 
