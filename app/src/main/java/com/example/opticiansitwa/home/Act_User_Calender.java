@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -44,6 +45,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 
 public class Act_User_Calender extends AppCompatActivity {
@@ -52,6 +56,16 @@ public class Act_User_Calender extends AppCompatActivity {
     RecyclerView.Adapter<Act_User_Calender.CalenderViewHolder> calAdapter;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     Map<String, String> test_report = new HashMap<>();
+
+    final int callbackId = 42;
+
+    final String[] permissionsId = {"Manifest.permission.READ_CALENDAR","Manifest.permission.WRITE_CALENDAR"};
+
+
+    long eventID;
+
+
+
 
 
     TextView data;
@@ -93,9 +107,14 @@ public class Act_User_Calender extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         super.onCreate(savedInstanceState);
         binding = ActUserCalenderBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+
+        checkPermissions(callbackId, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR);
+
 
 
         doc_uid = getIntent().getStringExtra("uid");
@@ -177,19 +196,7 @@ public class Act_User_Calender extends AppCompatActivity {
                     Appointment appointment = new Appointment(userInfo.uid, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "", "", "", "");
                     db.collection("appointment").document().set(appointment);
                     addCalendar();
-                    Intent intent = new Intent(Intent.ACTION_INSERT)
-                            .setData(CalendarContract.Events.CONTENT_URI)
-                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, epochSelected + (timeSelected * 3600000L))
-                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, epochSelected + (timeSelected * 3600000L) + 1800000L)
-                            .putExtra(CalendarContract.Events.TITLE, "Optician Appointment")
-                            .putExtra(CalendarContract.Events.DESCRIPTION, "Scheduled by Optician Sitva")
-                            .putExtra(CalendarContract.Events.EVENT_LOCATION, "Online")
-                            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-                            .putExtra(Intent.EXTRA_EMAIL, doc_email)
-                            .putExtra(Intent.EXTRA_EMAIL, userInfo.email);
-
                     Toast.makeText(Act_User_Calender.this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
                     finish();
 
 
@@ -202,31 +209,48 @@ public class Act_User_Calender extends AppCompatActivity {
 
     }
 
+    private void checkPermissions(int callbackId, String readCalendar, String writeCalendar) {
+
+        boolean permissions = true;
+        for (String p : permissionsId) {
+            permissions = permissions && ContextCompat.checkSelfPermission(this, p) == PERMISSION_GRANTED;
+        }
+
+        if (!permissions)
+            ActivityCompat.requestPermissions(this, permissionsId, callbackId);
+    }
+
+
     private void addCalendar() {
 
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(CalendarContract.Calendars.ACCOUNT_NAME, "cal@zoftino.com");
-//        contentValues.put(CalendarContract.Calendars.ACCOUNT_TYPE, "cal.zoftino.com");
-//        contentValues.put(CalendarContract.Calendars.NAME, "zoftino calendar");
-//        contentValues.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "Zoftino.com Calendar");
-//        contentValues.put(CalendarContract.Calendars.CALENDAR_COLOR, "232323");
-//        contentValues.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
-//        contentValues.put(CalendarContract.Calendars.OWNER_ACCOUNT, "cal@zoftino.com");
-//        contentValues.put(CalendarContract.Calendars.ALLOWED_REMINDERS, "METHOD_ALERT, METHOD_EMAIL, METHOD_ALARM");
-//        contentValues.put(CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES, "TYPE_OPTIONAL, TYPE_REQUIRED, TYPE_RESOURCE");
-//        contentValues.put(CalendarContract.Calendars.ALLOWED_AVAILABILITY, "AVAILABILITY_BUSY, AVAILABILITY_FREE, AVAILABILITY_TENTATIVE");
-//
-//
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_CAL_WRITE_REQ);
-//        }
-//
-//
-//        Uri uri = CalendarContract.Calendars.CONTENT_URI;
-//        uri = uri.buildUpon().appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER,"true")
-//                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "cal@zoftino.com")
-//                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, "cal.zoftino.com").build();
-//        getContentResolver().insert(uri, contentValues);
+        long calID = 3;
+        TimeZone tz = TimeZone.getDefault();
+
+        ContentResolver cr = getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, epochSelected + (timeSelected * 3600000L));
+        values.put(CalendarContract.Events.DTEND, epochSelected + (timeSelected * 3600000L) + 1800000L);
+        values.put(CalendarContract.Events.TITLE, "Optician Appointment");
+        values.put(CalendarContract.Events.DESCRIPTION, "Scheduled by Optician Sitva");
+        values.put(CalendarContract.Events.CALENDAR_ID, calID);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
+        values.put(CalendarContract.Events.HAS_ALARM, 1);
+        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+// get the event ID that is the last element in the Uri
+        eventID = Long.parseLong(uri.getLastPathSegment());
+
+        ContentValues values1 = new ContentValues();
+        values1.put(CalendarContract.Attendees.ATTENDEE_EMAIL, doc_email);
+        values1.put(CalendarContract.Attendees.EVENT_ID, eventID);
+        cr.insert(CalendarContract.Attendees.CONTENT_URI, values1);
+
+
+        ContentValues values2 = new ContentValues();
+        values2.put(CalendarContract.Reminders.MINUTES, 15);
+        values2.put(CalendarContract.Reminders.EVENT_ID, eventID);
+        values2.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        cr.insert(CalendarContract.Reminders.CONTENT_URI, values2);
 
     }
 

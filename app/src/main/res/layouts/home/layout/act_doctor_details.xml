@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/doc_image" />
 
 
-    <Button
+    <android.widget.Button
         android:id="@+id/make_appt_btn1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -257,6 +257,7 @@ public class Act_Login extends AppCompatActivity {
                             Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",0); //status = 0 User
+                            current=mAuth.getCurrentUser();
                             User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
                             db.collection("user").document(current.getUid()).set(user);
                             startActivity(locationIntent);
