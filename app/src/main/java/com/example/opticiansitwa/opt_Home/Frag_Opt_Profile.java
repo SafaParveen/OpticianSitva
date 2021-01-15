@@ -2,9 +2,11 @@ package com.example.opticiansitwa.opt_Home;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.FragOptProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -108,6 +111,7 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.edit.setText("Edit");
 
 
+
                     db.collection("doctor").document(userInfo.uid)
                             .update("age",binding.age.getText().toString(),
                                     "ssn",binding.ssn.getText().toString(),
@@ -133,6 +137,10 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.age.setEnabled(true);
                     binding.ssn.setEnabled(true);
                     binding.email.setEnabled(true);
+                    binding.age.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.black), PorterDuff.Mode.SRC_ATOP);
+                    binding.ssn.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.black), PorterDuff.Mode.SRC_ATOP);
+                    binding.email.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.black), PorterDuff.Mode.SRC_ATOP);
+
 
                 }
 

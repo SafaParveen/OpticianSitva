@@ -3,8 +3,10 @@ package com.example.opticiansitwa.home;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,7 +56,7 @@ public class Act_Profile extends AppCompatActivity {
         storageReference = storage.getReference();
 
 
-        storageReference.child("user_profile_pics").child(userInfo.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("user_profile_pics").child("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
@@ -76,7 +79,7 @@ public class Act_Profile extends AppCompatActivity {
         binding.ssn.setEnabled(false);
         binding.email.setEnabled(false);
 
-        db.collection("user").document(userInfo.uid).get()
+        db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -109,9 +112,11 @@ public class Act_Profile extends AppCompatActivity {
                     binding.ssn.setEnabled(false);
                     binding.email.setEnabled(false);
                     binding.edit.setText("Edit");
+                    binding.age.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.Red1), PorterDuff.Mode.SRC_ATOP);
 
 
-                    db.collection("user").document(userInfo.uid)
+
+                    db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2")
                             .update("age",binding.age.getText().toString(),
                                     "ssn",binding.ssn.getText().toString(),
                                     "email",binding.email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -136,6 +141,10 @@ public class Act_Profile extends AppCompatActivity {
                     binding.age.setEnabled(true);
                     binding.ssn.setEnabled(true);
                     binding.email.setEnabled(true);
+                    binding.age.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_ATOP);
+                    binding.ssn.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_ATOP);
+                    binding.email.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black), PorterDuff.Mode.SRC_ATOP);
+
 
                 }
 

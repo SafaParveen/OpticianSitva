@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,10 +50,11 @@ public class Act_Login extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
-    String user_email = "";
+    String user_email = "",name,photoUrl;
     int flag;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseUser current = mAuth.getCurrentUser();
+    FirebaseUser current;
+
 
 
 
@@ -60,6 +63,7 @@ public class Act_Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActLoginBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+        binding.termsOfSe.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
@@ -70,11 +74,12 @@ public class Act_Login extends AppCompatActivity {
         binding.signFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                loginButton.performClick();
-                Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
+               loginButton.performClick();
+               // Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
             }
         });
 
+         current = mAuth.getCurrentUser();
 
         loginButton.setPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -100,6 +105,18 @@ public class Act_Login extends AppCompatActivity {
         });
 // ...
 
+        binding.termsOfSe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                browserIntent.setData(Uri.parse("http://www.google.com"));
+                startActivity(browserIntent);
+
+
+
+            }
+        });
 
         binding.signGgl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,24 +182,20 @@ public class Act_Login extends AppCompatActivity {
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                        Toast.makeText(Act_Login.this, "SUCCESSFUL .", Toast.LENGTH_SHORT).show();
+                                           // photoUrl = "https://graph.facebook.com/" + current.getPhotoUrl().toString() + "/picture?height=500";
+                                          //  Log.v("Tag","photo: "+current.getPhotoUrl().toString());
 
-
-                                        try {
-                                            user_email = object.getString("email");
-                                            String name=object.getString("first_name");
-                                            String dob=object.getString("birthday");
-                                            Toast.makeText(Act_Login.this, "SUCCESSFUL ."+name+"Birthday"+dob, Toast.LENGTH_SHORT).show();
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-
-
-
+                                        Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                                        Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
+                                        locationIntent.putExtra("status",0);
+                                        User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
+                                        db.collection("user").document(current.getUid()).set(user);
+                                        startActivity(locationIntent);
+                                        finish();
                                     }
                                 });
-                                Toast.makeText(Act_Login.this, "SUCCESSFUL 2.", Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(Act_Login.this, "SUCCESSFUL wow ."+name+"Birthday"+dob, Toast.LENGTH_SHORT).show();
+
 
 
                                 Bundle parameters = new Bundle();
@@ -243,7 +256,7 @@ public class Act_Login extends AppCompatActivity {
 
                             Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
-                            locationIntent.putExtra("status",0);
+                            locationIntent.putExtra("status",0); //status = 0 User
                             User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
                             db.collection("user").document(current.getUid()).set(user);
                             startActivity(locationIntent);

@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/getstarted_button"
         app:srcCompat="@drawable/os_intro_img1" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/getstarted_button"
         android:layout_width="145dp"
         android:layout_height="40dp"
