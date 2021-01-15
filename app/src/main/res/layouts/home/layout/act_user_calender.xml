@@ -148,7 +148,7 @@
 
     </ScrollView>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/make_appt_btn2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

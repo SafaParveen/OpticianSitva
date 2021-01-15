@@ -21,7 +21,7 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/next_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

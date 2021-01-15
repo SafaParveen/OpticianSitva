@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/buy_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

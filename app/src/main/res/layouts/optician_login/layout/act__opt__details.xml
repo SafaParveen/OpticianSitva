@@ -190,7 +190,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="56dp"
                 android:fontFamily="@font/poppins"
-                android:text="Photo"
+                android:text="ID Proof"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -241,7 +241,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/reqappr_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
