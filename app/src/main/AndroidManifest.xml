@@ -29,19 +29,26 @@
         <activity android:name=".home.Act_Home" />
         <activity android:name=".home.Act_Appointment_result"/>
         <activity android:name=".intro.Act_SplashScreen" >
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+
+            </intent-filter>
 
 
 
-
-
+        </activity>
         <activity android:name=".opt_login.Act_Opt_Details" />
-        <activity android:name=".opt_login.Act_Opt_Login" />
+        <activity android:name=".opt_login.Act_Opt_Login" >
 
+
+
+
+
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -50,26 +57,28 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDZtqqbkSnNTAKpVvKH833Cehu1laJeGps" />
+            android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
 
         <activity android:name=".intro.Act_Intro" />
         <activity android:name=".login.Act_Login" />
-
-
-
-        <activity android:name=".login.Act_Location" ></activity>
-
+        <activity android:name=".login.Act_Location" />
         <activity android:name=".intro.Act_IntroMain" />
-        <activity android:name=".home.Act_Profile" ></activity>
+        <activity android:name=".home.Act_Profile" >
 
+
+        </activity>
         <activity android:name=".home.Act_Appointment_detail" />
         <activity android:name=".home.Act_Specs_List" />
         <activity android:name=".opt_Home.Act_Patient_Details" />
         <activity android:name=".opt_Home.Act_Patient_History" />
         <activity
             android:name=".opt_Home.Act_Opt_Home"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" >
 
+
+
+
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

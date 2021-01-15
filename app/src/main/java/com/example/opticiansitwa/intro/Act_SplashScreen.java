@@ -163,6 +163,7 @@ public class Act_SplashScreen extends AppCompatActivity {
 
 
                         } else {
+
                             user.name = current.getDisplayName();
                             user.email = current.getEmail();
                             user.pro_pic = current.getPhotoUrl().toString();
