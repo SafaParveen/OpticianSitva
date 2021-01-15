@@ -56,6 +56,8 @@ public class Act_Location extends AppCompatActivity {
     ActLocationBinding binding;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
 
+    User_Info user = new User_Info();
+
     Location_info location_info = new Location_info();
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
@@ -106,7 +108,13 @@ public class Act_Location extends AppCompatActivity {
                         location_info.addr = fulladdr;
                         EventBus.getDefault().postSticky(location_info);
 
-                        db.collection("doctor").document(userInfo.uid)
+//                        user.name = current.getDisplayName();
+//                        user.email = current.getEmail();
+//                        user.pro_pic = current.getPhotoUrl().toString();
+//                        user.uid = current.getUid();
+//                        EventBus.getDefault().postSticky(user);
+
+                        db.collection("doctor").document(current.getUid())
                                 .update("address_google_map",fulladdr).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

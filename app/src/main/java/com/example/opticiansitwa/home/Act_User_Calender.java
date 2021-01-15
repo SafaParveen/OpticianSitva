@@ -2,15 +2,20 @@ package com.example.opticiansitwa.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +28,15 @@ import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActUserCalenderBinding;
 import com.example.opticiansitwa.databinding.SelectedCalenderViewBinding;
 import com.example.opticiansitwa.databinding.SlotTimeRvBinding;
+import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.models.Appointment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +50,8 @@ public class Act_User_Calender extends AppCompatActivity {
 
     ActUserCalenderBinding binding;
     RecyclerView.Adapter<Act_User_Calender.CalenderViewHolder> calAdapter;
+    User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
+    Map<String, String> test_report = new HashMap<>();
 
 
     TextView data;
@@ -57,6 +67,7 @@ public class Act_User_Calender extends AppCompatActivity {
     String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     ArrayList<String> calenderList = new ArrayList<String>();
     ArrayList<Long> calenderEpochList = new ArrayList<Long>();
+    ArrayList<String> fullTimings = new ArrayList<>();
 
 
     ArrayList<String> mtiming = new ArrayList<String>();
@@ -69,7 +80,7 @@ public class Act_User_Calender extends AppCompatActivity {
 
     DocTimeAdapter mAdapter, aAdapter, eAdapter;
 
-    String str, timeChecker, uid;
+    String str, timeChecker, doc_uid, doc_email;
     SimpleDateFormat df;
     Date date;
     long epoch, epochSelected;
@@ -81,14 +92,18 @@ public class Act_User_Calender extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         binding = ActUserCalenderBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
-        uid = getIntent().getStringExtra("uid");
+
+        doc_uid = getIntent().getStringExtra("uid");
+        doc_email = getIntent().getStringExtra("doc_email");
 
 
         showCalender();
+        epochSelected = calenderEpochList.get(0);
 
 //        binding.calenderRv.setAdapter(calAdapter);
 
@@ -115,6 +130,7 @@ public class Act_User_Calender extends AppCompatActivity {
                         selectedIndex = position;
                         notifyDataSetChanged();
                         epochSelected = calenderEpochList.get(position);
+                        slotTester = 0;
                         checkSlot();
 
                     }
@@ -151,12 +167,30 @@ public class Act_User_Calender extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 if (slotTester == 0) {
                     Toast.makeText(Act_User_Calender.this, "Please select your slot", Toast.LENGTH_SHORT).show();
 
                 } else {
 
+
+                    Appointment appointment = new Appointment(userInfo.uid, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "", "", "", "");
+                    db.collection("appointment").document().set(appointment);
+                    addCalendar();
+                    Intent intent = new Intent(Intent.ACTION_INSERT)
+                            .setData(CalendarContract.Events.CONTENT_URI)
+                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, epochSelected + (timeSelected * 3600000L))
+                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, epochSelected + (timeSelected * 3600000L) + 1800000L)
+                            .putExtra(CalendarContract.Events.TITLE, "Optician Appointment")
+                            .putExtra(CalendarContract.Events.DESCRIPTION, "Scheduled by Optician Sitva")
+                            .putExtra(CalendarContract.Events.EVENT_LOCATION, "Online")
+                            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                            .putExtra(Intent.EXTRA_EMAIL, doc_email)
+                            .putExtra(Intent.EXTRA_EMAIL, userInfo.email);
+
                     Toast.makeText(Act_User_Calender.this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    finish();
 
 
                 }
@@ -165,6 +199,34 @@ public class Act_User_Calender extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void addCalendar() {
+
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(CalendarContract.Calendars.ACCOUNT_NAME, "cal@zoftino.com");
+//        contentValues.put(CalendarContract.Calendars.ACCOUNT_TYPE, "cal.zoftino.com");
+//        contentValues.put(CalendarContract.Calendars.NAME, "zoftino calendar");
+//        contentValues.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "Zoftino.com Calendar");
+//        contentValues.put(CalendarContract.Calendars.CALENDAR_COLOR, "232323");
+//        contentValues.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+//        contentValues.put(CalendarContract.Calendars.OWNER_ACCOUNT, "cal@zoftino.com");
+//        contentValues.put(CalendarContract.Calendars.ALLOWED_REMINDERS, "METHOD_ALERT, METHOD_EMAIL, METHOD_ALARM");
+//        contentValues.put(CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES, "TYPE_OPTIONAL, TYPE_REQUIRED, TYPE_RESOURCE");
+//        contentValues.put(CalendarContract.Calendars.ALLOWED_AVAILABILITY, "AVAILABILITY_BUSY, AVAILABILITY_FREE, AVAILABILITY_TENTATIVE");
+//
+//
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_CAL_WRITE_REQ);
+//        }
+//
+//
+//        Uri uri = CalendarContract.Calendars.CONTENT_URI;
+//        uri = uri.buildUpon().appendQueryParameter(android.provider.CalendarContract.CALLER_IS_SYNCADAPTER,"true")
+//                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "cal@zoftino.com")
+//                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, "cal.zoftino.com").build();
+//        getContentResolver().insert(uri, contentValues);
 
     }
 
@@ -241,7 +303,7 @@ public class Act_User_Calender extends AppCompatActivity {
 
         } catch (Exception e) {
 
-            System.out.println("error");
+            //System.out.println("error");
 
 
         }
@@ -251,14 +313,12 @@ public class Act_User_Calender extends AppCompatActivity {
     private void checkSlot() {
 
 
-        db.collection("doctor").document(uid)
+        db.collection("doctor").document(doc_uid)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                 if (task.isSuccessful()) {
-
-                    ArrayList<String> fullTimings = new ArrayList<>();
 
 
                     mtiming = (ArrayList<String>) task.getResult().getData().get("m_timing");
@@ -276,7 +336,7 @@ public class Act_User_Calender extends AppCompatActivity {
                     db.collection("appointment")
                             .whereGreaterThan("epoch", epochSelected)
                             .whereLessThanOrEqualTo("epoch", epochSelected + 86400000L)
-                            .whereEqualTo("doctor_id", uid)
+                            .whereEqualTo("doctor_id", doc_uid)
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
@@ -286,6 +346,7 @@ public class Act_User_Calender extends AppCompatActivity {
 
 
                                     if (task.isSuccessful()) {
+
                                         for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
 
 
@@ -298,6 +359,7 @@ public class Act_User_Calender extends AppCompatActivity {
                                                     timeSelected = Integer.parseInt(fullTimings.get(i).substring(0, 2)) + 12;
 
                                                 } else {
+
                                                     timeSelected = Integer.parseInt(fullTimings.get(i).substring(0, 2));
 
                                                 }
@@ -309,20 +371,19 @@ public class Act_User_Calender extends AppCompatActivity {
                                                     if (timeSelected > 12 && timeSelected <= 15) {
 
                                                         aTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
+                                                        aTimingList.put("Time", 1);
 
 
                                                     } else if (timeSelected > 15) {
 
-                                                        eTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
+                                                        aTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
+                                                        aTimingList.put("Time", 2);
 
 
                                                     } else if (timeSelected <= 12) {
 
-                                                        mTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
-                                                        ismBooked = true;
-                                                        break;
-
-//                                                        Log.v("DOCSIZE1", String.valueOf(mTimingList.size()));
+                                                        aTimingList.put(Long.toString(epochSelected + (timeSelected * 3600000L)), 1);
+                                                        aTimingList.put("Time", 0);
 
 
                                                     }
@@ -334,7 +395,6 @@ public class Act_User_Calender extends AppCompatActivity {
 
 
                                         }
-
 
                                         mAdapter = new DocTimeAdapter(getApplicationContext(), mtiming, ismBooked);
                                         aAdapter = new DocTimeAdapter(getApplicationContext(), atiming, isaBooked);
@@ -418,7 +478,6 @@ public class Act_User_Calender extends AppCompatActivity {
                 if (current_highlighted != null) {
                     current_highlighted.setBackgroundResource(R.drawable.grey_button1);
                     current_highlighted.setTextColor(Color.parseColor("#555555"));
-                    slotTester = 0;
 
                 }
                 current_highlighted = (TextView) view;
@@ -426,6 +485,16 @@ public class Act_User_Calender extends AppCompatActivity {
                 data = (TextView) view;
                 data.setBackgroundResource(R.drawable.blue_button1);
                 data.setTextColor(Color.parseColor("#ffffff"));
+                timeChecker = data.getText().toString();
+                if (timeChecker.contains("PM")) {
+                    timeSelected = Integer.parseInt(data.getText().toString().substring(0, 2)) + 12;
+
+                } else {
+
+                    timeSelected = Integer.parseInt(data.getText().toString().substring(0, 2));
+
+                }
+
                 slotTester = 1;
 
 

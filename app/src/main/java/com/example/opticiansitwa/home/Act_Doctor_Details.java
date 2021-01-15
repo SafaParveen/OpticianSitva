@@ -57,6 +57,7 @@ public class Act_Doctor_Details extends AppCompatActivity {
                     Intent slotIntent = new Intent(Act_Doctor_Details.this,Act_User_Calender.class);
                     slotIntent.putExtra("uid", uid);
                     startActivity(slotIntent);
+                    finish();
 
                 }
             });

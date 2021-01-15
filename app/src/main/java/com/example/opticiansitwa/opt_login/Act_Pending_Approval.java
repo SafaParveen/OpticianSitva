@@ -35,25 +35,26 @@ public class Act_Pending_Approval extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         db.collection("doctor").document(userInfo.uid)
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                if(task.isSuccessful())
-                {
-                    if(task.getResult().getData().get("status").equals("1"))
-                    {
-                        Intent homeIntent = new Intent(Act_Pending_Approval.this, Act_Opt_Home.class);
-                        startActivity(homeIntent);
-                        finish();
+                        if(value.exists())
+                        {
+
+                            if(value.getData().get("status").equals("1")) {
+
+                                Intent homeIntent = new Intent(Act_Pending_Approval.this, Act_Opt_Home.class);
+                                startActivity(homeIntent);
+                                finish();
+
+                            }
+
+
+                        }
 
                     }
-
-
-                }
-
-            }
-        });
+                });
 
 
 

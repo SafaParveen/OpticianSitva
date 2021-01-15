@@ -100,6 +100,7 @@ public class Act_Home extends AppCompatActivity {
 
                         Intent intent1 = new Intent(Act_Home.this, Act_Doctor_Details.class);
                         intent1.putExtra("uid", doctorList.get(position).getId());
+                        intent1.putExtra("doc_email", doctorList.get(position).get("email").toString());
                         startActivity(intent1);
 
                     }

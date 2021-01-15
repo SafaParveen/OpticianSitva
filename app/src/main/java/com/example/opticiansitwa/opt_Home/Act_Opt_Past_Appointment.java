@@ -133,7 +133,7 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
     }
 
     private void dateConverter(long epoch) {
-        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ HH a").format(new java.util.Date (epoch*1000));
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch*1000));
 
         String dateParts[] = date.split("/");
          dayNo = dateParts[0];
