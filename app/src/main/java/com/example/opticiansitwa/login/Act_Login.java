@@ -210,7 +210,7 @@ public class Act_Login extends AppCompatActivity {
                                         Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                                         Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                                         locationIntent.putExtra("status",0);
-                                        downloadImage(current.getPhotoUrl().toString());
+                                      //  downloadImage(current.getPhotoUrl().toString());
                                         User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
                                         db.collection("user").document(current.getUid()).set(user);
                                         startActivity(locationIntent);
@@ -281,9 +281,9 @@ public class Act_Login extends AppCompatActivity {
                             Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
                             locationIntent.putExtra("status",0); //status = 0 User
                             current=mAuth.getCurrentUser();
-                            downloadImage(current.getPhotoUrl().toString());
-                            uploadTask = storageReference.child("user_profile_pics").child(current.getUid());
-                            uploadTask.putFile(Uri.fromFile(imageFile));
+                          //  downloadImage(current.getPhotoUrl().toString());
+                            //uploadTask = storageReference.child("user_profile_pics").child(current.getUid());
+                            //uploadTask.putFile(Uri.fromFile(imageFile));
                             User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
                             db.collection("user").document(current.getUid()).set(user);
                             startActivity(locationIntent);

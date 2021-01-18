@@ -21,13 +21,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="303dp"
+        android:layout_height="wrap_content"
 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="45dp"
         android:background="@drawable/white_loc_semiround"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/google_map">
 
 
         <LinearLayout
@@ -35,7 +38,7 @@
             android:layout_width="35dp"
             android:layout_height="5dp"
             android:layout_marginStart="37dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="37dp"
             android:background="@drawable/grey_corner"
             android:clickable="true"
@@ -66,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="17dp"
             android:fontFamily="@font/poppins"
             android:text="@string/save_loc"
 
@@ -96,15 +99,14 @@
             app:layout_constraintTop_toBottomOf="@+id/map_address">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
                 android:id="@+id/address1"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:inputType="textCapWords"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blue"
                 tools:layout_editor_absoluteX="69dp"
-                tools:layout_editor_absoluteY="220dp"
-                android:inputType="textCapWords"
-                >
+                tools:layout_editor_absoluteY="220dp">
 
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -130,14 +132,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
                 android:id="@+id/address2"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:inputType="textCapWords"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blue"
                 tools:layout_editor_absoluteX="69dp"
                 tools:layout_editor_absoluteY="220dp"
-                android:inputType="textCapWords"
 
                 >
 
@@ -169,7 +171,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/blue_roundcorner"
             android:fontFamily="@font/poppins"
             android:text="Next"

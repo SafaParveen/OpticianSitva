@@ -140,7 +140,6 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                     binding.address1.setError("Please enter your Address");
                     binding.address1.requestFocus();
 
-                    Toast.makeText(Act_Location.this, "Address 1 error", Toast.LENGTH_SHORT).show();
 
                 }
                 else if(binding.address2.getText().toString().trim().length()==0)
@@ -148,7 +147,6 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                     binding.address2.setError("Please enter your Address");
                     binding.address2.requestFocus();
 
-                    Toast.makeText(Act_Location.this, "Address 2 error", Toast.LENGTH_SHORT).show();
 
                 }
                 else
@@ -187,7 +185,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 
 
                             location_info.addr = fulladdr;
-                            Toast.makeText(Act_Location.this, "Userrr", Toast.LENGTH_SHORT).show();
+
                             EventBus.getDefault().postSticky(location_info);
                             db.collection("user").document(userInfo.uid)
                                     .update("address_google_map",fulladdr,"location_x",latitude,"location_y",longitude,"address_typed_1",binding.address1.getText().toString(),"address_typed_2",binding.address2.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -73,6 +73,20 @@ public class Act_Appointment_detail extends AppCompatActivity {
                         binding.noAppText.setVisibility(View.GONE);
 
                     }
+                    if(AppointmentListPast.size()==0)
+                    {
+                        binding.noAppPastText.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        binding.noAppPastText.setVisibility(View.GONE);
+
+                    }
+
+
+
+
+
                 }
             }
         });

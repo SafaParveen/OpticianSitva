@@ -63,6 +63,15 @@ public class Frag_Opt_Appointment extends Fragment {
 
 
                 }
+                if(appointList.size()==0)
+                {
+                    binding.noAppText.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    binding.noAppText.setVisibility(View.GONE);
+
+                }
             }
         });
 

@@ -60,11 +60,19 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
                             cleanList.add(documentSnapshot);
                         }
                     }
-
-
-
-
                     pastListAdapter.notifyDataSetChanged();
+
+
+                    if(cleanList.size()==0)
+                    {
+                        binding.noAppText.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        binding.noAppText.setVisibility(View.GONE);
+
+                    }
+
 
                 }
 

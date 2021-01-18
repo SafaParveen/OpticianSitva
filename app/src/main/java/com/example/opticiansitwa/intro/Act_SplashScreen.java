@@ -159,6 +159,9 @@ public class Act_SplashScreen extends AppCompatActivity {
 
                 } else {
 
+
+
+
                     Intent i = new Intent(Act_SplashScreen.this, Act_Intro.class);
                     startActivity(i);
                     finish();
