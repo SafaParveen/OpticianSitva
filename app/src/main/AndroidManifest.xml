@@ -5,8 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -15,48 +15,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpticianSitva">
-        <activity android:name=".home.Act_Specs_Details"></activity>
-        <activity android:name=".home.Act_Spec_Store">
-
-        </activity>
-
-        <activity android:name=".home.Act_Appointment_Video"
-            android:configChanges="orientation|screenSize|layoutDirection">
-
-        </activity>
+        <activity android:name=".home.Act_Home_Appoint_Details"></activity>
+        <activity android:name=".home.Act_Specs_Details" />
+        <activity android:name=".home.Act_Spec_Store" />
+        <activity
+            android:name=".home.Act_Appointment_Video"
+            android:configChanges="orientation|screenSize|layoutDirection" />
         <activity android:name=".opt_Home.Act_Opt_Past_Appointment" />
         <activity android:name=".home.Act_User_Calender" />
         <activity android:name=".home.Act_Doctor_Details" />
         <activity android:name=".opt_login.Act_Pending_Approval" />
         <activity android:name=".home.Act_Home" />
-        <activity android:name=".home.Act_Appointment_result"/>
-        <activity android:name=".intro.Act_SplashScreen" >
-
+        <activity android:name=".home.Act_Appointment_result" />
+        <activity android:name=".intro.Act_SplashScreen">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
-
-
         </activity>
         <activity android:name=".opt_login.Act_Opt_Details" />
-        <activity android:name=".opt_login.Act_Opt_Login" >
-
-
-
-
-
-        </activity>
+        <activity android:name=".opt_login.Act_Opt_Login" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAwLI2fWnXW-d39O0Vj5-J52zSwDSzEeos" />
@@ -65,22 +49,14 @@
         <activity android:name=".login.Act_Login" />
         <activity android:name=".login.Act_Location" />
         <activity android:name=".intro.Act_IntroMain" />
-        <activity android:name=".home.Act_Profile" >
-
-
-        </activity>
+        <activity android:name=".home.Act_Profile" />
         <activity android:name=".home.Act_Appointment_detail" />
         <activity android:name=".home.Act_Specs_List" />
         <activity android:name=".opt_Home.Act_Patient_Details" />
         <activity android:name=".opt_Home.Act_Patient_History" />
         <activity
             android:name=".opt_Home.Act_Opt_Home"
-            android:windowSoftInputMode="adjustResize" >
-
-
-
-
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="preloaded_fonts"

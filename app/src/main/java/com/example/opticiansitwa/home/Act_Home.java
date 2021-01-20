@@ -3,23 +3,20 @@ package com.example.opticiansitwa.home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActHomeBinding;
-import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
 import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.login.Act_Location;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,11 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Act_Home extends AppCompatActivity {
+    List<DocumentSnapshot> doctorList = new ArrayList<>();
+    List<DocumentSnapshot> appointList = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ActHomeBinding binding;
-    RecyclerView.Adapter<Act_Home.docList_ViewHolder> DocListAdapter;
-    List<DocumentSnapshot> doctorList = new ArrayList<>();
     Location_info locationInfo = EventBus.getDefault().getStickyEvent(Location_info.class);
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     FirebaseAuth mAuth =FirebaseAuth.getInstance();
@@ -80,40 +77,6 @@ public class Act_Home extends AppCompatActivity {
         });
 
 
-        DocListAdapter=new RecyclerView.Adapter<docList_ViewHolder>() {
-            @NonNull
-            @Override
-            public docList_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new docList_ViewHolder(DoctorDetailsRvBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
-
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull docList_ViewHolder holder, int position) {
-
-               holder.dbinding.DocName.setText(String.valueOf(doctorList.get(position).getData().get("name")));
-                Glide.with(getApplicationContext()).load(doctorList.get(position).get("profile_pic")).into(holder.dbinding.profilePic);
-
-                holder.dbinding.DoctorRv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent intent1 = new Intent(Act_Home.this, Act_Doctor_Details.class);
-                        intent1.putExtra("uid", doctorList.get(position).getId());
-                        intent1.putExtra("doc_email", doctorList.get(position).get("email").toString());
-                        startActivity(intent1);
-
-                    }
-                });
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return doctorList.size();
-            }
-        };
-
         db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -121,15 +84,47 @@ public class Act_Home extends AppCompatActivity {
                 if(task.isSuccessful()){
 
                     doctorList = task.getResult().getDocuments();
-                    DocListAdapter.notifyDataSetChanged();
+                    recyler_doctor();
+
 
                 }
             }
         });
+        db.collection("appointment").whereEqualTo("user_id","mXgskeASE7qPExCuSqGx2BVH9RNn1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot documentSnapshot: task.getResult().getDocuments()){
+                        if(documentSnapshot.getData().get("test_status").equals("0")){
+                            appointList.add(documentSnapshot);
+                            // Toast.makeText(Act_Home_1.this, "Size appoint: "+appointList.size(), Toast.LENGTH_LONG).show();
+                            // recycler_appoint();
+                        }
+                    }
 
 
-        binding.optList.setAdapter(DocListAdapter);
-        binding.optList.setLayoutManager(new LinearLayoutManager(this));
+
+                }
+                if(appointList.size() == 0){
+                    //recycler_appoint();
+                    // Toast.makeText(Act_Home_1.this, "Size noooo: "+appointList.size(), Toast.LENGTH_LONG).show();
+                    binding.appointmentHoriz.setVisibility(View.GONE);
+                    binding.upcomTxt.setVisibility(View.GONE);
+                    // binding.linear.setVisibility(View.GONE);
+                    // binding.noAppoint.setVisibility(View.VISIBLE);
+
+
+                }
+                else {
+                    recycler_appoint();
+                    binding.appointmentHoriz.setBackgroundResource(R.drawable.white_ripple);
+                    //binding.noAppoint.setVisibility(View.INVISIBLE);
+
+                }
+
+
+            }
+        });
 
         binding.Address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,12 +139,28 @@ public class Act_Home extends AppCompatActivity {
     }
 
 
-    public class docList_ViewHolder extends RecyclerView.ViewHolder {
-        DoctorDetailsRvBinding dbinding;
-        public docList_ViewHolder(DoctorDetailsRvBinding cbinding) {
-            super(cbinding.getRoot());
-            this.dbinding= cbinding;
-        }
+    private void recyler_doctor() {
+
+        DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext(),2);
+        binding.optList.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.optList.setLayoutManager(layoutManager);
+//        Main_Home_Adapter adapter = new Main_Home_Adapter(this, doctorList,1);
+//        binding.optList.setAdapter(adapter);
+//        binding.optList.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    private void recycler_appoint() {
+        Home_Appointment_Adapter adapter1 = new Home_Appointment_Adapter( appointList,getApplicationContext(), 1);
+        binding.appointmentHoriz.setAdapter(adapter1);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.appointmentHoriz.setLayoutManager(layoutManager);
+//        Main_Home_Adapter adapter = new Main_Home_Adapter(this, appointmentList,2);
+//        binding.optList.setAdapter(adapter);
+//        binding.optList.setLayoutManager(new LinearLayoutManager(this));
     }
 
 }

@@ -60,8 +60,6 @@ public class Frag_Opt_Appointment extends Fragment {
                 if(task.isSuccessful()){
                     appointList = task.getResult().getDocuments();
                     appointListAdapter.notifyDataSetChanged();
-
-
                 }
                 if(appointList.size()==0)
                 {
