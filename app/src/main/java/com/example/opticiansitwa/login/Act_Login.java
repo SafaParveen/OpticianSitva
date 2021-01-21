@@ -45,6 +45,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -63,7 +64,7 @@ public class Act_Login extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
-    String user_email = "",name,photoUrl;
+    String user_email = "", name, photoUrl;
     int flag;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser current;
@@ -72,8 +73,6 @@ public class Act_Login extends AppCompatActivity {
 
     FirebaseStorage storage;
     StorageReference storageReference, uploadTask;
-
-
 
 
     @Override
@@ -96,19 +95,19 @@ public class Act_Login extends AppCompatActivity {
         binding.signFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               loginButton.performClick();
-               // Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
+                loginButton.performClick();
+                // Toast.makeText(Act_Login.this, "Facebook authentication in process!", Toast.LENGTH_SHORT).show();
             }
         });
 
-         current = mAuth.getCurrentUser();
+        current = mAuth.getCurrentUser();
 
         loginButton.setPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 //                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                flag=1;
+                flag = 1;
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -134,7 +133,6 @@ public class Act_Login extends AppCompatActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW);
                 browserIntent.setData(Uri.parse("http://www.google.com"));
                 startActivity(browserIntent);
-
 
 
             }
@@ -173,7 +171,6 @@ public class Act_Login extends AppCompatActivity {
                 startActivity(optLogin);
 
 
-
             }
         });
 
@@ -188,52 +185,65 @@ public class Act_Login extends AppCompatActivity {
 //    }
 
     private void handleFacebookAccessToken(AccessToken token) {
-            AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-            mAuth.signInWithCredential(credential)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
 
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "signInWithCredential:success");
-
-
-                                GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
-
-                                    @Override
-                                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                                           // photoUrl = "https://graph.facebook.com/" + current.getPhotoUrl().toString() + "/picture?height=500";
-                                          //  Log.v("Tag","photo: "+current.getPhotoUrl().toString());
-
-                                        Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
-                                        Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
-                                        locationIntent.putExtra("status",0);
-                                      //  downloadImage(current.getPhotoUrl().toString());
-                                        User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
-                                        db.collection("user").document(current.getUid()).set(user);
-                                        startActivity(locationIntent);
-                                        finish();
-                                    }
-                                });
-                             //   Toast.makeText(Act_Login.this, "SUCCESSFUL wow ."+name+"Birthday"+dob, Toast.LENGTH_SHORT).show();
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("TAG", "signInWithCredential:success");
 
 
+                            GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
 
-                                Bundle parameters = new Bundle();
-                                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
-                                request.setParameters(parameters);
-                                request.executeAsync();
+                                @Override
+                                public void onCompleted(JSONObject object, GraphResponse response) {
 
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("TAG", "signInWithCredential:failure", task.getException());
-                                Toast.makeText(Act_Login.this, "Facebook Authentication failed.", Toast.LENGTH_SHORT).show();
-                            }
+                                    // photoUrl = "https://graph.facebook.com/" + current.getPhotoUrl().toString() + "/picture?height=500";
+                                    //  Log.v("Tag","photo: "+current.getPhotoUrl().toString());
+
+                                    Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+                                    Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
+                                    locationIntent.putExtra("status", 0);
+                                    //  downloadImage(current.getPhotoUrl().toString());
+                                    User user = new User(current.getDisplayName(), current.getEmail(), current.getPhotoUrl().toString(), "", "", "", "", "");
+                                    db.collection("user").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                            if (task.isSuccessful()) {
+                                                startActivity(locationIntent);
+                                                finish();
+
+                                            } else {
+                                                db.collection("user").document(current.getUid()).set(user);
+                                                startActivity(locationIntent);
+                                                finish();
+
+                                            }
+
+                                        }
+                                    });
+                                }
+                            });
+                            //   Toast.makeText(Act_Login.this, "SUCCESSFUL wow ."+name+"Birthday"+dob, Toast.LENGTH_SHORT).show();
+
+
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");
+                            request.setParameters(parameters);
+                            request.executeAsync();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("TAG", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(Act_Login.this, "Facebook Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
-                    });
-        }
+                    }
+                });
+    }
 
 
     @Override
@@ -258,12 +268,7 @@ public class Act_Login extends AppCompatActivity {
         }
 
 
-
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
-
-
-
-
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
 
     }
@@ -279,25 +284,37 @@ public class Act_Login extends AppCompatActivity {
 
                             Toast.makeText(Act_Login.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Login.this, Act_Location.class);
-                            locationIntent.putExtra("status",0); //status = 0 User
-                            current=mAuth.getCurrentUser();
-                          //  downloadImage(current.getPhotoUrl().toString());
+                            locationIntent.putExtra("status", 0); //status = 0 User
+                            current = mAuth.getCurrentUser();
+                            //  downloadImage(current.getPhotoUrl().toString());
                             //uploadTask = storageReference.child("user_profile_pics").child(current.getUid());
                             //uploadTask.putFile(Uri.fromFile(imageFile));
-                            User user = new User(current.getDisplayName(),current.getEmail(),current.getPhotoUrl().toString(),"","","","","");
-                            db.collection("user").document(current.getUid()).set(user);
-                            startActivity(locationIntent);
-                            finish();
+                            User user = new User(current.getDisplayName(), current.getEmail(), current.getPhotoUrl().toString(), "", "", "", "", "");
+                            db.collection("user").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                        }
-                        else
-                        {
+                                    if (task.isSuccessful()) {
+                                        startActivity(locationIntent);
+                                        finish();
+
+                                    } else {
+                                        db.collection("user").document(current.getUid()).set(user);
+                                        startActivity(locationIntent);
+                                        finish();
+
+                                    }
+
+                                }
+                            });
+
+                        } else {
                             Toast.makeText(Act_Login.this, "Sign in failed! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
 
                         }
 
-                      }
+                    }
                 });
     }
 
