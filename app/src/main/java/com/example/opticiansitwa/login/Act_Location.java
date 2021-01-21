@@ -62,7 +62,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class Act_Location extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
+public class Act_Location extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , GoogleMap.OnMapClickListener {
 
     private static final int LOCATION_REQUEST_CODE = 123;
     private static final String TAG = "Messege";
@@ -227,6 +227,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setOnMarkerDragListener(this);
+        mMap.setOnMapClickListener(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             enableUserLocation();
@@ -313,11 +314,14 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        Toast.makeText(this, "Get last user", Toast.LENGTH_SHORT).show();
+
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
+
 
                 } else {
                     Log.d(TAG, "onSuccess: Location was null...");
@@ -373,6 +377,31 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 
             return;
         }
+        Toast.makeText(this, "Enable  user", Toast.LENGTH_SHORT).show();
+
+//        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+//
+//
+//        try {
+//            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+//            if (addresses.size() > 0) {
+//                Address address = addresses.get(0);
+//                String streetAddress = address.getAddressLine(0);
+//                place = getplace(latLng);
+//
+//                mMap.clear();
+//                //marker.setTitle(streetAddress);
+//                binding.mapAddress.setText(streetAddress);
+//                mMap.addMarker(new MarkerOptions()
+//                        .position(latLng)
+//                        .title(streetAddress)
+//                        .draggable(true).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.google_map_icon)));
+//
+//
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         mMap.setMyLocationEnabled(true);
 
     }
@@ -517,13 +546,13 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
     private void zoomToUserLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return; }
+
+        Toast.makeText(this, "Zooom to user", Toast.LENGTH_SHORT).show();
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-
                 List<Address> addresses = null;
                 try {
                     addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
@@ -543,5 +572,37 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                String streetAddress = address.getAddressLine(0);
+                place = getplace(latLng);
+
+                mMap.clear();
+                //marker.setTitle(streetAddress);
+                binding.mapAddress.setText(streetAddress);
+                mMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(streetAddress)
+                        .draggable(true).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.google_map_icon)));
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

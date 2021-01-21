@@ -117,7 +117,7 @@ public class Home_Appointment_Adapter extends RecyclerView.Adapter<Home_Appointm
 
 
     private void dateConverter(long epoch) {
-        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch*1000));
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch));
 
         String dateParts[] = date.split("/");
         dayNo = dateParts[1];

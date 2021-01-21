@@ -42,7 +42,7 @@ public class Act_Appointment_detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActAppointmentDetailBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-        db.collection("appointment").whereEqualTo("user_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("user_id","mXgskeASE7qPExCuSqGx2BVH9RNn1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 

@@ -26,7 +26,10 @@ public class Doctor {
     public ArrayList<String> m_timing ;
     public ArrayList<String> a_timing;
     public ArrayList<String> e_timing;
+    public Doctor()
+    {
 
+    }
 
     public Doctor(String name, String email, String profile_pic, Double location_x, String id_proof_url_1,String address_typed_1,String address_typed_2, String id_proof_url_2, Double location_y, String address_google_map, String ssn, String age, String status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch,ArrayList<String> m_timing,
     ArrayList<String> a_timing,ArrayList<String> e_timing) {

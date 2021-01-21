@@ -87,18 +87,7 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
 
 
 
-    private void dateConverter(long epoch) {
 
-        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch*1000));
-
-        String dateParts[] = date.split("/");
-        dayNo = dateParts[1];
-        monthNo = Integer.parseInt(dateParts[0]) ;
-        month= months[monthNo-1];
-        year = dateParts[2];
-        day = dateParts[3];
-        time = dateParts[4];
-    }
 
     @Override
     public int getItemCount() {
@@ -115,5 +104,18 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public void dateConverter(long epoch) {
+
+        String date = new java.text.SimpleDateFormat("MM/dd/yyyy/EEEE/ h a").format(new java.util.Date (epoch));
+
+        String dateParts[] = date.split("/");
+        dayNo = dateParts[1];
+        monthNo = Integer.parseInt(dateParts[0]) ;
+        month= months[monthNo-1];
+        year = dateParts[2];
+        day = dateParts[3];
+        time = dateParts[4];
     }
 }

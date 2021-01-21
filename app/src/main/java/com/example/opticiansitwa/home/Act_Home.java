@@ -2,27 +2,40 @@ package com.example.opticiansitwa.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActHomeBinding;
+import com.example.opticiansitwa.databinding.DoctorDetailsRvBinding;
+import com.example.opticiansitwa.databinding.SpecsViewRvBinding;
 import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.login.Act_Location;
+import com.example.opticiansitwa.models.Doctor;
+import com.example.opticiansitwa.models.Product;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,7 +57,11 @@ public class Act_Home extends AppCompatActivity {
     FirebaseUser current = mAuth.getCurrentUser();
 
     FirebaseStorage storage;
+
     StorageReference storageReference;
+    FirestorePagingAdapter<Doctor,DoctorViewHolder> mAdapter;
+    CollectionReference dbCollection;
+    Query mQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,19 +94,49 @@ public class Act_Home extends AppCompatActivity {
         });
 
 
-        db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        dbCollection = db.collection("doctor");
+
+        mQuery = dbCollection.orderBy("ssn",Query.Direction.ASCENDING);
+
+//        Task<QuerySnapshot> dbcol = dbCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful())
+//                {
+//                    mQuery = task.getResult().getQuery();
+//                }
+//            }
+//        });
+
+
+
+        binding.optList.setHasFixedSize(true);
+        binding.optList.setLayoutManager(new LinearLayoutManager(this));
+
+
+        setupAdapter();
+
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                if(task.isSuccessful()){
-
-                    doctorList = task.getResult().getDocuments();
-                    recyler_doctor();
-
-
-                }
+            public void onRefresh() {
+                mAdapter.refresh();
             }
         });
+
+
+//        db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//                if(task.isSuccessful()){
+//
+//                    doctorList = task.getResult().getDocuments();
+//                    recyler_doctor();
+//
+//
+//                }
+//            }
+//        });
         db.collection("appointment").whereEqualTo("user_id","mXgskeASE7qPExCuSqGx2BVH9RNn1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -117,6 +164,8 @@ public class Act_Home extends AppCompatActivity {
                 }
                 else {
                     recycler_appoint();
+                    binding.appointmentHoriz.setVisibility(View.VISIBLE);
+                    binding.upcomTxt.setVisibility(View.VISIBLE);
                     binding.appointmentHoriz.setBackgroundResource(R.drawable.white_ripple);
                     //binding.noAppoint.setVisibility(View.INVISIBLE);
 
@@ -135,6 +184,70 @@ public class Act_Home extends AppCompatActivity {
                 startActivity(locIntent);
             }
         });
+
+    }
+
+    private void setupAdapter() {
+
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setPageSize(2)
+                .build();
+
+
+        FirestorePagingOptions options = new FirestorePagingOptions.Builder<Doctor>()
+                .setLifecycleOwner(this)
+                .setQuery(mQuery, config, Doctor.class)
+                .build();
+
+        mAdapter = new FirestorePagingAdapter<Doctor, DoctorViewHolder>(options) {
+
+            @Override
+            protected void onBindViewHolder(@NonNull DoctorViewHolder holder, int position, @NonNull Doctor model) {
+
+                holder.bind(model);
+
+
+            }
+
+            @NonNull
+            @Override
+            public DoctorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                return new DoctorViewHolder(DoctorDetailsRvBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+            }
+
+            @Override
+            protected void onError(@NonNull Exception e) {
+                super.onError(e);
+            }
+
+            @Override
+            protected void onLoadingStateChanged(@NonNull LoadingState state) {
+                switch (state) {
+                    case LOADING_INITIAL:
+                    case LOADING_MORE:
+                        binding.swipeRefresh.setRefreshing(true);
+                        break;
+
+                    case LOADED:
+                        binding.swipeRefresh.setRefreshing(false);
+                        break;
+
+                    case ERROR:
+                        Toast.makeText(getApplicationContext(), "Error Occurred!", Toast.LENGTH_SHORT).show();
+
+                        binding.swipeRefresh.setRefreshing(false);
+                        break;
+
+                    case FINISHED:
+                        binding.swipeRefresh.setRefreshing(false);
+                        break;
+                }
+            }
+        };
+
+        binding.optList.setAdapter(mAdapter);
 
     }
 
