@@ -25,14 +25,14 @@ public class Act_Doctor_Details extends AppCompatActivity {
     ActDoctorDetailsBinding binding;
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String uid,doc_email,doc_name,doc_profile;
+    String uid,doc_email,doc_name,doc_profile,doctor_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActDoctorDetailsBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-        uid = getIntent().getStringExtra("uid");
+        doctor_id = getIntent().getStringExtra("doctor_id");
         doc_email = getIntent().getStringExtra("doc_email");
         doc_name = getIntent().getStringExtra("doc_name");
         doc_profile = getIntent().getStringExtra("doc_profile");
@@ -90,7 +90,7 @@ public class Act_Doctor_Details extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(Act_Doctor_Details.this, "Choose slot time", Toast.LENGTH_SHORT).show();
                     Intent slotIntent = new Intent(Act_Doctor_Details.this, Act_User_Calender.class);
-                    slotIntent.putExtra("uid", uid);
+                    slotIntent.putExtra("uid", doctor_id);
                     slotIntent.putExtra("doc_email", doc_email);
                     startActivity(slotIntent);
                     finish();

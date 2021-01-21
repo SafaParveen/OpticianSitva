@@ -195,7 +195,7 @@ public class Act_User_Calender extends AppCompatActivity {
 
                     Appointment appointment = new Appointment(userInfo.uid, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "", "", "", "");
                     db.collection("appointment").document().set(appointment);
-                    addCalendar();
+//                    addCalendar();
                     Toast.makeText(Act_User_Calender.this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
                     finish();
 
@@ -221,38 +221,38 @@ public class Act_User_Calender extends AppCompatActivity {
     }
 
 
-    private void addCalendar() {
-
-        long calID = 3;
-        TimeZone tz = TimeZone.getDefault();
-
-        ContentResolver cr = getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(CalendarContract.Events.DTSTART, epochSelected + (timeSelected * 3600000L));
-        values.put(CalendarContract.Events.DTEND, epochSelected + (timeSelected * 3600000L) + 1800000L);
-        values.put(CalendarContract.Events.TITLE, "Optician Appointment");
-        values.put(CalendarContract.Events.DESCRIPTION, "Scheduled by Optician Sitva");
-        values.put(CalendarContract.Events.CALENDAR_ID, calID);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
-        values.put(CalendarContract.Events.HAS_ALARM, 1);
-        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
-
-// get the event ID that is the last element in the Uri
-        eventID = Long.parseLong(uri.getLastPathSegment());
-
-        ContentValues values1 = new ContentValues();
-        values1.put(CalendarContract.Attendees.ATTENDEE_EMAIL, doc_email);
-        values1.put(CalendarContract.Attendees.EVENT_ID, eventID);
-        cr.insert(CalendarContract.Attendees.CONTENT_URI, values1);
-
-
-        ContentValues values2 = new ContentValues();
-        values2.put(CalendarContract.Reminders.MINUTES, 15);
-        values2.put(CalendarContract.Reminders.EVENT_ID, eventID);
-        values2.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
-        cr.insert(CalendarContract.Reminders.CONTENT_URI, values2);
-
-    }
+//    private void addCalendar() {
+//
+//        long calID = 3;
+//        TimeZone tz = TimeZone.getDefault();
+//
+//        ContentResolver cr = getContentResolver();
+//        ContentValues values = new ContentValues();
+//        values.put(CalendarContract.Events.DTSTART, epochSelected + (timeSelected * 3600000L));
+//        values.put(CalendarContract.Events.DTEND, epochSelected + (timeSelected * 3600000L) + 1800000L);
+//        values.put(CalendarContract.Events.TITLE, "Optician Appointment");
+//        values.put(CalendarContract.Events.DESCRIPTION, "Scheduled by Optician Sitva");
+//        values.put(CalendarContract.Events.CALENDAR_ID, calID);
+//        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.getID());
+//        values.put(CalendarContract.Events.HAS_ALARM, 1);
+//        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+//
+//// get the event ID that is the last element in the Uri
+//        eventID = Long.parseLong(uri.getLastPathSegment());
+//
+//        ContentValues values1 = new ContentValues();
+//        values1.put(CalendarContract.Attendees.ATTENDEE_EMAIL, doc_email);
+//        values1.put(CalendarContract.Attendees.EVENT_ID, eventID);
+//        cr.insert(CalendarContract.Attendees.CONTENT_URI, values1);
+//
+//
+//        ContentValues values2 = new ContentValues();
+//        values2.put(CalendarContract.Reminders.MINUTES, 15);
+//        values2.put(CalendarContract.Reminders.EVENT_ID, eventID);
+//        values2.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+//        cr.insert(CalendarContract.Reminders.CONTENT_URI, values2);
+//
+//    }
 
     private void showCalender() {
 

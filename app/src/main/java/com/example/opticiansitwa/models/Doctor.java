@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Doctor {
 
+    public String doctor_id;
     public String name;
     public String email;
     public String profile_pic;
@@ -31,8 +32,9 @@ public class Doctor {
 
     }
 
-    public Doctor(String name, String email, String profile_pic, Double location_x, String id_proof_url_1,String address_typed_1,String address_typed_2, String id_proof_url_2, Double location_y, String address_google_map, String ssn, String age, String status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch,ArrayList<String> m_timing,
+    public Doctor(String doctor_id,String name, String email, String profile_pic, Double location_x, String id_proof_url_1,String address_typed_1,String address_typed_2, String id_proof_url_2, Double location_y, String address_google_map, String ssn, String age, String status,Long morning_start_epoch, Long morning_end_epoch, Long afternoon_start_epoch, Long afternoon_end_epoch, Long evening_start_epoch, Long evening_end_epoch,ArrayList<String> m_timing,
     ArrayList<String> a_timing,ArrayList<String> e_timing) {
+        this.doctor_id=doctor_id;
         this.name = name;
         this.email = email;
         this.profile_pic = profile_pic;

@@ -32,6 +32,7 @@ public class DoctorViewHolder extends RecyclerView.ViewHolder {
                 intent1.putExtra("doc_email", doctor.email);
                 intent1.putExtra("doc_name", doctor.name);
                 intent1.putExtra("doc_profile", doctor.profile_pic);
+                intent1.putExtra("doctor_id",doctor.doctor_id);
 
 
                 binding.getRoot().getContext().startActivity(intent1);

@@ -108,7 +108,7 @@ public class Act_Opt_Details extends AppCompatActivity {
                    // uploadTask = storageReference.child("doctor_profile_pics").child(userInfo.uid);
                    // uploadTask.putFile(Uri.fromFile(imageFile));
                     Toast.makeText(Act_Opt_Details.this, "Request Sent!", Toast.LENGTH_SHORT).show();
-                    Doctor doctor = new Doctor(userInfo.name,userInfo.email,userInfo.pro_pic,latitude,appr_img1,address1,address2,"",longitude,addr,"","","0",0L,0L,0L,0L,0L,0L,m_timing,a_timing,e_timing);
+                    Doctor doctor = new Doctor(userInfo.uid,userInfo.name,userInfo.email,userInfo.pro_pic,latitude,appr_img1,address1,address2,"",longitude,addr,"","","0",0L,0L,0L,0L,0L,0L,m_timing,a_timing,e_timing);
                     db.collection("doctor").document(userInfo.uid).set(doctor);
                     Intent apprIntent = new Intent(Act_Opt_Details.this,Act_Pending_Approval.class);
                     startActivity(apprIntent);
