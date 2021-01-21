@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActOptLoginBinding;
+import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.login.Act_Login;
 import com.example.opticiansitwa.login.Act_Location;
 import com.example.opticiansitwa.models.Doctor;
@@ -40,6 +41,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONObject;
@@ -53,6 +55,9 @@ public class Act_Opt_Login extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 123;
     CallbackManager mCallbackManager;
+    User_Info userInfo = new User_Info();
+    FirebaseUser current;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -109,7 +114,6 @@ public class Act_Opt_Login extends AppCompatActivity {
                 startActivity(browserIntent);
 
 
-
             }
         });
 
@@ -138,7 +142,6 @@ public class Act_Opt_Login extends AppCompatActivity {
 
             }
         });
-
 
 
         binding.signInUser.setOnClickListener(new View.OnClickListener() {
@@ -174,15 +177,31 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                                     Toast.makeText(Act_Opt_Login.this, "Opt Signed in successfully", Toast.LENGTH_SHORT).show();
                                     Intent locationIntent = new Intent(Act_Opt_Login.this, Act_Location.class);
-                                    locationIntent.putExtra("status",1);
+                                    locationIntent.putExtra("status", 1);
+
+                                    current = mAuth1.getCurrentUser();
+
+                                    userInfo.pro_pic = current.getPhotoUrl().toString();
 
 
-                                    startActivity(locationIntent);
-                                    finish();
+                                    db.collection("doctor").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                            if (task.isSuccessful()) {
+                                                Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
+                                                startActivity(apprIntent);
+
+                                            } else {
+                                                startActivity(locationIntent);
+                                                finish();
+                                            }
+
+                                        }
+                                    });
                                 }
                             });
                             //   Toast.makeText(Act_Login.this, "SUCCESSFUL wow ."+name+"Birthday"+dob, Toast.LENGTH_SHORT).show();
-
 
 
                             Bundle parameters = new Bundle();
@@ -222,12 +241,7 @@ public class Act_Opt_Login extends AppCompatActivity {
         }
 
 
-
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
-
-
-
-
 
 
     }
@@ -244,13 +258,29 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                             Toast.makeText(Act_Opt_Login.this, "Opt Signed in successfully", Toast.LENGTH_SHORT).show();
                             Intent locationIntent = new Intent(Act_Opt_Login.this, Act_Location.class);
-                            locationIntent.putExtra("status",1);
-                            startActivity(locationIntent);
-                            finish();
+                            locationIntent.putExtra("status", 1);
+                            current = mAuth1.getCurrentUser();
 
-                        }
-                        else
-                        {
+                            userInfo.pro_pic = current.getPhotoUrl().toString();
+
+
+                            db.collection("doctor").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                    if (task.isSuccessful()) {
+                                        Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
+                                        startActivity(apprIntent);
+
+                                    } else {
+                                        startActivity(locationIntent);
+                                        finish();
+                                    }
+
+                                }
+                            });
+
+                        } else {
                             Toast.makeText(Act_Opt_Login.this, "Sign in failed! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
 
@@ -261,4 +291,4 @@ public class Act_Opt_Login extends AppCompatActivity {
     }
 
 
-    }
+}

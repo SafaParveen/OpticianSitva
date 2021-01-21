@@ -84,13 +84,13 @@ public class Act_Home extends AppCompatActivity {
                 if(task.isSuccessful()){
 
                     doctorList = task.getResult().getDocuments();
-                    recyler_doctor();
+                    recycler_doctor();
 
 
                 }
             }
         });
-        db.collection("appointment").whereEqualTo("user_id","mXgskeASE7qPExCuSqGx2BVH9RNn1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("user_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -139,7 +139,7 @@ public class Act_Home extends AppCompatActivity {
     }
 
 
-    private void recyler_doctor() {
+    private void recycler_doctor() {
 
         DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext(),2);
         binding.optList.setAdapter(adapter);

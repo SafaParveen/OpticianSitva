@@ -56,7 +56,7 @@ public class Act_Profile extends AppCompatActivity {
         storageReference = storage.getReference();
 
 
-        storageReference.child("user_profile_pics").child("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("user_profile_pics").child(userInfo.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
@@ -79,7 +79,7 @@ public class Act_Profile extends AppCompatActivity {
         binding.ssn.setEnabled(false);
         binding.email.setEnabled(false);
 
-        db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2").get()
+        db.collection("user").document(userInfo.uid).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -116,7 +116,7 @@ public class Act_Profile extends AppCompatActivity {
 
 
 
-                    db.collection("user").document("5lsimHeTwgW9Ovd3VQwdgq1Oy2R2")
+                    db.collection("user").document(userInfo.uid)
                             .update("age",binding.age.getText().toString(),
                                     "ssn",binding.ssn.getText().toString(),
                                     "email",binding.email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
