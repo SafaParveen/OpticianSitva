@@ -28,7 +28,6 @@ public class DoctorViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
 
                  Intent intent1 = new Intent(binding.getRoot().getContext(), Act_Doctor_Details.class);
-                // intent1.putExtra("uid", doctorList.get(position).getId());
                 intent1.putExtra("doc_email", doctor.email);
                 intent1.putExtra("doc_name", doctor.name);
                 intent1.putExtra("doc_profile", doctor.profile_pic);

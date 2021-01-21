@@ -43,11 +43,14 @@ import com.google.firebase.storage.StorageReference;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Act_Home extends AppCompatActivity {
     List<DocumentSnapshot> doctorList = new ArrayList<>();
     List<DocumentSnapshot> appointList = new ArrayList<>();
+    ArrayList<String> title=new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ActHomeBinding binding;
@@ -55,6 +58,8 @@ public class Act_Home extends AppCompatActivity {
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     FirebaseAuth mAuth =FirebaseAuth.getInstance();
     FirebaseUser current = mAuth.getCurrentUser();
+
+    Map<String,Map<String,List<DocumentSnapshot>>> allItems = new HashMap<>();
 
     FirebaseStorage storage;
 
@@ -65,6 +70,11 @@ public class Act_Home extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        title.add("My Orders");
+        title.add("Upcoming Appointments");
+        title.add("Top Doctors Nearby");
+
         super.onCreate(savedInstanceState);
         binding = ActHomeBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
@@ -77,7 +87,7 @@ public class Act_Home extends AppCompatActivity {
             }
         });
 
-        binding.Address.setText(locationInfo.addr);
+        //binding.Address.setText(locationInfo.addr);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -109,34 +119,35 @@ public class Act_Home extends AppCompatActivity {
 //        });
 
 
+//
+//        binding.optList.setHasFixedSize(true);
+//        binding.optList.setLayoutManager(new LinearLayoutManager(this));
 
-        binding.optList.setHasFixedSize(true);
-        binding.optList.setLayoutManager(new LinearLayoutManager(this));
+
+        //setupAdapter();
 
 
-        setupAdapter();
-
-        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onRefresh() {
-                mAdapter.refresh();
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if(task.isSuccessful()){
+
+                    doctorList = task.getResult().getDocuments();
+                    Map<String,List<DocumentSnapshot>> items = new HashMap<>();
+                    items.put("doctor",doctorList);
+                    allItems.put("type",items);
+                    Main_Home_Adapter adapter = new Main_Home_Adapter(doctorList,getApplicationContext(),"Top Doctors Nearby");
+                    binding.optList.setAdapter(adapter);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    binding.optList.setLayoutManager(layoutManager);
+
+
+
+                }
             }
         });
-
-
-//        db.collection("doctor").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//
-//                if(task.isSuccessful()){
-//
-//                    doctorList = task.getResult().getDocuments();
-//                    recyler_doctor();
-//
-//
-//                }
-//            }
-//        });
         db.collection("appointment").whereEqualTo("user_id","mXgskeASE7qPExCuSqGx2BVH9RNn1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -144,6 +155,7 @@ public class Act_Home extends AppCompatActivity {
                     for(DocumentSnapshot documentSnapshot: task.getResult().getDocuments()){
                         if(documentSnapshot.getData().get("test_status").equals("0")){
                             appointList.add(documentSnapshot);
+
                             // Toast.makeText(Act_Home_1.this, "Size appoint: "+appointList.size(), Toast.LENGTH_LONG).show();
                             // recycler_appoint();
                         }
@@ -155,18 +167,31 @@ public class Act_Home extends AppCompatActivity {
                 if(appointList.size() == 0){
                     //recycler_appoint();
                     // Toast.makeText(Act_Home_1.this, "Size noooo: "+appointList.size(), Toast.LENGTH_LONG).show();
-                    binding.appointmentHoriz.setVisibility(View.GONE);
-                    binding.upcomTxt.setVisibility(View.GONE);
+//                    binding.appointmentHoriz.setVisibility(View.GONE);
+//                    binding.upcomTxt.setVisibility(View.GONE);
                     // binding.linear.setVisibility(View.GONE);
                     // binding.noAppoint.setVisibility(View.VISIBLE);
 
 
                 }
                 else {
-                    recycler_appoint();
-                    binding.appointmentHoriz.setVisibility(View.VISIBLE);
-                    binding.upcomTxt.setVisibility(View.VISIBLE);
-                    binding.appointmentHoriz.setBackgroundResource(R.drawable.white_ripple);
+
+                    Map<String,List<DocumentSnapshot>> items = new HashMap<>();
+                    items.put("appoint",appointList);
+                    allItems.put("type",items);
+
+//                    if(allItems.get()
+
+                    Main_Home_Adapter adapter = new Main_Home_Adapter(appointList,getApplicationContext(),"Upcoming Appointments");
+                    binding.optList.setAdapter(adapter);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+                   layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    binding.optList.setLayoutManager(layoutManager);
+
+
+//                    binding.appointmentHoriz.setVisibility(View.VISIBLE);
+//                    binding.upcomTxt.setVisibility(View.VISIBLE);
+//                    binding.appointmentHoriz.setBackgroundResource(R.drawable.white_ripple);
                     //binding.noAppoint.setVisibility(View.INVISIBLE);
 
                 }
@@ -227,21 +252,21 @@ public class Act_Home extends AppCompatActivity {
                 switch (state) {
                     case LOADING_INITIAL:
                     case LOADING_MORE:
-                        binding.swipeRefresh.setRefreshing(true);
+                        binding.swipeRefresh.setVisibility(View.VISIBLE);
                         break;
 
                     case LOADED:
-                        binding.swipeRefresh.setRefreshing(false);
+                        binding.swipeRefresh.setVisibility(View.GONE);
                         break;
 
                     case ERROR:
                         Toast.makeText(getApplicationContext(), "Error Occurred!", Toast.LENGTH_SHORT).show();
 
-                        binding.swipeRefresh.setRefreshing(false);
+                        binding.swipeRefresh.setVisibility(View.GONE);
                         break;
 
                     case FINISHED:
-                        binding.swipeRefresh.setRefreshing(false);
+                        binding.swipeRefresh.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -252,25 +277,25 @@ public class Act_Home extends AppCompatActivity {
     }
 
 
-    private void recyler_doctor() {
-
-        DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext(),2);
-        binding.optList.setAdapter(adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.optList.setLayoutManager(layoutManager);
+//    private void recycler_doctor() {
+//
+//        DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext(),2);
+//        binding.optList.setAdapter(adapter);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        binding.optList.setLayoutManager(layoutManager);
 //        Main_Home_Adapter adapter = new Main_Home_Adapter(this, doctorList,1);
 //        binding.optList.setAdapter(adapter);
 //        binding.optList.setLayoutManager(new LinearLayoutManager(this));
 
-    }
+//    }
 
     private void recycler_appoint() {
-        Home_Appointment_Adapter adapter1 = new Home_Appointment_Adapter( appointList,getApplicationContext(), 1);
-        binding.appointmentHoriz.setAdapter(adapter1);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.appointmentHoriz.setLayoutManager(layoutManager);
+//        Home_Appointment_Adapter adapter1 = new Home_Appointment_Adapter( appointList,getApplicationContext(), 1);
+//        binding.appointmentHoriz.setAdapter(adapter1);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        binding.appointmentHoriz.setLayoutManager(layoutManager);
 //        Main_Home_Adapter adapter = new Main_Home_Adapter(this, appointmentList,2);
 //        binding.optList.setAdapter(adapter);
 //        binding.optList.setLayoutManager(new LinearLayoutManager(this));

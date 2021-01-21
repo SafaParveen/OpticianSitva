@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLoginBinding;
+import com.example.opticiansitwa.home.Act_Home;
 import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Login;
 import com.facebook.AccessToken;
@@ -295,7 +296,9 @@ public class Act_Login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                                     if (task.isSuccessful()) {
-                                        startActivity(locationIntent);
+
+                                        Intent homeIntent = new Intent(Act_Login.this, Act_Home.class);
+                                        startActivity(homeIntent);
                                         finish();
 
                                     } else {

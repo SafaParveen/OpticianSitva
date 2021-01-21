@@ -31,10 +31,10 @@ public class DoctorList_Adapter extends RecyclerView.Adapter<DoctorList_Adapter.
 
 
 
-    public DoctorList_Adapter(List<DocumentSnapshot> docList, Context context, int status) {
+    public DoctorList_Adapter(List<DocumentSnapshot> docList, Context context) {
         doctorList = docList;
         this.context = context;
-        this.status = status;
+
     }
 
 

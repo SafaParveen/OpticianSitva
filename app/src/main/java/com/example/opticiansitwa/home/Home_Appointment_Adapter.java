@@ -25,10 +25,10 @@ public class Home_Appointment_Adapter extends RecyclerView.Adapter<Home_Appointm
     String approve_status,user_name,user_profile,user_id;
 
 
-    public Home_Appointment_Adapter(List<DocumentSnapshot> appointmentList, Context context, int status) {
+    public Home_Appointment_Adapter(List<DocumentSnapshot> appointmentList, Context context) {
         appointList = appointmentList;
         this.context = context;
-        this.status = status;
+
     }
 
     long epoch;
