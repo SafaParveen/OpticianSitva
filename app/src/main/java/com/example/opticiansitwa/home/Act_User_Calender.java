@@ -59,13 +59,10 @@ public class Act_User_Calender extends AppCompatActivity {
 
     final int callbackId = 42;
 
-    final String[] permissionsId = {"Manifest.permission.READ_CALENDAR","Manifest.permission.WRITE_CALENDAR"};
+    final String[] permissionsId = {"Manifest.permission.READ_CALENDAR", "Manifest.permission.WRITE_CALENDAR"};
 
 
     long eventID;
-
-
-
 
 
     TextView data;
@@ -108,13 +105,11 @@ public class Act_User_Calender extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
         super.onCreate(savedInstanceState);
         binding = ActUserCalenderBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
         checkPermissions(callbackId, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR);
-
 
 
         doc_uid = getIntent().getStringExtra("uid");
