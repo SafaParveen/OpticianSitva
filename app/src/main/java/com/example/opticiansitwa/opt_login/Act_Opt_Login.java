@@ -182,6 +182,8 @@ public class Act_Opt_Login extends AppCompatActivity {
                                     current = mAuth1.getCurrentUser();
 
                                     userInfo.pro_pic = current.getPhotoUrl().toString();
+                                    userInfo.uid = current.getUid();
+
 
 
                                     db.collection("doctor").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -262,6 +264,7 @@ public class Act_Opt_Login extends AppCompatActivity {
                             current = mAuth1.getCurrentUser();
 
                             userInfo.pro_pic = current.getPhotoUrl().toString();
+                            userInfo.uid = current.getUid();
 
 
                             db.collection("doctor").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

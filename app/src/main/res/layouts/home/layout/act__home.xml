@@ -1,145 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".home.Act_Home">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="25dp"
-            android:src="@drawable/google_map_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/Address"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/poppins"
-            android:gravity="top"
-            android:lineSpacingExtra="0sp"
-            android:maxLines="1"
-            android:text="Address"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-            app:layout_constraintEnd_toStartOf="@+id/profile_image"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/google_map_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/my_ord_txt"
-        android:layout_width="wrap_content"
+        android:id="@+id/Address"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="20dp"
+        android:ellipsize="end"
         android:fontFamily="@font/poppins"
-        android:text="My Orders"
-        android:visibility="gone"
+        android:gravity="top"
+        android:lineSpacingExtra="0sp"
+        android:maxLines="1"
+        android:text="Address"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toStartOf="@+id/profile_image"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myOrder_rv"
-        android:visibility="gone"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
-        android:layout_marginStart="10dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/blue_ripple"
-        android:layout_marginEnd="10dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_ord_txt" />
-
-    <TextView
-
-        android:id="@+id/upcom_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:clickable="false"
+        android:drawableEnd="@drawable/ic_search"
+        android:ems="10"
         android:fontFamily="@font/poppins"
-        android:text="Upcoming Appointments"
+        android:hint="Search Doctors..."
+        android:inputType="textPersonName"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/appointment_horiz"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/light_green_bg"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upcom_txt" />
+        app:layout_constraintTop_toBottomOf="@+id/Address" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins"
-        android:text="Top Doctors Nearby"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/opt_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="487dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/search" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <ProgressBar
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/opt_list"
+        app:layout_constraintVertical_bias="0.889" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
