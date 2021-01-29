@@ -54,7 +54,7 @@ public class Frag_Opt_Appointment extends Fragment {
 
 
 
-        db.collection("appointment").whereEqualTo("doctor_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("doctor_id","jKnDp1bHwo4gWMJIaT9P9HpkBKVt2").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -123,7 +123,6 @@ public class Frag_Opt_Appointment extends Fragment {
                    holder.Abinding.approvedTick.setVisibility(View.VISIBLE);
                }
 
-               holder.Abinding.title.setText(String.valueOf(appointList.get(position).getData().get("user_name")));
                holder.Abinding.AppointmentRv.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View view) {

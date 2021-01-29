@@ -144,7 +144,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                     if (bundle != null) {
 
                         if (bundle.getInt("status") == 1) {
-                            Toast.makeText(Act_Location.this, "Doctor \n city:" + city + "\nstate: " + loc + "Country :" + cou + "\naddres:" + fulladdr, Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(Act_Location.this, "Doctor \n city:" + city + "\nstate: " + loc + "Country :" + cou + "\naddres:" + fulladdr, Toast.LENGTH_SHORT).show();
                             Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
                             location_info.addr = fulladdr;
                             EventBus.getDefault().postSticky(location_info);
@@ -305,7 +305,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Toast.makeText(this, "Get last user", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Get last user", Toast.LENGTH_SHORT).show();
 
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -368,7 +368,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 
             return;
         }
-        Toast.makeText(this, "Enable  user", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Enable  user", Toast.LENGTH_SHORT).show();
         mMap.setMyLocationEnabled(true);
 
 //        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
@@ -575,7 +575,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
 
-        Toast.makeText(this, "Zooom to user", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Zooom to user", Toast.LENGTH_SHORT).show();
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
