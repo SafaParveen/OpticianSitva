@@ -22,7 +22,10 @@ import com.example.opticiansitwa.databinding.ActSplashScreenBinding;
 import com.example.opticiansitwa.global_data.Location_info;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.home.Act_Home;
+import com.example.opticiansitwa.login.Act_Location;
 import com.example.opticiansitwa.login.Act_Login;
+import com.example.opticiansitwa.opt_Home.Act_Opt_Home;
+import com.example.opticiansitwa.opt_login.Act_Opt_Login;
 import com.example.opticiansitwa.opt_login.Act_Pending_Approval;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -223,16 +226,32 @@ public class Act_SplashScreen extends AppCompatActivity {
 
                         if (documentSnapshot.exists()) {
 
-                            Toast.makeText(Act_SplashScreen.this, "You are already signed in", Toast.LENGTH_SHORT).show();
                             user.name = current.getDisplayName();
                             user.email = current.getEmail();
                             user.pro_pic = current.getPhotoUrl().toString();
                             user.uid = current.getUid();
                             EventBus.getDefault().postSticky(user);
-                            Intent i = new Intent(Act_SplashScreen.this, Act_Pending_Approval.class);
-                            i.putExtra("status", 1);
-                            startActivity(i);
-                            finish();
+                            if(documentSnapshot.getData().get("status").equals("1"))
+                            {
+                                Toast.makeText(Act_SplashScreen.this, "You are already signed in", Toast.LENGTH_SHORT).show();
+
+                                Intent homeIntent = new Intent(Act_SplashScreen.this, Act_Opt_Home.class);
+                                startActivity(homeIntent);
+                                finish();
+
+
+                            }
+
+                            else
+                            {
+                                Toast.makeText(Act_SplashScreen.this, "Awaiting approval", Toast.LENGTH_SHORT).show();
+
+                                Intent i = new Intent(Act_SplashScreen.this, Act_Pending_Approval.class);
+                                startActivity(i);
+                                finish();
+
+                            }
+
 
 
                         } else {
@@ -245,7 +264,8 @@ public class Act_SplashScreen extends AppCompatActivity {
                             user.pro_pic = current.getPhotoUrl().toString();
                             user.uid = current.getUid();
                             EventBus.getDefault().postSticky(user);
-                            Intent i = new Intent(Act_SplashScreen.this, Act_Pending_Approval.class);
+                            Intent i = new Intent(Act_SplashScreen.this, Act_Location.class);
+                            i.putExtra("status", 1);
                             startActivity(i);
                             finish();
 

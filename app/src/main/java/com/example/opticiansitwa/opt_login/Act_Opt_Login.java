@@ -198,10 +198,22 @@ public class Act_Opt_Login extends AppCompatActivity {
                                                 DocumentSnapshot documentSnapshot = task.getResult();
                                                 if(documentSnapshot.exists())
                                                 {
+                                                    if(documentSnapshot.getData().get("status").equals("1"))
+                                                    {
 
-                                                    Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
-                                                    startActivity(apprIntent);
-                                                    finish();
+                                                        Intent homeIntent = new Intent(Act_Opt_Login.this, Act_Opt_Home.class);
+                                                        startActivity(homeIntent);
+                                                        finish();
+
+                                                    }
+
+                                                    else {
+
+                                                        Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
+                                                        startActivity(apprIntent);
+                                                        finish();
+
+                                                    }
 
                                                 }
                                                 else
