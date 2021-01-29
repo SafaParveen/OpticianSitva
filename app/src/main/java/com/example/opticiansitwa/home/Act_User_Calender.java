@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,13 +60,10 @@ public class Act_User_Calender extends AppCompatActivity {
 
     final int callbackId = 42;
 
-    final String[] permissionsId = {"Manifest.permission.READ_CALENDAR","Manifest.permission.WRITE_CALENDAR"};
+    final String[] permissionsId = {"Manifest.permission.READ_CALENDAR", "Manifest.permission.WRITE_CALENDAR"};
 
 
     long eventID;
-
-
-
 
 
     TextView data;
@@ -108,13 +106,11 @@ public class Act_User_Calender extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
         super.onCreate(savedInstanceState);
         binding = ActUserCalenderBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
         checkPermissions(callbackId, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR);
-
 
 
         doc_uid = getIntent().getStringExtra("uid");
@@ -196,6 +192,24 @@ public class Act_User_Calender extends AppCompatActivity {
                     Appointment appointment = new Appointment(userInfo.uid, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "", "", "", "");
                     db.collection("appointment").document().set(appointment);
 //                    addCalendar();
+                    FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(new OnCompleteListener<String>() {
+                                @Override
+                                public void onComplete(@NonNull Task<String> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.w("TAG", "Fetching FCM registration token failed", task.getException());
+                                        return;
+                                    }
+
+                                    // Get new FCM registration token
+                                    String token = task.getResult();
+
+                                    // Log and toast
+////                                    String msg = getString(R.string.msg_token_fmt, token);
+//                                    Log.d("TAG", msg);
+//                                    Toast.makeText(Act_User_Calender.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                     Toast.makeText(Act_User_Calender.this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
                     finish();
 

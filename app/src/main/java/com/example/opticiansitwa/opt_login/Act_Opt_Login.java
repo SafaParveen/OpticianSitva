@@ -191,12 +191,25 @@ public class Act_Opt_Login extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                                             if (task.isSuccessful()) {
-                                                Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
-                                                startActivity(apprIntent);
+
+                                                DocumentSnapshot documentSnapshot = task.getResult();
+                                                if(documentSnapshot.exists())
+                                                {
+
+                                                    Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
+                                                    startActivity(apprIntent);
+
+                                                }
+                                                else
+                                                {
+                                                    startActivity(locationIntent);
+                                                    finish();
+
+                                                }
+
 
                                             } else {
-                                                startActivity(locationIntent);
-                                                finish();
+
                                             }
 
                                         }
@@ -272,14 +285,26 @@ public class Act_Opt_Login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                                     if (task.isSuccessful()) {
-                                        Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
-                                        startActivity(apprIntent);
+
+                                        DocumentSnapshot documentSnapshot = task.getResult();
+                                        if(documentSnapshot.exists())
+                                        {
+
+                                            Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
+                                            startActivity(apprIntent);
+
+                                        }
+                                        else
+                                        {
+                                            startActivity(locationIntent);
+                                            finish();
+
+                                        }
+
 
                                     } else {
-                                        startActivity(locationIntent);
-                                        finish();
-                                    }
 
+                                    }
                                 }
                             });
 

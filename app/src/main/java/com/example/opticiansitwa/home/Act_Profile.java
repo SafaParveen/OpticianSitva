@@ -112,7 +112,10 @@ public class Act_Profile extends AppCompatActivity {
                     binding.ssn.setEnabled(false);
                     binding.email.setEnabled(false);
                     binding.edit.setText("Edit");
-                    binding.age.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.Red1), PorterDuff.Mode.SRC_ATOP);
+                    binding.age.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white), PorterDuff.Mode.SRC_ATOP);
+                    binding.ssn.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white), PorterDuff.Mode.SRC_ATOP);
+                    binding.email.getBackground().mutate().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white), PorterDuff.Mode.SRC_ATOP);
+
 
 
 
@@ -126,7 +129,7 @@ public class Act_Profile extends AppCompatActivity {
                             if(task.isSuccessful())
                             {
 
-                                Toast.makeText(getApplicationContext(), "Values Updated", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "Values Updated", Toast.LENGTH_SHORT).show();
 
                             }
 
