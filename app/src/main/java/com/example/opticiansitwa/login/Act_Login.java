@@ -215,15 +215,33 @@ public class Act_Login extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                                             if (task.isSuccessful()) {
-                                                startActivity(locationIntent);
-                                                finish();
+
+                                                DocumentSnapshot documentSnapshot = task.getResult();
+
+                                                if(documentSnapshot.exists())
+                                                {
+                                                    Intent homeIntent = new Intent(Act_Login.this, Act_Home.class);
+                                                    startActivity(homeIntent);
+                                                    finish();
+
+
+                                                }
+
+                                                else
+                                                {
+                                                    db.collection("user").document(current.getUid()).set(user);
+                                                    startActivity(locationIntent);
+                                                    finish();
+
+                                                }
+
+
 
                                             } else {
-                                                db.collection("user").document(current.getUid()).set(user);
-                                                startActivity(locationIntent);
-                                                finish();
+
 
                                             }
+
 
                                         }
                                     });
@@ -297,14 +315,29 @@ public class Act_Login extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
 
-                                        Intent homeIntent = new Intent(Act_Login.this, Act_Home.class);
-                                        startActivity(homeIntent);
-                                        finish();
+                                        DocumentSnapshot documentSnapshot = task.getResult();
+
+                                        if(documentSnapshot.exists())
+                                        {
+                                            Intent homeIntent = new Intent(Act_Login.this, Act_Home.class);
+                                            startActivity(homeIntent);
+                                            finish();
+
+
+                                        }
+
+                                        else
+                                        {
+                                            db.collection("user").document(current.getUid()).set(user);
+                                            startActivity(locationIntent);
+                                            finish();
+
+                                        }
+
+
 
                                     } else {
-                                        db.collection("user").document(current.getUid()).set(user);
-                                        startActivity(locationIntent);
-                                        finish();
+
 
                                     }
 

@@ -48,8 +48,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Act_Home extends AppCompatActivity {
-    List<DocumentSnapshot> doctorList = new ArrayList<>();
-    List<DocumentSnapshot> appointList = new ArrayList<>();
+
+    public List<DocumentSnapshot> doctorList = new ArrayList<>();
+    public List<DocumentSnapshot> appointList = new ArrayList<>();
     ArrayList<String> title=new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -58,6 +59,8 @@ public class Act_Home extends AppCompatActivity {
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     FirebaseAuth mAuth =FirebaseAuth.getInstance();
     FirebaseUser current = mAuth.getCurrentUser();
+
+    ArrayList<Object> objects = new ArrayList<>();
 
     Map<String,Map<String,List<DocumentSnapshot>>> allItems = new HashMap<>();
 
@@ -70,6 +73,7 @@ public class Act_Home extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         title.add("My Orders");
         title.add("Upcoming Appointments");
@@ -211,6 +215,24 @@ public class Act_Home extends AppCompatActivity {
         });
 
     }
+
+    private ArrayList<Object> getObject()
+    {
+
+        if(appointList.size()==0 && doctorList.size()!=0)
+        {
+
+
+        }
+
+
+
+
+
+        return objects;
+    }
+
+
 
     private void setupAdapter() {
 
