@@ -25,6 +25,7 @@ import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.FragOptProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -70,6 +71,13 @@ public class Frag_Opt_Profile extends Fragment {
 
                 Glide.with(getContext()).load(uri).into(binding.profileImage);
 
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Glide.with(getContext()).load(userInfo.pro_pic).into(binding.profileImage);
 
             }
         });

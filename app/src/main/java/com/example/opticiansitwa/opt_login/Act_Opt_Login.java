@@ -44,6 +44,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -183,6 +184,7 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                                     userInfo.pro_pic = current.getPhotoUrl().toString();
                                     userInfo.uid = current.getUid();
+                                    EventBus.getDefault().postSticky(userInfo);
 
 
 
@@ -198,6 +200,7 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                                                     Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
                                                     startActivity(apprIntent);
+                                                    finish();
 
                                                 }
                                                 else
@@ -278,6 +281,7 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                             userInfo.pro_pic = current.getPhotoUrl().toString();
                             userInfo.uid = current.getUid();
+                            EventBus.getDefault().postSticky(userInfo);
 
 
                             db.collection("doctor").document(current.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -292,6 +296,7 @@ public class Act_Opt_Login extends AppCompatActivity {
 
                                             Intent apprIntent = new Intent(Act_Opt_Login.this, Act_Pending_Approval.class);
                                             startActivity(apprIntent);
+                                            finish();
 
                                         }
                                         else
