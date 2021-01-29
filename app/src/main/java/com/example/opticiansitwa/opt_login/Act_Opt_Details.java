@@ -136,7 +136,7 @@ public class Act_Opt_Details extends AppCompatActivity {
     private void downloadImage(String imageURL) {
 
 
-        final String fileName = "profile_pic";
+        final String fileName = "profile_pic "+System.currentTimeMillis();
 
         Glide.with(this)
                 .load(imageURL)
