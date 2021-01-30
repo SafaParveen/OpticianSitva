@@ -76,10 +76,15 @@ public class DoctorList_Adapter extends RecyclerView.Adapter<DoctorList_Adapter.
             public void onClick(View view) {
 
 
+
+
                 Intent intent1 = new Intent(context, Act_Doctor_Details.class);
-                intent1.setFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
-                intent1.putExtra("uid", doctorList.get(position).getId());
+                intent1.putExtra("doc_id", doctorList.get(position).getId());
                 intent1.putExtra("doc_email", doctorList.get(position).get("email").toString());
+                intent1.putExtra("doc_name",doctorList.get(position).get("name").toString());
+                intent1.putExtra("doc_profile",doctorList.get(position).get("profile_pic").toString());
+                intent1.setFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
+
                 context.startActivity(intent1);
 
             }

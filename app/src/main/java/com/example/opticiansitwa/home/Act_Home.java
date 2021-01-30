@@ -316,6 +316,7 @@ public class Act_Home extends AppCompatActivity {
 
 
      private void recycler_doctor() {
+
 //
         DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext());
         binding.optList.setAdapter(adapter);

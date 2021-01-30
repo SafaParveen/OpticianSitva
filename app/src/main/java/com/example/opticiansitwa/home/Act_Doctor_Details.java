@@ -26,16 +26,28 @@ public class Act_Doctor_Details extends AppCompatActivity {
     User_Info userInfo = EventBus.getDefault().getStickyEvent(User_Info.class);
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String uid,doc_email,doc_name,doc_profile,doctor_id;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActDoctorDetailsBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-        doctor_id = getIntent().getStringExtra("doctor_id");
-        doc_email = getIntent().getStringExtra("doc_email");
-        doc_name = getIntent().getStringExtra("doc_name");
-        doc_profile = getIntent().getStringExtra("doc_profile");
+
+        bundle = getIntent().getExtras();
+
+        if(bundle!=null)
+        {
+
+            doctor_id = bundle.getString("doc_id");
+            doc_email = bundle.getString("doc_email");
+            doc_name = bundle.getString("doc_name");
+            doc_profile = bundle.getString("doc_profile");
+
+
+        }
+
+
 //        for(DocumentSnapshot doc: userInfo.doctorsList){
 //            if(doc.getId().equals(uid)){
 //
