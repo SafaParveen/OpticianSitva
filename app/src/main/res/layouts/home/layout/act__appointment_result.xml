@@ -103,7 +103,6 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/image_round_corner"
                     android:outlineProvider="background"
-                    android:src="@drawable/os_logo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
