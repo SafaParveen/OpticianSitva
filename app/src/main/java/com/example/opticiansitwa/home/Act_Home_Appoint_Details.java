@@ -126,5 +126,13 @@ public class Act_Home_Appoint_Details extends AppCompatActivity {
 
         }
 
+        binding.backIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+
     }
 }
