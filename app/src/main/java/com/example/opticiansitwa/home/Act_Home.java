@@ -270,6 +270,7 @@ public class Act_Home extends AppCompatActivity {
                 holder.bind(model);
 
 
+
             }
 
             @NonNull
