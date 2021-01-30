@@ -62,12 +62,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class Act_Location extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener , GoogleMap.OnMapClickListener {
+public class Act_Location extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener, GoogleMap.OnMapClickListener {
 
     private static final int LOCATION_REQUEST_CODE = 123;
     private static final String TAG = "Messege";
     private static final int ACCESS_LOCATION_REQUEST_CODE = 12121;
-   // private Permissions permissions;
+    // private Permissions permissions;
     String streetAddress;
 
 
@@ -84,7 +84,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
     LocationRequest locationRequest;
     List<Address> addresses;
     String place, loc, cou, city, fulladdr;
-    double latitude,longitude;
+    double latitude, longitude;
     Bundle bundle;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -112,7 +112,6 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         bundle = getIntent().getExtras();
 
 
-
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -130,27 +129,22 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
 
-                if(binding.address1.getText().toString().trim().length()==0)
-                {
+                if (binding.address1.getText().toString().trim().length() == 0) {
                     binding.address1.setError("Please enter your Address");
                     binding.address1.requestFocus();
 
 
-                }
-                else if(binding.address2.getText().toString().trim().length()==0)
-                {
+                } else if (binding.address2.getText().toString().trim().length() == 0) {
                     binding.address2.setError("Please enter your Address");
                     binding.address2.requestFocus();
 
 
-                }
-                else
-                {
+                } else {
 
-                    if(bundle!=null) {
+                    if (bundle != null) {
 
-                        if(bundle.getInt("status") == 1) {
-                            Toast.makeText(Act_Location.this, "Doctor \n city:"+city+"\nstate: "+loc+"Country :"+cou+"\naddres:"+fulladdr, Toast.LENGTH_SHORT).show();
+                        if (bundle.getInt("status") == 1) {
+                          //  Toast.makeText(Act_Location.this, "Doctor \n city:" + city + "\nstate: " + loc + "Country :" + cou + "\naddres:" + fulladdr, Toast.LENGTH_SHORT).show();
                             Intent optdetailsIntent = new Intent(Act_Location.this, Act_Opt_Details.class);
                             location_info.addr = fulladdr;
                             EventBus.getDefault().postSticky(location_info);
@@ -160,36 +154,31 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                             user.uid = current.getUid();
                             EventBus.getDefault().postSticky(user);
 
-                            optdetailsIntent.putExtra("city",city);
-                            optdetailsIntent.putExtra("state",loc);
-                            optdetailsIntent.putExtra("country",cou);
-                            optdetailsIntent.putExtra("address",fulladdr);
-                            optdetailsIntent.putExtra("location_x",latitude);
-                            optdetailsIntent.putExtra("location_y",longitude);
-                            optdetailsIntent.putExtra("address1",binding.address1.getText().toString());
-                            optdetailsIntent.putExtra("address2",binding.address2.getText().toString());
+                            optdetailsIntent.putExtra("city", city);
+                            optdetailsIntent.putExtra("state", loc);
+                            optdetailsIntent.putExtra("country", cou);
+                            optdetailsIntent.putExtra("address", fulladdr);
+                            optdetailsIntent.putExtra("location_x", latitude);
+                            optdetailsIntent.putExtra("location_y", longitude);
+                            optdetailsIntent.putExtra("address1", binding.address1.getText().toString());
+                            optdetailsIntent.putExtra("address2", binding.address2.getText().toString());
                             startActivity(optdetailsIntent);
                             finish();
 
 
-
-                        }
-
-                        else if(bundle.getInt("status") == 0)
-                        {
+                        } else if (bundle.getInt("status") == 0) {
 
 
                             location_info.addr = fulladdr;
 
                             EventBus.getDefault().postSticky(location_info);
                             db.collection("user").document(userInfo.uid)
-                                    .update("address_google_map",fulladdr,"location_x",latitude,"location_y",longitude,"address_typed_1",binding.address1.getText().toString(),"address_typed_2",binding.address2.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    .update("address_google_map", fulladdr, "location_x", latitude, "location_y", longitude, "address_typed_1", binding.address1.getText().toString(), "address_typed_2", binding.address2.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
 
-                                    if(task.isSuccessful())
-                                    {
+                                    if (task.isSuccessful()) {
 
                                         Intent userHome = new Intent(Act_Location.this, Act_Home.class);
                                         startActivity(userHome);
@@ -203,17 +192,13 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 
                         }
 
-                    }
-
-                    else
-                    {
+                    } else {
 
                         Toast.makeText(Act_Location.this, "Error", Toast.LENGTH_SHORT).show();
 
                     }
 
                 }
-
 
 
             }
@@ -228,6 +213,9 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapClickListener(this);
+        //mMap.setOnMyLocationButtonClickListener(this);
+
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             enableUserLocation();
@@ -300,8 +288,11 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                         apiException.startResolutionForResult(Act_Location.this, 1001);
                     } catch (IntentSender.SendIntentException ex) {
                         ex.printStackTrace();
-                    } } }
-        }); }
+                    }
+                }
+            }
+        });
+    }
 
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -314,7 +305,7 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Toast.makeText(this, "Get last user", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Get last user", Toast.LENGTH_SHORT).show();
 
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -377,7 +368,8 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 
             return;
         }
-        Toast.makeText(this, "Enable  user", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Enable  user", Toast.LENGTH_SHORT).show();
+        mMap.setMyLocationEnabled(true);
 
 //        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 //
@@ -402,7 +394,46 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        mMap.setMyLocationEnabled(true);
+
+        //  mMap.clear();
+        // Toast.makeText(this, "Zooom to user", Toast.LENGTH_SHORT).show();
+//        Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+//        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+//                List<Address> addresses = null;
+//                try {
+//                    addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                if (addresses.size() > 0) {
+//                    Address address = addresses.get(0);
+//                    streetAddress = address.getAddressLine(0);
+//                    binding.mapAddress.setText(streetAddress);
+//                    place = getplace(latLng);
+//                    mMap.clear();
+//                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+//                    mMap.addMarker(new MarkerOptions()
+//                            .position(latLng)
+//                            .title(streetAddress)
+//                            .draggable(true).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.google_map_icon)));
+//                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                        // TODO: Consider calling
+//                        //    ActivityCompat#requestPermissions
+//                        // here to request the missing permissions, and then overriding
+//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                        //                                          int[] grantResults)
+//                        // to handle the case where the user grants the permission. See the documentation
+//                        // for ActivityCompat#requestPermissions for more details.
+//                        return;
+//                    }
+//                    mMap.setMyLocationEnabled(false);
+//                }
+//            }
+//        });
+        //  mMap.addMarker(new MarkerOptions().position(LatLng).draggable(true).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.google_map_icon)));
 
     }
 
@@ -421,9 +452,6 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
-
-
-
 
 
     private void getCurrentLocation() {
@@ -474,8 +502,8 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
         String address = addresses.get(0).getAddressLine(0);
-        latitude=latLng.latitude;
-        longitude=latLng.longitude;
+        latitude = latLng.latitude;
+        longitude = latLng.longitude;
         loc = addresses.get(0).getAdminArea();
         city = addresses.get(0).getLocality();
         cou = addresses.get(0).getCountryName();
@@ -542,12 +570,12 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
     private void zoomToUserLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return; }
+            return;
+        }
 
-        Toast.makeText(this, "Zooom to user", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Zooom to user", Toast.LENGTH_SHORT).show();
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -598,11 +626,19 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
-
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
+//    @Override
+//    public boolean onMyLocationButtonClick() {
+////        Toast.makeText(this, "Hiiiiiiii", Toast.LENGTH_SHORT).show();
+////
+////
+////        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+////
+////        }
+////        mMap.setMyLocationEnabled(true);
+////       // getLastLocation();
+////        return true;
+//    }
 }

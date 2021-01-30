@@ -117,6 +117,9 @@ public class Frag_Opt_Profile extends Fragment {
                     binding.ssn.setEnabled(false);
                     binding.email.setEnabled(false);
                     binding.edit.setText("Edit");
+                    binding.age.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.white), PorterDuff.Mode.SRC_ATOP);
+                    binding.ssn.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.white), PorterDuff.Mode.SRC_ATOP);
+                    binding.email.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.white), PorterDuff.Mode.SRC_ATOP);
 
 
 
@@ -130,7 +133,7 @@ public class Frag_Opt_Profile extends Fragment {
                             if(task.isSuccessful())
                             {
 
-                                Toast.makeText(getContext(), "Values Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Data Updated", Toast.LENGTH_SHORT).show();
 
                             }
 

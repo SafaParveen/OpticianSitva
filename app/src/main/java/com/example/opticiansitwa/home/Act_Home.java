@@ -28,6 +28,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.firebase.ui.firestore.paging.LoadingState;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,21 +92,26 @@ public class Act_Home extends AppCompatActivity {
             }
         });
 
-        //binding.Address.setText(locationInfo.addr);
+       binding.Address.setText(locationInfo.addr);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
 
         storageReference.child("user_profile_pics").child(userInfo.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
                 Glide.with(getApplicationContext()).load(uri).into(binding.profileImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-
-
+                Glide.with(getApplicationContext()).load(userInfo.pro_pic).into(binding.profileImage);
             }
         });
+
 
 
         dbCollection = db.collection("doctor");
@@ -138,15 +144,15 @@ public class Act_Home extends AppCompatActivity {
                 if(task.isSuccessful()){
 
                     doctorList = task.getResult().getDocuments();
-                    Map<String,List<DocumentSnapshot>> items = new HashMap<>();
-                    items.put("doctor",doctorList);
-                    allItems.put("type",items);
-                    Main_Home_Adapter adapter = new Main_Home_Adapter(doctorList,getApplicationContext(),"Top Doctors Nearby");
-                    binding.optList.setAdapter(adapter);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    binding.optList.setLayoutManager(layoutManager);
-
+//                    Map<String,List<DocumentSnapshot>> items = new HashMap<>();
+//                    items.put("doctor",doctorList);
+//                    allItems.put("type",items);
+//                    Main_Home_Adapter adapter = new Main_Home_Adapter(doctorList,getApplicationContext(),"Top Doctors Nearby");
+//                    binding.optList.setAdapter(adapter);
+//                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+//                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                    binding.optList.setLayoutManager(layoutManager);
+                    recycler_doctor();
 
 
                 }
@@ -169,10 +175,10 @@ public class Act_Home extends AppCompatActivity {
 
                 }
                 if(appointList.size() == 0){
-                    //recycler_appoint();
+//                    recycler_appoint();
                     // Toast.makeText(Act_Home_1.this, "Size noooo: "+appointList.size(), Toast.LENGTH_LONG).show();
-//                    binding.appointmentHoriz.setVisibility(View.GONE);
-//                    binding.upcomTxt.setVisibility(View.GONE);
+                    binding.appointmentHoriz.setVisibility(View.GONE);
+                    binding.upcomTxt.setVisibility(View.GONE);
                     // binding.linear.setVisibility(View.GONE);
                     // binding.noAppoint.setVisibility(View.VISIBLE);
 
@@ -180,24 +186,27 @@ public class Act_Home extends AppCompatActivity {
                 }
                 else {
 
-                    Map<String,List<DocumentSnapshot>> items = new HashMap<>();
-                    items.put("appoint",appointList);
-                    allItems.put("type",items);
-
-//                    if(allItems.get()
-
-                    Main_Home_Adapter adapter = new Main_Home_Adapter(appointList,getApplicationContext(),"Upcoming Appointments");
-                    binding.optList.setAdapter(adapter);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
-                   layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    binding.optList.setLayoutManager(layoutManager);
-
-
-//                    binding.appointmentHoriz.setVisibility(View.VISIBLE);
-//                    binding.upcomTxt.setVisibility(View.VISIBLE);
-//                    binding.appointmentHoriz.setBackgroundResource(R.drawable.white_ripple);
-                    //binding.noAppoint.setVisibility(View.INVISIBLE);
-
+                      binding.appointmentHoriz.setVisibility(View.VISIBLE);
+                      binding.upcomTxt.setVisibility(View.VISIBLE);
+                    recycler_appoint();
+//                    Map<String,List<DocumentSnapshot>> items = new HashMap<>();
+//                    items.put("appoint",appointList);
+//                    allItems.put("type",items);
+//
+////                    if(allItems.get()
+//
+//                    Main_Home_Adapter adapter = new Main_Home_Adapter(appointList,getApplicationContext(),"Upcoming Appointments");
+//                    binding.optList.setAdapter(adapter);
+//                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+//                   layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                    binding.optList.setLayoutManager(layoutManager);
+//
+//
+////                    binding.appointmentHoriz.setVisibility(View.VISIBLE);
+////                    binding.upcomTxt.setVisibility(View.VISIBLE);
+////                    binding.appointmentHoriz.setBackgroundResource(R.drawable.white_ripple);
+//                    //binding.noAppoint.setVisibility(View.INVISIBLE);
+//
                 }
 
 
@@ -305,25 +314,25 @@ public class Act_Home extends AppCompatActivity {
     }
 
 
-//    private void recycler_doctor() {
+     private void recycler_doctor() {
 //
-//        DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext(),2);
-//        binding.optList.setAdapter(adapter);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        binding.optList.setLayoutManager(layoutManager);
+        DoctorList_Adapter adapter=new DoctorList_Adapter(doctorList,getApplicationContext());
+        binding.optList.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.optList.setLayoutManager(layoutManager);
 //        Main_Home_Adapter adapter = new Main_Home_Adapter(this, doctorList,1);
 //        binding.optList.setAdapter(adapter);
 //        binding.optList.setLayoutManager(new LinearLayoutManager(this));
 
-//    }
+    }
 
     private void recycler_appoint() {
-//        Home_Appointment_Adapter adapter1 = new Home_Appointment_Adapter( appointList,getApplicationContext(), 1);
-//        binding.appointmentHoriz.setAdapter(adapter1);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        binding.appointmentHoriz.setLayoutManager(layoutManager);
+        Home_Appointment_Adapter adapter1 = new Home_Appointment_Adapter( appointList,getApplicationContext());
+        binding.appointmentHoriz.setAdapter(adapter1);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());//  layoutManager.setStackFromEnd(true);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.appointmentHoriz.setLayoutManager(layoutManager);
 //        Main_Home_Adapter adapter = new Main_Home_Adapter(this, appointmentList,2);
 //        binding.optList.setAdapter(adapter);
 //        binding.optList.setLayoutManager(new LinearLayoutManager(this));

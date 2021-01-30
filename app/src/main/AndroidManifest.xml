@@ -28,21 +28,17 @@
         <activity android:name=".home.Act_Home" />
         <activity android:name=".home.Act_Appointment_result" />
         <activity android:name=".intro.Act_SplashScreen">
-
-
-
-        </activity>
-        <activity android:name=".opt_login.Act_Opt_Details" />
-        <activity android:name=".opt_login.Act_Opt_Login" >
-
-            <intent-filter>
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+
+        <activity android:name=".opt_login.Act_Opt_Details" />
+        <activity android:name=".opt_login.Act_Opt_Login"/> >
+
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -69,12 +65,12 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".FCM.FirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+<!--        <service android:name=".FCM.FirebaseMessagingService"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
