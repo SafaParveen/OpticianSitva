@@ -22,6 +22,8 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActLoginBinding;
+import com.example.opticiansitwa.global_data.Location_info;
+import com.example.opticiansitwa.global_data.User_Info;
 import com.example.opticiansitwa.home.Act_Home;
 import com.example.opticiansitwa.models.User;
 import com.example.opticiansitwa.opt_login.Act_Opt_Login;
@@ -51,6 +53,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,6 +68,8 @@ public class Act_Login extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
+    Location_info loc = new Location_info();
+    User_Info userInfo = new User_Info();
     String user_email = "", name, photoUrl;
     int flag;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -223,6 +228,11 @@ public class Act_Login extends AppCompatActivity {
                                                 if(documentSnapshot.exists())
                                                 {
                                                     Intent homeIntent = new Intent(Act_Login.this, Act_Home.class);
+                                                    loc.addr = documentSnapshot.getData().get("address_google_map").toString();
+                                                    EventBus.getDefault().postSticky(loc);
+                                                    userInfo.uid = current.getUid();
+                                                    userInfo.pro_pic = current.getPhotoUrl().toString();
+                                                    EventBus.getDefault().postSticky(userInfo);
                                                     startActivity(homeIntent);
                                                     finish();
 
@@ -322,6 +332,11 @@ public class Act_Login extends AppCompatActivity {
                                         if(documentSnapshot.exists())
                                         {
                                             Intent homeIntent = new Intent(Act_Login.this, Act_Home.class);
+                                            loc.addr = documentSnapshot.getData().get("address_google_map").toString();
+                                            EventBus.getDefault().postSticky(loc);
+                                            userInfo.uid = current.getUid();
+                                            userInfo.pro_pic = current.getPhotoUrl().toString();
+                                            EventBus.getDefault().postSticky(userInfo);
                                             startActivity(homeIntent);
                                             finish();
 
