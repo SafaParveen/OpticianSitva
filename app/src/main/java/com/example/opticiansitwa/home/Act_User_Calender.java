@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.opticiansitwa.FCM.FirebaseMessagingService;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActUserCalenderBinding;
 import com.example.opticiansitwa.databinding.SelectedCalenderViewBinding;
@@ -92,7 +95,7 @@ public class Act_User_Calender extends AppCompatActivity {
 
     DocTimeAdapter mAdapter, aAdapter, eAdapter;
 
-    String str, timeChecker, doc_uid, doc_email;
+    String str, timeChecker, doc_uid, doc_email,doc_name,doc_pro;
     SimpleDateFormat df;
     Date date;
     long epoch, epochSelected;
@@ -115,6 +118,9 @@ public class Act_User_Calender extends AppCompatActivity {
 
         doc_uid = getIntent().getStringExtra("uid");
         doc_email = getIntent().getStringExtra("doc_email");
+        doc_name = getIntent().getStringExtra("doc_name");
+        doc_pro = getIntent().getStringExtra("doc_profile");
+
 
 
         showCalender();
@@ -189,27 +195,20 @@ public class Act_User_Calender extends AppCompatActivity {
                 } else {
 
 
-                    Appointment appointment = new Appointment(userInfo.uid, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "", "", "", "");
+                    Appointment appointment = new Appointment(userInfo.uid,doc_name,doc_pro,"1","https://firebasestorage.googleapis.com/v0/b/optician-sitva-gcp.appspot.com/o/test_reports%2Ftest_report.png?alt=media&token=4309def0-acb1-4ea5-860d-4850740fde49",userInfo.name,userInfo.pro_pic, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "https://firebasestorage.googleapis.com/v0/b/optician-sitva-gcp.appspot.com/o/invoices%2FResume_SafaParveen.pdf?alt=media&token=655bee1c-85ff-4b9e-8481-9498016c0fae", "Please avoid watching TV Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut.", "", "");
                     db.collection("appointment").document().set(appointment);
 //                    addCalendar();
-                    FirebaseMessaging.getInstance().getToken()
-                            .addOnCompleteListener(new OnCompleteListener<String>() {
-                                @Override
-                                public void onComplete(@NonNull Task<String> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.w("TAG", "Fetching FCM registration token failed", task.getException());
-                                        return;
-                                    }
+                    Intent myIntent = new Intent(getApplicationContext() , FirebaseMessagingService. class ) ;
+                    AlarmManager alarmManager = (AlarmManager) getSystemService( ALARM_SERVICE ) ;
+                    PendingIntent pendingIntent = PendingIntent. getService ( getApplicationContext(), 0 , myIntent , 0 ) ;
+                    Calendar calendar = Calendar. getInstance () ;
+                    calendar.set(Calendar. SECOND , 0 ) ;
+                    calendar.set(Calendar. MINUTE , 0 ) ;
+                    calendar.set(Calendar. HOUR , 0 ) ;
+                    calendar.set(Calendar. AM_PM , Calendar. AM ) ;
+                    calendar.add(Calendar. DAY_OF_MONTH , 1 ) ;
+                    alarmManager.setRepeating(AlarmManager. RTC_WAKEUP , calendar.getTimeInMillis() , 1000 * 60 * 60 * 24 , pendingIntent) ;
 
-                                    // Get new FCM registration token
-                                    String token = task.getResult();
-
-                                    // Log and toast
-////                                    String msg = getString(R.string.msg_token_fmt, token);
-//                                    Log.d("TAG", msg);
-//                                    Toast.makeText(Act_User_Calender.this, msg, Toast.LENGTH_SHORT).show();
-                                }
-                            });
                     Toast.makeText(Act_User_Calender.this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
                     finish();
 

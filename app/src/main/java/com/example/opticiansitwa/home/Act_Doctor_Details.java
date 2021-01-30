@@ -104,6 +104,8 @@ public class Act_Doctor_Details extends AppCompatActivity {
                     Intent slotIntent = new Intent(Act_Doctor_Details.this, Act_User_Calender.class);
                     slotIntent.putExtra("uid", doctor_id);
                     slotIntent.putExtra("doc_email", doc_email);
+                    slotIntent.putExtra("doc_name", doc_name);
+                    slotIntent.putExtra("doc_profile", doc_profile);
                     startActivity(slotIntent);
                     finish();
             }
