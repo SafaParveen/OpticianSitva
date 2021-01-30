@@ -219,11 +219,17 @@ public class Act_Home extends AppCompatActivity {
     private ArrayList<Object> getObject()
     {
 
-        if(appointList.size()==0 && doctorList.size()!=0)
+        if(appointList.size()!=0 && doctorList.size()!=0)
         {
+
+            objects.add(appointList);
+            objects.add(doctorList);
 
 
         }
+
+
+
 
 
 
