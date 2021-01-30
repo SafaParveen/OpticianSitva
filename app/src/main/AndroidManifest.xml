@@ -64,10 +64,12 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".FCM.FirebaseMessagingService"
-            android:exported="true"
-            android:enabled="true">
-        </service>
+<!--        <service android:name=".FCM.FirebaseMessagingService"-->
+<!--            android:exported="true"-->
+<!--            android:enabled="true">-->
+<!--        </service>-->
+
+        <receiver android:name=".FCM.NotificationService"/>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

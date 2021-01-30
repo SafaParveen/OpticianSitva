@@ -44,11 +44,13 @@ import com.google.firebase.storage.StorageReference;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Act_Home extends AppCompatActivity {
+
 
     public List<DocumentSnapshot> doctorList = new ArrayList<>();
     public List<DocumentSnapshot> appointList = new ArrayList<>();
@@ -220,6 +222,17 @@ public class Act_Home extends AppCompatActivity {
                 Intent locIntent = new Intent(Act_Home.this, Act_Location.class);
                 locIntent.putExtra("status", 0);
                 startActivity(locIntent);
+            }
+        });
+
+        binding.imageView7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent locIntent = new Intent(Act_Home.this, Act_Location.class);
+                locIntent.putExtra("status", 0);
+                startActivity(locIntent);
+
             }
         });
 

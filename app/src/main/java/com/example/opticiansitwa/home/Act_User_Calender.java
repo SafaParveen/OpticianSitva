@@ -3,22 +3,19 @@ package com.example.opticiansitwa.home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.opticiansitwa.FCM.FirebaseMessagingService;
+import com.example.opticiansitwa.FCM.NotificationService;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActUserCalenderBinding;
 import com.example.opticiansitwa.databinding.SelectedCalenderViewBinding;
@@ -39,7 +36,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,12 +45,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 
 public class Act_User_Calender extends AppCompatActivity {
+
+
+    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
+    final Calendar myCalendar = Calendar. getInstance();
+    private final static String default_notification_channel_id = "default" ;
 
     ActUserCalenderBinding binding;
     RecyclerView.Adapter<Act_User_Calender.CalenderViewHolder> calAdapter;
@@ -198,17 +198,10 @@ public class Act_User_Calender extends AppCompatActivity {
                     Appointment appointment = new Appointment(userInfo.uid,doc_name,doc_pro,"1","https://firebasestorage.googleapis.com/v0/b/optician-sitva-gcp.appspot.com/o/test_reports%2Ftest_report.png?alt=media&token=4309def0-acb1-4ea5-860d-4850740fde49",userInfo.name,userInfo.pro_pic, doc_uid, "", epochSelected + (timeSelected * 3600000L), "0", "0", "", "", "", test_report, "", "https://firebasestorage.googleapis.com/v0/b/optician-sitva-gcp.appspot.com/o/invoices%2FResume_SafaParveen.pdf?alt=media&token=655bee1c-85ff-4b9e-8481-9498016c0fae", "Please avoid watching TV Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut.", "", "");
                     db.collection("appointment").document().set(appointment);
 //                    addCalendar();
-                    Intent myIntent = new Intent(getApplicationContext() , FirebaseMessagingService. class ) ;
-                    AlarmManager alarmManager = (AlarmManager) getSystemService( ALARM_SERVICE ) ;
-                    PendingIntent pendingIntent = PendingIntent. getService ( getApplicationContext(), 0 , myIntent , 0 ) ;
-                    Calendar calendar = Calendar. getInstance () ;
-                    calendar.set(Calendar. SECOND , 0 ) ;
-                    calendar.set(Calendar. MINUTE , 0 ) ;
-                    calendar.set(Calendar. HOUR , 0 ) ;
-                    calendar.set(Calendar. AM_PM , Calendar. AM ) ;
-                    calendar.add(Calendar. DAY_OF_MONTH , 1 ) ;
-                    alarmManager.setRepeating(AlarmManager. RTC_WAKEUP , calendar.getTimeInMillis() , 1000 * 60 * 60 * 24 , pendingIntent) ;
-
+                    String date = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date (epochSelected + (timeSelected * 3600000L)));
+                    String date1[] = date.split(" ");
+                    String date2 = date1[0];
+                    scheduleNotification(getNotification(date2),epochSelected + (timeSelected * 3600000L));
                     Toast.makeText(Act_User_Calender.this, "Booking Confirmed!", Toast.LENGTH_SHORT).show();
                     finish();
 
@@ -582,6 +575,25 @@ public class Act_User_Calender extends AppCompatActivity {
                 this.slotTimeRvBinding = slotTimeRvBinding;
             }
         }
+    }
+
+    private void scheduleNotification (Notification notification , long delay) {
+        Intent notificationIntent = new Intent( this, NotificationService. class ) ;
+        notificationIntent.putExtra(NotificationService. NOTIFICATION_ID , 1 ) ;
+        notificationIntent.putExtra(NotificationService. NOTIFICATION , notification) ;
+        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context. ALARM_SERVICE ) ;
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , delay , pendingIntent) ;
+    }
+    private Notification getNotification (String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder( this, default_notification_channel_id ) ;
+        builder.setContentTitle( "Scheduled Notification" ) ;
+        builder.setContentText(content) ;
+        builder.setSmallIcon(R.drawable. ic_launcher_foreground ) ;
+        builder.setAutoCancel( true ) ;
+        builder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;
+        return builder.build() ;
     }
 
 }
