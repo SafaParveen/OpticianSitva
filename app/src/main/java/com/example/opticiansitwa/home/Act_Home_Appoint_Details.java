@@ -1,9 +1,11 @@
 package com.example.opticiansitwa.home;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,18 @@ import com.bumptech.glide.Glide;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActHomeAppointDetailsBinding;
 import com.example.opticiansitwa.databinding.ActLocationBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class Act_Home_Appoint_Details extends AppCompatActivity {
     ActHomeAppointDetailsBinding binding;
-    String approve_status,user_name,user_profile,user_id,epoch,day,dayNo,month,time,doctor_name,doctor_profile;
+    String approve_status,user_name,user_profile,user_id,epoch,day,dayNo,month,time,doctor_name,doctor_profile,doc_id;
+
+    FirebaseStorage storage;
+
+    StorageReference storageReference;
 
 
     @Override
@@ -24,6 +34,8 @@ public class Act_Home_Appoint_Details extends AppCompatActivity {
         binding = ActHomeAppointDetailsBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
         Intent intent = getIntent();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         approve_status = intent.getStringExtra("approve_status");
         user_name = intent.getStringExtra("user_name");
@@ -36,8 +48,22 @@ public class Act_Home_Appoint_Details extends AppCompatActivity {
         time=intent.getStringExtra("time");
         doctor_name=intent.getStringExtra("doctor_name");
         doctor_profile=intent.getStringExtra("doctor_profile");
+        doc_id = intent.getStringExtra("doc_id");
 
-        Glide.with(getApplicationContext()).load(doctor_profile).into(binding.profilePic);
+        storageReference.child("doctor_profile_pics").child(doc_id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+                Glide.with(getApplicationContext()).load(uri).into(binding.profilePic);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Glide.with(getApplicationContext()).load(doctor_profile).into(binding.profilePic);
+            }
+        });
+
         binding.DocName.setText(doctor_name);
 
 

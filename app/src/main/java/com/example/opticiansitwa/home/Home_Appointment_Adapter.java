@@ -22,7 +22,7 @@ public class Home_Appointment_Adapter extends RecyclerView.Adapter<Home_Appointm
     List<DocumentSnapshot> appointList;
     Context context;
     int status;
-    String approve_status,user_name,user_profile,user_id;
+    String approve_status,user_name,user_profile,user_id,doctor_id;
 
 
     public Home_Appointment_Adapter(List<DocumentSnapshot> appointmentList, Context context) {
@@ -93,6 +93,7 @@ public class Home_Appointment_Adapter extends RecyclerView.Adapter<Home_Appointm
                 approve_status=appointList.get(position).getData().get("approve_status").toString();
                 user_name=appointList.get(position).getData().get("user_name").toString();
                 user_id=appointList.get(position).getData().get("user_id").toString();
+                doctor_id = appointList.get(position).getData().get("doctor_id").toString();
                 Intent intent = new Intent(context, Act_Home_Appoint_Details.class);
                 intent.setFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
 
@@ -106,6 +107,7 @@ public class Home_Appointment_Adapter extends RecyclerView.Adapter<Home_Appointm
                 intent.putExtra("day",day);
                 intent.putExtra("month",month);
                 intent.putExtra("time",time);
+                intent.putExtra("doc_id",doctor_id);
                 intent.putExtra("doctor_name",appointList.get(position).getData().get("doctor_name").toString());
                 intent.putExtra("doctor_profile",appointList.get(position).getData().get("doctor_profile").toString());
 

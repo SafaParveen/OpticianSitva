@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.HistoryRvBinding;
+import com.example.opticiansitwa.models.Appointment;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class Appointment_Adapter extends RecyclerView.Adapter<Appointment_Adapte
 
                     intent1.putExtra("doctor_name", AppointmentList.get(position).getData().get("doctor_name").toString());
                     intent1.putExtra("doctor_profile", AppointmentList.get(position).getData().get("doctor_profile").toString());
+                    intent1.putExtra("doctor_id", AppointmentList.get(position).getData().get("doctor_id").toString());
                     intent1.putExtra("day_no",dayNo);
                     intent1.putExtra("month",month);
                     intent1.putExtra("day",day);

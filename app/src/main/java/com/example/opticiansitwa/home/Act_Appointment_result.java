@@ -27,7 +27,7 @@ import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class Act_Appointment_result extends AppCompatActivity {
     ActAppointmentResultBinding binding;
-    String doctor_name,doctor_image,day_no,month,day,time,test_report_img,note_from_dr,invoice_url;
+    String doctor_name,doctor_image,day_no,month,day,time,test_report_img,note_from_dr,invoice_url,doc_id;
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference storageReference;
     StorageReference ref;
@@ -52,12 +52,26 @@ public class Act_Appointment_result extends AppCompatActivity {
         month = intent.getStringExtra("month");
         day = intent.getStringExtra("day");
         time = intent.getStringExtra("time");
+        doc_id = intent.getStringExtra("doctor_id");
         invoice_url=intent.getStringExtra("invoice_url");
         test_report_img = intent.getStringExtra("test_report_img");
         note_from_dr = intent.getStringExtra("note_from_doctor");
 
         binding.DocName.setText(doctor_name);
-        Glide.with(this).load(doctor_image).into(binding.profilePic);
+        storageReference.child("doctor_profile_pics").child(doc_id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+
+                Glide.with(getApplicationContext()).load(uri).into(binding.profilePic);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Glide.with(getApplicationContext()).load(doctor_image).into(binding.profilePic);
+            }
+        });
+
         binding.dayTime.setText(day+"."+time);
         binding.date.setText(day_no);
         binding.month.setText(month);
