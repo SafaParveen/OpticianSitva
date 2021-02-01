@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.ActProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.login.Act_Location;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -185,6 +186,9 @@ public class Act_Profile extends AppCompatActivity {
 
             }
         });
+
+
+
     }
 
 

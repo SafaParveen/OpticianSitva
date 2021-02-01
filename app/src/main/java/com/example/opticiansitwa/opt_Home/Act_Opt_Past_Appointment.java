@@ -50,7 +50,7 @@ public class Act_Opt_Past_Appointment extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        db.collection("appointment").whereEqualTo("doctor_id","jKnDp1bHwo4gWMJIaT9P9HpkBKVt2").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("doctor_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){

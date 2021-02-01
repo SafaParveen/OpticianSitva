@@ -24,6 +24,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.opticiansitwa.R;
 import com.example.opticiansitwa.databinding.FragOptProfileBinding;
 import com.example.opticiansitwa.global_data.User_Info;
+import com.example.opticiansitwa.login.Act_Location;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -154,6 +155,17 @@ public class Frag_Opt_Profile extends Fragment {
 
 
                 }
+
+            }
+        });
+
+
+        binding.address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Act_Location.class);
+                intent.putExtra("status",2);
+                startActivity(intent);
 
             }
         });

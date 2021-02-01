@@ -112,6 +112,7 @@ public class Act_Opt_Details extends AppCompatActivity {
                     db.collection("doctor").document(userInfo.uid).set(doctor);
                     Intent apprIntent = new Intent(Act_Opt_Details.this,Act_Pending_Approval.class);
                     startActivity(apprIntent);
+                    finish();
 
                 }
 

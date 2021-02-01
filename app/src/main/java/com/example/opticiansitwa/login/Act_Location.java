@@ -191,6 +191,31 @@ public class Act_Location extends AppCompatActivity implements OnMapReadyCallbac
                             });
 
                         }
+                        else if (bundle.getInt("status") == 2) //Editing address from user profile
+                            {
+                                location_info.addr = fulladdr;
+
+                                EventBus.getDefault().postSticky(location_info);
+                                db.collection("doctor").document(userInfo.uid)
+                                        .update("address_google_map", fulladdr, "location_x", latitude, "location_y", longitude, "address_typed_1", binding.address1.getText().toString(), "address_typed_2", binding.address2.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                                        if (task.isSuccessful()) {
+
+//                                            Intent userHome = new Intent(Act_Location.this, Act_Home.class);
+//                                            startActivity(userHome);
+                                            finish();
+
+                                        }
+
+
+                                    }
+                                });
+
+
+                            }
 
                     } else {
 

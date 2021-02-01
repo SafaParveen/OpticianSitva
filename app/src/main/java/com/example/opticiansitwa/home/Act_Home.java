@@ -160,14 +160,13 @@ public class Act_Home extends AppCompatActivity {
                 }
             }
         });
-        db.collection("appointment").whereEqualTo("user_id","mXgskeASE7qPExCuSqGx2BVH9RNn1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("appointment").whereEqualTo("user_id",userInfo.uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(DocumentSnapshot documentSnapshot: task.getResult().getDocuments()){
-                        if(documentSnapshot.getData().get("test_status").equals("0")){
+                        if( documentSnapshot.getData().get("test_status").equals("0") && ((long)documentSnapshot.getData().get("epoch")>System.currentTimeMillis())){
                             appointList.add(documentSnapshot);
-
                             // Toast.makeText(Act_Home_1.this, "Size appoint: "+appointList.size(), Toast.LENGTH_LONG).show();
                             // recycler_appoint();
                         }
