@@ -51,6 +51,15 @@ public class Frag_Opt_Profile extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference,uploadTask;
 
+//    public void changeAddress(View view) {
+//
+//        Intent intent = new Intent(getContext(), Act_Location.class);
+//        Toast.makeText(getContext(), "Ayyayyoo", Toast.LENGTH_SHORT).show();
+//        intent.putExtra("status",2);
+//        startActivity(intent);
+//
+//    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,15 +169,7 @@ public class Frag_Opt_Profile extends Fragment {
         });
 
 
-        binding.address.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Act_Location.class);
-                intent.putExtra("status",2);
-                startActivity(intent);
 
-            }
-        });
 
         binding.pastAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +192,18 @@ public class Frag_Opt_Profile extends Fragment {
 
             }
         });
+
+        binding.address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Act_Location.class);
+                Toast.makeText(getContext(), "Ayyayyoo", Toast.LENGTH_SHORT).show();
+                intent.putExtra("status",2);
+                startActivity(intent);
+
+            }
+        });
+
 
 
 

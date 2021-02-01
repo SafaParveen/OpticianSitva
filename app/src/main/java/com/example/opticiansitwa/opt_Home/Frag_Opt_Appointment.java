@@ -58,7 +58,14 @@ public class Frag_Opt_Appointment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    appointList = task.getResult().getDocuments();
+                    for(DocumentSnapshot documentSnapshot: task.getResult().getDocuments()){
+
+                        if((documentSnapshot.getData().get("test_status").equals("0")) &&
+                                ((long)documentSnapshot.getData().get("epoch")>System.currentTimeMillis())){
+                            appointList = task.getResult().getDocuments();
+
+                        }
+                        }
                     appointListAdapter.notifyDataSetChanged();
                 }
                 if(appointList.size()==0)
